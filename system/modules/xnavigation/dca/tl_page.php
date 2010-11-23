@@ -38,9 +38,13 @@ $GLOBALS['TL_DCA']['tl_page']['palettes']['__selector__'][] = 'xNavigationInclud
 foreach (array('regular', 'forward', 'redirect') as $type) {
 	$GLOBALS['TL_DCA']['tl_page']['palettes'][$type] = preg_replace(
 		'/,(sitemap,)?hide([^;]*;)/',
-		',sitemap,xNavigation$2{xNavigation_legend:hide},xNavigationIncludeArticles,xNavigationIncludeNewsArchives;{xNavigationNewsArchives_legend:hide},xNavigationNewsArchives,xNavigationNewsArchiveFormat,xNavigationNewsArchiveShowQuantity;',
+		',sitemap,xNavigation$2{xNavigation_legend:hide},xNavigationIncludeArticles,xNavigationIncludeNewsArchives;{xNavigationNewsArchives_legend:hide},xNavigationNewsArchives,xNavigationNewsArchivePosition,xNavigationNewsArchiveFormat,xNavigationNewsArchiveShowQuantity,xNavigationNewsArchiveJumpTo;',
 		$GLOBALS['TL_DCA']['tl_page']['palettes'][$type]);
 }
+$GLOBALS['TL_DCA']['tl_page']['palettes']['root'] = str_replace(
+		',includeChmod;',
+		',includeChmod;{xNavigation_legend:hide},xNavigationIncludeArticles,xNavigationIncludeNewsArchives;{xNavigationNewsArchives_legend:hide},xNavigationNewsArchives,xNavigationNewsArchivePosition,xNavigationNewsArchiveFormat,xNavigationNewsArchiveShowQuantity,xNavigationNewsArchiveJumpTo;',
+		$GLOBALS['TL_DCA']['tl_page']['palettes']['root']);
 
 if (!isset($GLOBALS['TL_DCA']['tl_page']['fields']['sitemap'])) {
 	$GLOBALS['TL_DCA']['tl_page']['fields']['sitemap'] = array
@@ -94,7 +98,17 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['xNavigationNewsArchives'] = array
 	'exclude'                 => true,
 	'inputType'               => 'checkbox',
 	'options_callback'        => array('tl_page_xNavigation', 'getNewsArchives'),
-	'eval'                    => array('multiple'=>true)
+	'eval'                    => array('multiple'=>true, 'tl_class'=>'w50')
+);
+
+$GLOBALS['TL_DCA']['tl_page']['fields']['xNavigationNewsArchivePosition'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_page']['xNavigationNewsArchivePosition'],
+	'default'                 => '0',
+	'exclude'                 => true,
+	'inputType'               => 'select',
+	'options_callback'        => array('tl_page_xNavigation', 'getNewsArchivePositions'),
+	'eval'                    => array('tl_class'=>'w50')
 );
 
 $GLOBALS['TL_DCA']['tl_page']['fields']['xNavigationNewsArchiveFormat'] = array
@@ -105,7 +119,7 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['xNavigationNewsArchiveFormat'] = array
 	'inputType'               => 'select',
 	'options'                 => array('news_month', 'news_year'),
 	'reference'               => &$GLOBALS['TL_LANG']['tl_page'],
-	'eval'                    => array('tl_class'=>'w50'),
+	'eval'                    => array('tl_class'=>'w50 clr'),
 	'wizard' => array
 	(
 		array('tl_page_xNavigation', 'hideStartDay')
@@ -116,8 +130,18 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['xNavigationNewsArchiveShowQuantity'] = 
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_page']['xNavigationNewsArchiveShowQuantity'],
 	'exclude'                 => true,
-	'inputType'               => 'checkbox'
+	'inputType'               => 'checkbox',
+	'eval'                    => array('tl_class'=>'w50')
 );
+
+$GLOBALS['TL_DCA']['tl_page']['fields']['xNavigationNewsArchiveJumpTo'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_page']['xNavigationNewsArchiveJumpTo'],
+	'exclude'                 => true,
+	'inputType'               => 'pageTree',
+	'eval'                    => array('fieldType'=>'radio', 'tl_class'=>'clr')
+);
+
 
 
 /**
@@ -166,6 +190,22 @@ class tl_page_xNavigation extends Backend
 		}
 
 		return $arrForms;
+	}
+
+
+	/**
+	 * Get all news archives positions
+	 * @return array
+	 */
+	public function getNewsArchivePositions(DataContainer $dc) {
+		$options = array('0' => &$GLOBALS['TL_LANG']['tl_page']['position_top']);
+		$objPages = $this->Database->prepare("SELECT id, title FROM tl_page WHERE pid = ? ORDER BY title")
+								   ->execute($dc->id);
+		while ($objPages->next()) {
+			$options[$objPages->id] = sprintf(&$GLOBALS['TL_LANG']['tl_page']['position_after'], $objPages->title);
+		}
+		$options[2147483647] = &$GLOBALS['TL_LANG']['tl_page']['position_bottom'];
+		return $options;
 	}
 
 	

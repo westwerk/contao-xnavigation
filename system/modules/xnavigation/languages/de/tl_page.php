@@ -35,6 +35,8 @@ $GLOBALS['TL_LANG']['tl_page']['xNavigationIncludeNewsArchives']  = array('News 
 $GLOBALS['TL_LANG']['tl_page']['xNavigationNewsArchives']   = array('News Archiv', '..');
 $GLOBALS['TL_LANG']['tl_page']['xNavigationNewsArchiveFormat'] = array('Archivformat', 'Hier können Sie das Archivformat auswählen.');
 $GLOBALS['TL_LANG']['tl_page']['xNavigationNewsArchiveShowQuantity'] = array('Anzahl der Beiträge anzeigen', 'Die Anzahl der Beiträge jedes Monats anzeigen.');
+$GLOBALS['TL_LANG']['tl_page']['xNavigationNewsArchiveJumpTo'] = array('Weiterleitungsseite', 'Bitte wählen Sie die Seite aus, zu der Besucher beim Anklicken eines Links weitergeleitet werden.');
+$GLOBALS['TL_LANG']['tl_page']['xNavigationNewsArchivePosition'] = array('Position', 'Bitte wählen Sie an welcher Position die News Archive angezeigt werden sollen.');
 
 /**
  * Reference
@@ -51,4 +53,8 @@ $GLOBALS['TL_LANG']['tl_page']['map_always']  = 'Immer anzeigen';
 if (!isset($GLOBALS['TL_LANG']['tl_page']['map_never']))
 $GLOBALS['TL_LANG']['tl_page']['map_never']   = 'Nie anzeigen';
 $GLOBALS['TL_LANG']['tl_page']['map_active'] = 'Wenn Menüpunkt aktiv';
+$GLOBALS['TL_LANG']['tl_page']['position_top'] = 'Am Anfang';
+$GLOBALS['TL_LANG']['tl_page']['position_after'] = 'Nach »%s«';
+$GLOBALS['TL_LANG']['tl_page']['position_bottom'] = 'Am Ende';
+
 ?>

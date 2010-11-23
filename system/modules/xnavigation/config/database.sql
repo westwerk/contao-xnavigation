@@ -17,8 +17,10 @@ CREATE TABLE `tl_page` (
   `xNavigationIncludeArticles` varchar(32) NOT NULL default 'map_never',
   `xNavigationIncludeNewsArchives` varchar(32) NOT NULL default 'map_never',
   `xNavigationNewsArchives` blob NULL,
+  `xNavigationNewsArchivePosition` int(10) unsigned NOT NULL default '0',
   `xNavigationNewsArchiveFormat` varchar(32) NOT NULL default '',
   `xNavigationNewsArchiveShowQuantity` char(1) NOT NULL default '',
+  `xNavigationNewsArchiveJumpTo` int(10) unsigned NOT NULL default '0',
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
