@@ -291,7 +291,7 @@ class ModuleXNavigation extends Module {
 				if (($objPage->id == $objSubpages->id || $objSubpages->type == 'forward' && $objPage->id == $objSubpages->jumpTo)
 					&& !$this instanceof ModuleXSitemap && !$this->Input->get('articles'))
 				{
-					$strClass = 'page' . trim((strlen($subitems) ? ' submenu' : '') . (strlen($objSubpages->cssClass) ? ' ' . $objSubpages->cssClass : ''));
+					$strClass = 'page' . ((strlen($subitems) ? ' submenu' : '') . (strlen($objSubpages->cssClass) ? ' ' . $objSubpages->cssClass : ''));
 					$row = $objSubpages->row();
 
 					$row['isActive'] = true;
