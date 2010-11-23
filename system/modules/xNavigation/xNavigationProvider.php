@@ -41,19 +41,35 @@ abstract class xNavigationProvider extends Controller
 	
 	/**
 	 * Generate menu items for the specific page.
-	 * @param ModuleXNavigation
-	 * @param Database_Result
-	 * @param bool
-	 * @param array
-	 * @param array
-	 * @param int
-	 * @param int
+	 * @param ModuleXNavigation $xNavigation
+	 * The module instance.
+	 * 
+	 * @param Database_Result $objCurrentPage
+	 * The page data.
+	 * 
+	 * @param bool $blnActive
+	 * Flag that define the current page active state.
+	 * 
+	 * @param bool $blnTrail
+	 * Flag that define the current page trail state.
+	 * 
+	 * @param array $arrItems
+	 * The reference to the items array.
+	 * 
+	 * @param int $intLevel
+	 * The current hierarchy level.
+	 * 
+	 * @param int $intMaxLevel
+	 * @param int $intHardLevel
+	 * 
+	 * @return
+	 * Return the count of existing children, but maybe not added to $arrItems.
 	 */
-	public abstract function generateItems(ModuleXNavigation &$xNavigation,
+	public abstract function generateItems(ModuleXNavigation &$objXNavigation,
 		Database_Result $objCurrentPage,
-		$blnActive,
+		$blnCurrentPageActive,
+		$blnCurrentPageTrail,
 		&$arrItems,
-		$arrGroups,
 		$intLevel,
 		$intMaxLevel,
 		$intHardLevel);

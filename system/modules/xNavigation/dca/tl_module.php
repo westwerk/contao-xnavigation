@@ -31,8 +31,10 @@
 /**
  * Table tl_module
  */
-$GLOBALS['TL_DCA']['tl_module']['palettes']['xNavigation'] = '{title_legend},name,headline,type;{nav_legend},levelOffset,showLevel,hardLevel,showProtected;{reference_legend:hide},defineRoot;{template_legend:hide},navigationTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
-$GLOBALS['TL_DCA']['tl_module']['palettes']['xSitemap']    = '{title_legend},name,headline,type;{nav_legend},includeRoot,showProtected,showHidden;{reference_legend:hide},rootPage;{template_legend:hide},navigationTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'includeFullHierarchy';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['xNavigation']          = '{title_legend},name,headline,type;{nav_legend},levelOffset,showLevel,hardLevel,showProtected;{reference_legend:hide},defineRoot;{template_legend:hide},navigationTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['xSitemap']             = '{title_legend},name,headline,type;{nav_legend},includeRoot,includeFullHierarchy,showProtected;{reference_legend:hide},rootPage;{template_legend:hide},navigationTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['includeFullHierarchy'] = '{title_legend},name,headline,type;{nav_legend},includeFullHierarchy,showProtected;{reference_legend:hide},rootPage;{template_legend:hide},navigationTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['hardLevel'] = array
 (
@@ -41,6 +43,14 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['hardLevel'] = array
 	'exclude'     => true,
 	'inputType'   => 'text',
 	'eval'        => array('maxlength'=>5, 'rgxp'=>'digit', 'tl_class'=>'w50')
+);
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['includeFullHierarchy'] = array
+(
+	'label'       => &$GLOBALS['TL_LANG']['tl_module']['includeFullHierarchy'],
+	'exclude'     => true,
+	'inputType'   => 'checkbox',
+	'eval'        => array('submitOnChange'=>true, 'tl_class'=>'w50')
 );
 
 ?>
