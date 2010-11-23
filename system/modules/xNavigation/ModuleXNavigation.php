@@ -147,34 +147,25 @@ class ModuleXNavigation extends Module {
 		$objTemplate = new FrontendTemplate($this->navigationTpl);
 
 		$objTemplate->type = get_class($this);
-
-		// Render news navigation
-		if ($objNewsArchives && $objCurrentPage->xNavigationNewsArchivePosition == 0) {
-			$this->generateNewsItems($objCurrentPage, $objNewsArchives, $arrItems, $time);
-		}
-
 		$objTemplate->level = 'level_' . $intLevel;
+		
+		$n = 0;
 		
 		// TODO use providers!
 		$this->import('xNavigationPageProvider');
-		$this->xNavigationPageProvider->generateItems($this, $objCurrentPage, $blnActive, $arrItems, $arrGroups, $intLevel, $this->showLevel);
+		$n += $this->xNavigationPageProvider->generateItems($this, $objCurrentPage, $blnActive, $arrItems, $arrGroups, $intLevel, $this->showLevel, $this->hardLevel);
 		
 		// Add classes first and last
 		if (count($arrItems))
 		{
 			$last = count($arrItems) - 1;
 			
-			if ($n <= $last) {
-				$arrItems[$n]['class'] = trim($arrItems[$n]['class'] . ' first_page');
-				$arrItems[$last]['class'] = trim($arrItems[$last]['class'] . ' last_page');
-			}
-
 			$arrItems[0]['class'] = trim($arrItems[0]['class'] . ' first');
 			$arrItems[$last]['class'] = trim($arrItems[$last]['class'] . ' last');
 		}
 
 		$objTemplate->items = $arrItems;
-		return count($arrItems) ? $objTemplate->parse() : '';
+		return count($arrItems) ? $objTemplate->parse() : ($n > 0 ? true : '');
 	}
 	
 }
