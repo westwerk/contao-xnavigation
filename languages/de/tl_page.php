@@ -43,5 +43,11 @@ $GLOBALS['TL_LANG']['tl_page']['xNavigationNewsArchives_legend'] = 'Erweiterte N
 $GLOBALS['TL_LANG']['tl_page']['news_day']   = 'Tag';
 $GLOBALS['TL_LANG']['tl_page']['news_month'] = 'Monat';
 $GLOBALS['TL_LANG']['tl_page']['news_year']  = 'Jahr';
+if (!isset($GLOBALS['TL_LANG']['tl_page']['map_default']))
+$GLOBALS['TL_LANG']['tl_page']['map_default'] = 'Standard';
+if (!isset($GLOBALS['TL_LANG']['tl_page']['map_always']))
+$GLOBALS['TL_LANG']['tl_page']['map_always']  = 'Immer anzeigen';
+if (!isset($GLOBALS['TL_LANG']['tl_page']['map_never']))
+$GLOBALS['TL_LANG']['tl_page']['map_never']   = 'Nie anzeigen';
 $GLOBALS['TL_LANG']['tl_page']['map_active'] = 'Wenn Menüpunkt aktiv';
 ?>
