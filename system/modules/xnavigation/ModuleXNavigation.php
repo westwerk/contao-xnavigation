@@ -156,11 +156,11 @@ class ModuleXNavigation extends Module {
 	 * Generate the news archive items.
 	 * 
 	 * @param Database_Result $objCurrentPage
-	 * @param Database_Result $objNewsArchives
+	 * @param array $objNewsArchives
 	 * @param array $items
 	 * @param integer $time
 	 */
-	protected function generateNewsItems(Database_Result &$objCurrentPage, Database_Result &$objNewsArchives, &$items, $time) {
+	protected function generateNewsItems(Database_Result &$objCurrentPage, &$objNewsArchives, &$items, $time) {
 		$arrData = array();
 		$maxQuantity = 0;
 		switch ($objCurrentPage->xNavigationNewsArchiveFormat) {
