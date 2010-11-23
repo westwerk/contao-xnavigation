@@ -61,8 +61,8 @@ class xNavigationPageProvider extends xNavigationProvider
 						AND p2.type!='root'
 						AND p2.type!='error_403'
 						AND p2.type!='error_404'"
-						. ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN) ? "AND p2.guests!=1" : "")
-						. (!BE_USER_LOGGED_IN ? "AND (p2.start='' OR p2.start<".$time.") AND (p2.stop='' OR p2.stop>".$time.") AND p2.published=1" : "") . "
+						. ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN) ? " AND p2.guests!=1" : "")
+						. (!BE_USER_LOGGED_IN ? " AND (p2.start='' OR p2.start<".$time.") AND (p2.stop='' OR p2.stop>".$time.") AND p2.published=1" : "") . "
 				) AS subpages,
 				(
 					SELECT COUNT(*)
@@ -72,8 +72,8 @@ class xNavigationPageProvider extends xNavigationProvider
 						AND p2.type!='root'
 						AND p2.type!='error_403'
 						AND p2.type!='error_404'"
-						. ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN) ? "AND p2.guests!=1" : "")
-						. (!BE_USER_LOGGED_IN ? "AND (p2.start='' OR p2.start<".$time.") AND (p2.stop='' OR p2.stop>".$time.") AND p2.published=1" : "") . "
+						. ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN) ? " AND p2.guests!=1" : "")
+						. (!BE_USER_LOGGED_IN ? " AND (p2.start='' OR p2.start<".$time.") AND (p2.stop='' OR p2.stop>".$time.") AND p2.published=1" : "") . "
 						AND hide != 1 AND menu_visibility != 'map_never'
 				) AS vsubpages
 			FROM
