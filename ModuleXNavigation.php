@@ -163,13 +163,11 @@ class ModuleXNavigation extends Module {
 		$active = $objCurrentPageID == $objPage->id || in_array($objCurrentPageID, $objPage->trail);
 		
 		// Get all active subpages
-		if ($this instanceof ModuleXSitemap) {
-			$objSubpages = $this->Database->prepare("SELECT p1.*, (SELECT COUNT(*) FROM tl_page p2 WHERE p2.pid=p1.id AND p2.type!='root' AND p2.type!='error_403' AND p2.type!='error_404'" . ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN && !$this->showProtected) ? " AND p2.guests!=1" : "") . (!BE_USER_LOGGED_IN ? " AND (p2.start='' OR p2.start<".$time.") AND (p2.stop='' OR p2.stop>".$time.") AND p2.published=1" : "") . ") AS subpages FROM tl_page p1 WHERE p1.pid=? AND p1.type!='error_403' AND p1.type!='error_404'" . ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN && !$this->showProtected) ? " AND p1.guests!=1" : "") . (!BE_USER_LOGGED_IN ? " AND (p1.start='' OR p1.start<".$time.") AND (p1.stop='' OR p1.stop>".$time.") AND p1.published=1" : "") . " ORDER BY p1.sorting")
-										  ->execute($objCurrentPageID);
-		} else {
-			$objSubpages = $this->Database->prepare("SELECT p1.*, (SELECT COUNT(*) FROM tl_page p2 WHERE p2.pid=p1.id AND p2.type!='root' AND p2.type!='error_403' AND p2.type!='error_404'" . ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN && !$this->showProtected) ? " AND p2.guests!=1" : "") . (!BE_USER_LOGGED_IN ? " AND (p2.start='' OR p2.start<".$time.") AND (p2.stop='' OR p2.stop>".$time.") AND p2.published=1" : "") . ") AS subpages FROM tl_page p1 WHERE p1.pid=? AND p1.type!='root' AND p1.type!='error_403' AND p1.type!='error_404'" . ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN && !$this->showProtected) ? " AND p1.guests!=1" : "") . (!BE_USER_LOGGED_IN ? " AND (p1.start='' OR p1.start<".$time.") AND (p1.stop='' OR p1.stop>".$time.") AND p1.published=1" : "") . " ORDER BY p1.sorting")
-										  ->execute($objCurrentPageID);
-		}
+		$objSubpages = $this->Database->prepare("SELECT p1.*, 
+			(SELECT COUNT(*) FROM tl_page p2 WHERE p2.pid=p1.id AND p2.type!='root' AND p2.type!='error_403' AND p2.type!='error_404'" . ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN && !$this->showProtected) ? " AND p2.guests!=1" : "") . (!BE_USER_LOGGED_IN ? " AND (p2.start='' OR p2.start<".$time.") AND (p2.stop='' OR p2.stop>".$time.") AND p2.published=1" : "") . ") AS subpages,
+			(SELECT COUNT(*) FROM tl_page p2 WHERE p2.pid=p1.id AND p2.type!='root' AND p2.type!='error_403' AND p2.type!='error_404'" . ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN && !$this->showProtected) ? " AND p2.guests!=1" : "") . (!BE_USER_LOGGED_IN ? " AND (p2.start='' OR p2.start<".$time.") AND (p2.stop='' OR p2.stop>".$time.") AND p2.published=1" : "") . " AND hide != 1 AND xNavigation != 'map_never') AS vsubpages
+			FROM tl_page p1 WHERE p1.pid=? ".($this instanceof ModuleXSitemap ? "" : "AND p1.type!='root' ")."AND p1.type!='error_403' AND p1.type!='error_404'" . ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN && !$this->showProtected) ? " AND p1.guests!=1" : "") . (!BE_USER_LOGGED_IN ? " AND (p1.start='' OR p1.start<".$time.") AND (p1.stop='' OR p1.stop>".$time.") AND p1.published=1" : "") . " ORDER BY p1.sorting")
+									  ->execute($objCurrentPageID);
 		
 		if ($objCurrentPageID > 0 && ($objCurrentPage->xNavigationIncludeArticles == 'map_always' || ($this instanceof ModuleXSitemap || $active) && $objCurrentPage->xNavigationIncludeArticles == 'map_active'))
 			$objArticles = $this->Database->prepare("SELECT id FROM tl_article WHERE pid = ? AND xNavigation != 'map_never' AND inColumn = 'main'" . ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN && !$this->showProtected) ? " AND guests!=1" : "") . (!BE_USER_LOGGED_IN ? " AND (start='' OR start<".$time.") AND (stop='' OR stop>".$time.") AND published=1" : ""))
@@ -286,12 +284,21 @@ class ModuleXNavigation extends Module {
 						$href = $this->generateFrontendUrl($objSubpages->row());
 						break;
 				}
+				
+				$hassubmenu = false;
+				if (!($this instanceof ModuleXSitemap) &&
+					($objSubpages->xNavigationIncludeArticles == 'map_always' || $objSubpages->xNavigationIncludeArticles == 'map_active' ||
+					$objSubpages->xNavigationIncludeNewsArchives == 'map_always' || $objSubpages->xNavigationIncludeNewsArchives == 'map_active' ||
+					$objSubpages->vsubpages > 0)) {
+					$hassubmenu = true;
+				}
+				
 
 				// Active page
 				if (($objPage->id == $objSubpages->id || $objSubpages->type == 'forward' && $objPage->id == $objSubpages->jumpTo)
 					&& !$this instanceof ModuleXSitemap && !$this->Input->get('articles'))
 				{
-					$strClass = 'page' . ((strlen($subitems) ? ' submenu' : '') . (strlen($objSubpages->cssClass) ? ' ' . $objSubpages->cssClass : ''));
+					$strClass = 'page' . (strlen($subitems) ? ' submenu' : '') . ($hassubmenu ? ' hassubmenu' : '') . (strlen($objSubpages->cssClass) ? ' ' . $objSubpages->cssClass : '');
 					$row = $objSubpages->row();
 
 					$row['isActive'] = true;
@@ -315,7 +322,8 @@ class ModuleXNavigation extends Module {
 				// Regular page
 				else
 				{
-					$strClass = 'page' . (strlen($subitems) ? ' submenu' : '') . (strlen($objSubpages->cssClass) ? ' ' . $objSubpages->cssClass : '') . (in_array($objSubpages->id, $objPage->trail) ? ' trail' : '');
+					$strClass = 'page' . (strlen($subitems) ? ' submenu' : '') . ($hassubmenu ? ' hassubmenu' : '') . (strlen($objSubpages->cssClass) ? ' ' . $objSubpages->cssClass : '') . (in_array($objSubpages->id, $objPage->trail) ? ' trail' : '');
+					
 					$row = $objSubpages->row();
 
 					$row['isActive'] = false;
