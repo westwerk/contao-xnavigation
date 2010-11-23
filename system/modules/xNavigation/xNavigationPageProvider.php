@@ -43,7 +43,7 @@ class xNavigationPageProvider extends xNavigationProvider
 		$this->import('Database');
 	}
 	
-	public function generateItems(ModuleXNavigation &$xNavigation, Database_Result $objCurrentPage, $blnActive, &$arrItems, $arrGroups, $intLevel, $intMaxLevel, $intHardLevel) 
+	public function generateItems(ModuleXNavigation &$objXNavigation, Database_Result $objCurrentPage, $blnActive, &$arrItems, $arrGroups, $intLevel, $intMaxLevel, $intHardLevel) 
 	{
 		global $objPage;
 		
@@ -80,7 +80,7 @@ class xNavigationPageProvider extends xNavigationProvider
 				tl_page p1
 			WHERE
 					p1.pid=?"
-				. ($this instanceof ModuleXSitemap ? "" : " AND p1.type!='root' ") . "
+				. ($objXNavigation instanceof ModuleXSitemap ? "" : " AND p1.type!='root' ") . "
 				AND p1.type!='error_403'
 				AND p1.type!='error_404'"
 				. ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN && !$this->showProtected) ? " AND p1.guests!=1" : "")
@@ -94,24 +94,38 @@ class xNavigationPageProvider extends xNavigationProvider
 		while($objSubpages->next())
 		{
 			// Skip hidden pages
-			if (!(/* non sitemap navigation */
-				!($this instanceof ModuleXSitemap) && ($objSubpages->menu_visibility == 'map_never' || $objSubpages->hide ||
-					($intMaxLevel > 0 && $intMaxLevel < $intLevel && 
-						!($objPage->id == $objSubpages->id ||
-							in_array($objSubpages->id, $objPage->trail) ||
-							in_array($objCurrentPage->id, $objPage->trail)) ||
-						$intHardLevel > 0 && $intHardLevel < $intLevel) && $objSubpages->menu_visibility != 'map_always') ||
+			if (/* non sitemap navigation */
+				!(	!($objXNavigation instanceof ModuleXSitemap)
+				&&  (	$objSubpages->menu_visibility == 'map_never'
+					||  $objSubpages->hide
+					||  (	$intMaxLevel > 0
+						&&  $intMaxLevel < $intLevel
+						&&  !(	$objPage->id == $objSubpages->id
+							||  in_array($objSubpages->id, $objPage->trail)
+							||  in_array($objCurrentPage->id, $objPage->trail))
+						||  $intHardLevel > 0
+						&&  $intHardLevel < $intLevel)
+					&&  $objSubpages->menu_visibility != 'map_always')
 				/* sitemap navigation */
-				$this instanceof ModuleXSitemap && $objSubpages->sitemap == 'map_never'))
+				||  $objXNavigation instanceof ModuleXSitemap
+				&&  $objSubpages->sitemap == 'map_never'))
 			{
 				$strSubItems = '';
 				$_groups = deserialize($objSubpages->groups);
 
 				// Do not show protected pages unless a back end or front end user is logged in
-				if (!strlen($objSubpages->protected) || BE_USER_LOGGED_IN || (!is_array($_groups) && FE_USER_LOGGED_IN) || (is_array($_groups) && count(array_intersect($arrGroups, $_groups))) || $this->showProtected || ($this instanceof ModuleSitemap && $objSubpages->sitemap == 'map_always'))
+				if (	!strlen($objSubpages->protected)
+					||  BE_USER_LOGGED_IN
+					||  (	!is_array($_groups)
+						&&  FE_USER_LOGGED_IN)
+					||  (	is_array($_groups)
+						&&  count(array_intersect($arrGroups, $_groups)))
+					||  $this->showProtected
+					||  (	$objXNavigation instanceof ModuleSitemap
+						&&  $objSubpages->sitemap == 'map_always'))
 				{
 					// Check whether there will be subpages
-					$strSubItems = $xNavigation->renderXNavigation($objSubpages, $intLevel+1);
+					$strSubItems = $objXNavigation->renderXNavigation($objSubpages, $intLevel+1);
 
 					// Get href
 					switch ($objSubpages->type)
@@ -160,8 +174,11 @@ class xNavigationPageProvider extends xNavigationProvider
 					}
 
 					// Active page
-					if (($objPage->id == $objSubpages->id || $objSubpages->type == 'forward' && $objPage->id == $objSubpages->jumpTo)
-						&& !$this instanceof ModuleXSitemap && !$this->Input->get('articles'))
+					if (	(	$objPage->id == $objSubpages->id
+							||  $objSubpages->type == 'forward'
+							&&  $objPage->id == $objSubpages->jumpTo)
+						&&  !($objXNavigation instanceof ModuleXSitemap)
+						&&  !$this->Input->get('articles'))
 					{
 						$strClass = 'page' . (strlen($strSubItems) ? ' submenu' : '') . ($hassubmenu ? ' hassubmenu' : '') . (strlen($objSubpages->cssClass) ? ' ' . $objSubpages->cssClass : '');
 						$row = $objSubpages->row();
@@ -211,11 +228,17 @@ class xNavigationPageProvider extends xNavigationProvider
 						$arrItems[] = $row;
 					}
 				}
-			} else if (!(/* non sitemap navigation */
-				!($this instanceof ModuleXSitemap) && ($objSubpages->menu_visibility == 'map_never' || $objSubpages->hide ||
-					($this->hardLevel > 0 && $this->hardLevel < $level) && $objSubpages->menu_visibility != 'map_always') ||
+			} else if (
+				/* non sitemap navigation */
+				!(	!($objXNavigation instanceof ModuleXSitemap)
+				&&  (	$objSubpages->menu_visibility == 'map_never'
+					||  $objSubpages->hide
+					||  (	$this->hardLevel > 0
+						&&  $this->hardLevel < $level)
+					&&  $objSubpages->menu_visibility != 'map_always')
 				/* sitemap navigation */
-				$this instanceof ModuleXSitemap && $objSubpages->sitemap == 'map_never'))
+				||  $objXNavigation instanceof ModuleXSitemap
+				&&  $objSubpages->sitemap == 'map_never'))
 			{
 				$n ++;
 			}

@@ -112,16 +112,20 @@ class ModuleXNavigation extends Module {
 		global $objPage;
 		
 		// Convert current page id into database record 
-		if (is_numeric($objCurrentPage))
+		if (!($objCurrentPage instanceof Database_Result))
 		{
-			if ($objCurrentPage > 0) {
+			if ($objCurrentPage > 0)
+			{
 				$objCurrentPage = $this->Database->prepare("SELECT * FROM tl_page WHERE id = ?")
 									   ->execute($objCurrentPage);
-				if (!$objCurrentPage->next())
-				{
-					return '';
-				}
-			} else {
+			}
+			else
+			{
+				$objCurrentPage = $this->Database->execute("SELECT 0 as id");
+			}
+			if (!$objCurrentPage->next())
+			{
+				return '';
 			}
 		}
 		
