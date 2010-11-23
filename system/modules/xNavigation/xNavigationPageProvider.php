@@ -38,8 +38,17 @@
  */
 class xNavigationPageProvider extends xNavigationProvider
 {
-	public function generateItems(DC_Table $objCurrentPage, $blnActive, &$arrItems, $arrGroups, $intLevel, $intMaxLevel) 
+	public function __construct() {
+		parent::__construct();
+		$this->import('Database');
+	}
+	
+	public function generateItems(ModuleXNavigation &$xNavigation, Database_Result $objCurrentPage, $blnActive, &$arrItems, $arrGroups, $intLevel, $intMaxLevel) 
 	{
+		global $objPage;
+		
+		$time = time();
+		
 		// Get all active subpages
 		$stmtSubpages = $this->Database->prepare("
 			SELECT
@@ -52,8 +61,8 @@ class xNavigationPageProvider extends xNavigationProvider
 						AND p2.type!='root'
 						AND p2.type!='error_403'
 						AND p2.type!='error_404'"
-						. ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN) ? " AND p2.guests!=1" : "")
-						. (!BE_USER_LOGGED_IN ? " AND (p2.start='' OR p2.start<".$time.") AND (p2.stop='' OR p2.stop>".$time.") AND p2.published=1" : "") . "
+						. ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN) ? "AND p2.guests!=1" : "")
+						. (!BE_USER_LOGGED_IN ? "AND (p2.start='' OR p2.start<".$time.") AND (p2.stop='' OR p2.stop>".$time.") AND p2.published=1" : "") . "
 				) AS subpages,
 				(
 					SELECT COUNT(*)
@@ -63,9 +72,9 @@ class xNavigationPageProvider extends xNavigationProvider
 						AND p2.type!='root'
 						AND p2.type!='error_403'
 						AND p2.type!='error_404'"
-						. ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN) ? " AND p2.guests!=1" : "")
-						. (!BE_USER_LOGGED_IN ? " AND (p2.start='' OR p2.start<".$time.") AND (p2.stop='' OR p2.stop>".$time.") AND p2.published=1" : "") . "
-						AND hide != 1 AND xNavigation != 'map_never'
+						. ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN) ? "AND p2.guests!=1" : "")
+						. (!BE_USER_LOGGED_IN ? "AND (p2.start='' OR p2.start<".$time.") AND (p2.stop='' OR p2.stop>".$time.") AND p2.published=1" : "") . "
+						AND hide != 1 AND menu_visibility != 'map_never'
 				) AS vsubpages
 			FROM
 				tl_page p1
@@ -86,12 +95,12 @@ class xNavigationPageProvider extends xNavigationProvider
 		{
 			// Skip hidden pages
 			if (!(/* non sitemap navigation */
-				!($this instanceof ModuleXSitemap) && ($objSubpages->xNavigation == 'map_never' || $objSubpages->hide ||
+				!($this instanceof ModuleXSitemap) && ($objSubpages->menu_visibility == 'map_never' || $objSubpages->hide ||
 					($this->showLevel > 0 && $this->showLevel < $level && 
 						!($objPage->id == $objSubpages->id ||
 							in_array($objSubpages->id, $objPage->trail) ||
 							in_array($objCurrentPageID, $objPage->trail)) ||
-						$this->hardLevel > 0 && $this->hardLevel < $level) && $objSubpages->xNavigation != 'map_always') ||
+						$this->hardLevel > 0 && $this->hardLevel < $level) && $objSubpages->menu_visibility != 'map_always') ||
 				/* sitemap navigation */
 				$this instanceof ModuleXSitemap && $objSubpages->sitemap == 'map_never'))
 			{
@@ -102,10 +111,7 @@ class xNavigationPageProvider extends xNavigationProvider
 				if (!strlen($objSubpages->protected) || BE_USER_LOGGED_IN || (!is_array($_groups) && FE_USER_LOGGED_IN) || (is_array($_groups) && count(array_intersect($arrGroups, $_groups))) || $this->showProtected || ($this instanceof ModuleSitemap && $objSubpages->sitemap == 'map_always'))
 				{
 					// Check whether there will be subpages
-					if ($objSubpages->subpages > 0 || $objSubpages->xNavigationIncludeArticles != 'map_never' || $objSubpages->xNavigationIncludeNewsArchives != 'map_never')
-					{
-						$subitems = $this->renderXNavigation($objSubpages, $level+1);
-					}
+					$subitems = $xNavigation->renderXNavigation($objSubpages, $level+1);
 
 					// Get href
 					switch ($objSubpages->type)
