@@ -19,8 +19,8 @@
  * Software Foundation website at http://www.gnu.org/licenses/.
  *
  * PHP version 5
- * @copyright  InfinityLabs - Olck & Lins GbR 2009 
- * @author     Tristan Lins 
+ * @copyright  InfinityLabs - Olck & Lins GbR - 2009-2010
+ * @author     Tristan Lins <tristan.lins@infinitylabs.de>
  * @package    xNavigation
  * @license    LGPL 
  * @filesource
@@ -122,8 +122,8 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['xNavigationNewsArchiveShowQuantity'] = 
  * Class tl_page_xNavigation
  *
  * Provide miscellaneous methods that are used by the data configuration array.
- * @copyright  InfinityLabs - Olck & Lins GbR 2009 
- * @author     Tristan Lins 
+ * @copyright  InfinityLabs - Olck & Lins GbR - 2009-2010
+ * @author     Tristan Lins <tristan.lins@infinitylabs.de>
  * @package    xNavigation
  */
 class tl_page_xNavigation extends Backend

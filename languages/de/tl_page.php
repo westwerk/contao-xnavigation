@@ -19,12 +19,13 @@
  * Software Foundation website at http://www.gnu.org/licenses/.
  *
  * PHP version 5
- * @copyright  InfinityLabs - Olck & Lins GbR 2009 
- * @author     Tristan Lins 
+ * @copyright  InfinityLabs - Olck & Lins GbR - 2009-2010
+ * @author     Tristan Lins <tristan.lins@infinitylabs.de>
  * @package    xNavigation
  * @license    LGPL 
  * @filesource
  */
+
 
 if (!isset($GLOBALS['TL_LANG']['tl_page']['sitemap']))
 $GLOBALS['TL_LANG']['tl_page']['sitemap']                = array('In der Sitemap zeigen', 'Hier können Sie festlegen, ob die Seite in der Sitemap angezeigt wird.');
