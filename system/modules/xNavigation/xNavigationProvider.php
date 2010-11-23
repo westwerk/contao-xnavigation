@@ -36,17 +36,18 @@
  * @author     Tristan Lins <tristan.lins@infinitysoft.de>
  * @package    xNavigation
  */
-abstract class xNavigationProvider
+abstract class xNavigationProvider extends Controller
 {
 	/**
 	 * Generate menu items for the specific page.
-	 * @param DC_Table
+	 * @param ModuleXNavigation
+	 * @param Database_Result
 	 * @param bool
 	 * @param array
 	 * @param array
 	 * @param int
 	 * @param int
 	 */
-	public abstract function generateItems(DC_Table $objCurrentPage, $blnActive, &$arrItems, $arrGroups, $intLevel, $intMaxLevel);
+	public abstract function generateItems(ModuleXNavigation &$xNavigation, Database_Result $objCurrentPage, $blnActive, &$arrItems, $arrGroups, $intLevel, $intMaxLevel);
 }
 ?>

@@ -105,7 +105,7 @@ class ModuleXNavigation extends Module {
 	 * @param integer
 	 * @return string
 	 */
-	protected function renderXNavigation(&$objCurrentPage, $intLevel=1) {
+	public function renderXNavigation(&$objCurrentPage, $intLevel=1) {
 		$time = time();
 		
 		// Get global page object
@@ -121,16 +121,12 @@ class ModuleXNavigation extends Module {
 				{
 					return '';
 				}
-				$objCurrentPageID = intval($objCurrentPage->id);
 			} else {
-				$objCurrentPageID = intval($objCurrentPage);
 			}
-		} else {
-			$objCurrentPageID = intval($objCurrentPage->id);
 		}
 		
 		// Define if the current element is active
-		$blnActive = $objCurrentPageID == $objPage->id || in_array($objCurrentPageID, $objPage->trail);
+		$blnActive = $objCurrentPage->id == $objPage->id || in_array($objCurrentPage->id, $objPage->trail);
 		
 		$arrItems = array();
 		$arrGroups = array();
@@ -161,7 +157,7 @@ class ModuleXNavigation extends Module {
 		
 		// TODO use providers!
 		$this->import('xNavigationPageProvider');
-		$this->xNavigationPageProvider->generateItems($objCurrentPage, $blnActive, &$arrItems, $arrGroups, $intLevel, $this->showLevel);
+		$this->xNavigationPageProvider->generateItems($this, $objCurrentPage, $blnActive, $arrItems, $arrGroups, $intLevel, $this->showLevel);
 		
 		// Add classes first and last
 		if (count($arrItems))
