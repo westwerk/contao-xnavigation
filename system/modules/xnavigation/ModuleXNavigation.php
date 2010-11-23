@@ -217,7 +217,7 @@ class ModuleXNavigation extends Module {
 					'isActive' => ($this->Input->get($param) == $intDate),
 					'quantity' => $quantity,
 					'maxQuantity' => $maxQuantity,
-					'type' => 'news_archive',
+					'itemtype' => 'news_archive',
 					'class' => ''
 				);
 			}
@@ -418,7 +418,7 @@ class ModuleXNavigation extends Module {
 					$row['accesskey'] = $objSubpages->accesskey;
 					$row['tabindex'] = $objSubpages->tabindex;
 					$row['subpages'] = $objSubpages->subpages;
-					$row['type'] = 'page';
+					$row['itemtype'] = 'page';
 
 					$items[] = $row;
 				}
@@ -444,7 +444,7 @@ class ModuleXNavigation extends Module {
 					$row['accesskey'] = $objSubpages->accesskey;
 					$row['tabindex'] = $objSubpages->tabindex;
 					$row['subpages'] = $objSubpages->subpages;
-					$row['type'] = 'page';
+					$row['itemtype'] = 'page';
 
 					$items[] = $row;
 				}
