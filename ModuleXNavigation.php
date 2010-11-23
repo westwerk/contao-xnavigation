@@ -112,9 +112,17 @@ class ModuleXNavigation extends Module {
 		$this->Template->items = $this->renderXNavigation($trail[$level]);
 	}
 	
+	
+	/**
+	 * Converts the articles array structure into a 1 dimension flat structure, that only contains the top level.
+	 * All subitems are converted and parsed by the navigation template.
+	 * @return array
+	 */
 	protected function convertArticles2Navigation(&$objTemplate, $articles, $level, $toString = false) {
 		foreach ($articles as &$article) {
+			// Set the item link
 			$article['link'] = $article['title'];
+			// Flatten subitems
 			if (isset($article['subitems'])) {
 				$article['subitems'] = $this->convertArticles2Navigation($objTemplate, $article['subitems'], $level + 1, true);
 			}
@@ -125,10 +133,11 @@ class ModuleXNavigation extends Module {
 		{
 			$last = count($articles) - 1;
 
-			$articles[0]['class'] = trim($articles[0]['class'] . ' first');
-			$articles[$last]['class'] = trim($articles[$last]['class'] . ' last');
+			$articles[0]['class'] = trim($articles[0]['class'] . ' first_article');
+			$articles[$last]['class'] = trim($articles[$last]['class'] . ' last_article');
 		}
-			
+		
+		// Parse by template or return the modified array
 		if ($toString) {
 			$objTemplate->level = 'level_' . $level++;
 			$objTemplate->items = $articles;
@@ -138,10 +147,20 @@ class ModuleXNavigation extends Module {
 		}
 	}
 	
+	
+	/**
+	 * Recursively compile the navigation menu and return it as HTML string
+	 * @param integer|Database_Result
+	 * @param integer
+	 * @return string
+	 */
 	protected function renderXNavigation(&$objCurrentPage, $level=1) {
-		// Get page object
+		$time = time();
+		
+		// Get global page object
 		global $objPage;
 		
+		// Convert current page id into database record 
 		if (is_numeric($objCurrentPage))
 		{
 			if ($objCurrentPage > 0) {
@@ -159,7 +178,7 @@ class ModuleXNavigation extends Module {
 			$objCurrentPageID = intval($objCurrentPage->id);
 		}
 		
-		$time = time();
+		// Define if the current element is active
 		$active = $objCurrentPageID == $objPage->id || in_array($objCurrentPageID, $objPage->trail);
 		
 		// Get all active subpages
@@ -169,17 +188,19 @@ class ModuleXNavigation extends Module {
 			FROM tl_page p1 WHERE p1.pid=? ".($this instanceof ModuleXSitemap ? "" : "AND p1.type!='root' ")."AND p1.type!='error_403' AND p1.type!='error_404'" . ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN && !$this->showProtected) ? " AND p1.guests!=1" : "") . (!BE_USER_LOGGED_IN ? " AND (p1.start='' OR p1.start<".$time.") AND (p1.stop='' OR p1.stop>".$time.") AND p1.published=1" : "") . " ORDER BY p1.sorting")
 									  ->execute($objCurrentPageID);
 		
+		// Get article navigation
 		if ($objCurrentPageID > 0 && ($objCurrentPage->xNavigationIncludeArticles == 'map_always' || ($this instanceof ModuleXSitemap || $active) && $objCurrentPage->xNavigationIncludeArticles == 'map_active'))
 			$objArticles = $this->Database->prepare("SELECT id FROM tl_article WHERE pid = ? AND xNavigation != 'map_never' AND inColumn = 'main'" . ((FE_USER_LOGGED_IN && !BE_USER_LOGGED_IN && !$this->showProtected) ? " AND guests!=1" : "") . (!BE_USER_LOGGED_IN ? " AND (start='' OR start<".$time.") AND (stop='' OR stop>".$time.") AND published=1" : ""))
 										  ->execute($objCurrentPageID);
 		else
 			$objArticles = false;
 
+		// Get news navigation
 		if ($objCurrentPageID > 0 && ($objCurrentPage->xNavigationIncludeNewsArchives == 'map_always' || ($this instanceof ModuleXSitemap || $active) && $objCurrentPage->xNavigationIncludeNewsArchives == 'map_active'))
 			$objNewsArchives = unserialize($objCurrentPage->xNavigationNewsArchives);
 		else
 			$objNewsArchives = false;
-			
+		
 		$items = array();
 		$groups = array();
 
@@ -199,7 +220,8 @@ class ModuleXNavigation extends Module {
 		$objTemplate = new FrontendTemplate($this->navigationTpl);
 
 		$objTemplate->type = get_class($this);
-		
+
+		// Render article navigation
 		if ($objArticles) {
 			$articleIDs = array();
 			while($objArticles->next()) {
@@ -209,15 +231,80 @@ class ModuleXNavigation extends Module {
 			$items = array_merge($items, $this->convertArticles2Navigation($objTemplate, $an->fromArticles($articleIDs), $level));
 		}
 		
+		// Render news navigation
 		if ($objNewsArchives) {
-			$wrapper = new ModuleXNavigationMenuWrapper($this->objModule);
-			$items = array_merge($items, $wrapper->generateItems($this, $objCurrentPage, $objNewsArchives));
-			unset($wrapper);
+			$arrData = array();
+			$maxQuantity = 0;
+			switch ($objCurrentPage->xNavigationNewsArchiveFormat) {
+			case 'news_year':
+				$format = 'Y';
+				$param = 'year';
+				break;
+			case 'news_month':
+			default:
+				$format = 'Ym';
+				$param = 'month';
+			}
+			
+			foreach ($objNewsArchives as $id)
+			{
+				// Get all active items
+				$objArchives = $this->Database->prepare("SELECT date FROM tl_news WHERE pid=?" . (!BE_USER_LOGGED_IN ? " AND (start='' OR start<$time) AND (stop='' OR stop>$time) AND published=1" : "") . " ORDER BY date DESC")
+											  ->execute($id);
+	
+				while ($objArchives->next())
+				{
+					++$arrData[date($format, $objArchives->date)];
+					if ($arrData[date($format, $objArchives->date)] > $maxQuantity) {
+						$maxQuantity = $arrData[date($format, $objArchives->date)];
+					}
+				}
+			}
+			krsort($arrData);
+			
+			$url = $this->generateFrontendUrl($objCurrentPage->row(), sprintf('/%s/%%s', $param));
+			
+			if (count($arrData)) {
+				$n = count($items);
+				foreach ($arrData as $intDate => $intCount) {
+					$quantity = sprintf((($intCount < 2) ? $GLOBALS['TL_LANG']['MSC']['entry'] : $GLOBALS['TL_LANG']['MSC']['entries']), $intCount);
+					switch ($objCurrentPage->xNavigationNewsArchiveFormat) {
+					case 'news_year':
+						$intYear = $intDate;
+						$intMonth = '0';
+						$link = $title = specialchars($intYear . ($objCurrentPage->xNavigationNewsArchiveShowQuantity=='1' ? ' (' . $quantity . ')' : ''));
+						break;
+					case 'news_month':
+					default:
+						$intYear = intval(substr($intDate, 0, 4));
+						$intMonth = intval(substr($intDate, 4));
+						$link = $title = specialchars($GLOBALS['TL_LANG']['MONTHS'][$intMonth-1].' '.$intYear . ($objCurrentPage->xNavigationNewsArchiveShowQuantity=='1' ? ' (' . $quantity . ')' : ''));
+					}
+					
+					$items[] = array(
+						'date' => $intDate,
+						'link' => $link,
+						'href' => sprintf($url, $intDate),
+						'title' => $title,
+						'isActive' => ($this->Input->get($param) == $intDate),
+						'quantity' => $quantity,
+						'maxQuantity' => $maxQuantity,
+						'type' => 'news_archive',
+						'class' => ''
+					);
+				}
+				
+				$last = count($items) - 1;
+				
+				$items[$n]['class'] = trim($items[$n]['class'] . ' first_news_archive');
+				$items[$last]['class'] = trim($items[$last]['class'] . ' last_news_archive');
+			}
 		}
 
 		$objTemplate->level = 'level_' . $level;
 		
 		// Browse subpages
+		$n = count($items);
 		while($objSubpages->next())
 		{
 			// Skip hidden pages
@@ -315,6 +402,7 @@ class ModuleXNavigation extends Module {
 					$row['accesskey'] = $objSubpages->accesskey;
 					$row['tabindex'] = $objSubpages->tabindex;
 					$row['subpages'] = $objSubpages->subpages;
+					$row['type'] = 'page';
 
 					$items[] = $row;
 				}
@@ -340,6 +428,7 @@ class ModuleXNavigation extends Module {
 					$row['accesskey'] = $objSubpages->accesskey;
 					$row['tabindex'] = $objSubpages->tabindex;
 					$row['subpages'] = $objSubpages->subpages;
+					$row['type'] = 'page';
 
 					$items[] = $row;
 				}
@@ -350,6 +439,11 @@ class ModuleXNavigation extends Module {
 		if (count($items))
 		{
 			$last = count($items) - 1;
+			
+			if ($n <= $last) {
+				$items[$n]['class'] = trim($items[$n]['class'] . ' first_page');
+				$items[$last]['class'] = trim($items[$last]['class'] . ' last_page');
+			}
 
 			$items[0]['class'] = trim($items[0]['class'] . ' first');
 			$items[$last]['class'] = trim($items[$last]['class'] . ' last');
