@@ -36,7 +36,9 @@ $GLOBALS['TL_DCA']['tl_page']['config']['onsubmit_callback'][] = array('tl_page_
 
 $GLOBALS['TL_DCA']['tl_page']['palettes']['__selector__'][] = 'xNavigationIncludeNewsArchives';
 foreach (array('regular', 'forward', 'redirect') as $type) {
-	$GLOBALS['TL_DCA']['tl_page']['palettes'][$type] = preg_replace('/,(sitemap,)?hide([^;]*;)/', ',sitemap,xNavigation$2{xNavigation_legend},xNavigationIncludeArticles,xNavigationIncludeNewsArchives;{xNavigationNewsArchives_legend},xNavigationNewsArchives,xNavigationNewsArchiveFormat,xNavigationNewsArchiveShowQuantity;',
+	$GLOBALS['TL_DCA']['tl_page']['palettes'][$type] = preg_replace(
+		'/,(sitemap,)?hide([^;]*;)/',
+		',sitemap,xNavigation$2{xNavigation_legend:hide},xNavigationIncludeArticles,xNavigationIncludeNewsArchives;{xNavigationNewsArchives_legend:hide},xNavigationNewsArchives,xNavigationNewsArchiveFormat,xNavigationNewsArchiveShowQuantity;',
 		$GLOBALS['TL_DCA']['tl_page']['palettes'][$type]);
 }
 
