@@ -109,7 +109,7 @@ class ModuleXNavigation extends Module {
 		$this->Template->request = $request;
 		$this->Template->skipId = 'skipNavigation' . $this->id;
 		$this->Template->skipNavigation = specialchars($GLOBALS['TL_LANG']['MSC']['skipNavigation']);
-		$this->Template->items = $this->renderXNavigation($trail[$level]);
+		$this->Template->items = $this->renderXNavigation($trail[$level], $level+1);
 	}
 	
 	
