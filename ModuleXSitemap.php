@@ -66,6 +66,23 @@ class ModuleXSitemap extends ModuleXNavigation {
 		return parent::generate();
 	}
 
+
+	/**
+	 * Generate module
+	 */
+	protected function compile()
+	{
+		if ($this->includeRoot)
+		{
+			$this->rootPage = 0;
+		}
+
+		$this->showLevel = 0;
+		$this->hardLimit = false;
+		$this->levelOffset = 0;
+
+		$this->Template->items = $this->renderXNavigation($this->rootPage);
+	}
 }
 
 ?>
