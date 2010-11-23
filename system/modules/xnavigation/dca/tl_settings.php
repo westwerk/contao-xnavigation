@@ -2,7 +2,7 @@
 
 /**
  * TYPOlight Open Source CMS
- * Copyright (C) 2009-2010 Leo Feyer
+ * Copyright (C) 2005-2010 Leo Feyer
  *
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,24 +19,24 @@
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  InfinityLabs - Olck & Lins GbR - 2009-2010
+ * @copyright  2009, InfinityLabs 
  * @author     Tristan Lins <tristan.lins@infinitylabs.de>
- * @package    xNavigation
- * @license    LGPL 
+ * @package    WebDAV
+ * @license    LGPL
  * @filesource
  */
 
 
 /**
- * Front end modules
+ * System configuration
  */
-$GLOBALS['FE_MOD']['navigationMenu']['xNavigation'] = 'ModuleXNavigation';
-$GLOBALS['FE_MOD']['navigationMenu']['xSitemap'] = 'ModuleXSitemap';
+$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{dns_legend:hide},baseDNS';
 
-/**
- * Hooks
- */
-$GLOBALS['TL_HOOKS']['generateFrontendUrl'][] = array('XNavigation', 'generateDomainLink');
-$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('XNavigation', 'replaceDomainLinkInsertTags');
+$GLOBALS['TL_DCA']['tl_settings']['fields']['baseDNS'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['baseDNS'],
+	'inputType'               => 'text',
+	'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255)
+);
 
 ?>

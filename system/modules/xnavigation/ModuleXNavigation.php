@@ -173,6 +173,14 @@ class ModuleXNavigation extends Module {
 			$format = 'Ym';
 			$param = 'month';
 		}
+
+		$jumpTo = $objCurrentPage->row();
+		if ($objCurrentPage->xNavigationNewsArchiveJumpTo > 0) {
+			$objJumpTo = $this->Database->prepare("SELECT * FROM tl_page WHERE id = ?")
+										->execute($objCurrentPage->xNavigationNewsArchiveJumpTo);
+			if ($objJumpTo->next())
+				$jumpTo = $objJumpTo->row();
+		}
 		
 		foreach ($objNewsArchives as $id)
 		{
@@ -190,7 +198,7 @@ class ModuleXNavigation extends Module {
 		}
 		krsort($arrData);
 		
-		$url = $this->generateFrontendUrl($objCurrentPage->row(), sprintf('/%s/%%s', $param));
+		$url = $this->generateFrontendUrl($jumpTo, sprintf('/%s/%%s', $param));
 		
 		if (count($arrData)) {
 			$n = count($items);
@@ -313,7 +321,7 @@ class ModuleXNavigation extends Module {
 		}
 		
 		// Render news navigation
-		if ($objNewsArchives) {
+		if ($objNewsArchives && $objCurrentPage->xNavigationNewsArchivePosition == 0) {
 			$this->generateNewsItems($objCurrentPage, $objNewsArchives, $items, $time);
 		}
 
@@ -324,7 +332,7 @@ class ModuleXNavigation extends Module {
 		while($objSubpages->next())
 		{
 			// Skip hidden pages
-			if (/* non sitemap navigation */
+			if (!(/* non sitemap navigation */
 				!($this instanceof ModuleXSitemap) && ($objSubpages->xNavigation == 'map_never' || $objSubpages->hide ||
 					($this->showLevel > 0 && $this->showLevel < $level && 
 						!($objPage->id == $objSubpages->id ||
@@ -332,123 +340,131 @@ class ModuleXNavigation extends Module {
 							in_array($objCurrentPageID, $objPage->trail)) ||
 						$this->hardLevel > 0 && $this->hardLevel < $level) && $objSubpages->xNavigation != 'map_always') ||
 				/* sitemap navigation */
-				$this instanceof ModuleXSitemap && $objSubpages->sitemap == 'map_never')
+				$this instanceof ModuleXSitemap && $objSubpages->sitemap == 'map_never'))
 			{
-				continue;
-			}
-			
-			$subitems = '';
-			$_groups = deserialize($objSubpages->groups);
+				$subitems = '';
+				$_groups = deserialize($objSubpages->groups);
 
-			// Do not show protected pages unless a back end or front end user is logged in
-			if (!strlen($objSubpages->protected) || BE_USER_LOGGED_IN || (!is_array($_groups) && FE_USER_LOGGED_IN) || (is_array($_groups) && count(array_intersect($groups, $_groups))) || $this->showProtected || ($this instanceof ModuleSitemap && $objSubpages->sitemap == 'map_always'))
-			{
-				// Check whether there will be subpages
-				if ($objSubpages->subpages > 0 || $objSubpages->xNavigationIncludeArticles != 'map_never' || $objSubpages->xNavigationIncludeNewsArchives != 'map_never')
+				// Do not show protected pages unless a back end or front end user is logged in
+				if (!strlen($objSubpages->protected) || BE_USER_LOGGED_IN || (!is_array($_groups) && FE_USER_LOGGED_IN) || (is_array($_groups) && count(array_intersect($groups, $_groups))) || $this->showProtected || ($this instanceof ModuleSitemap && $objSubpages->sitemap == 'map_always'))
 				{
-					$subitems = $this->renderXNavigation($objSubpages, $level+1);
-				}
+					// Check whether there will be subpages
+					if ($objSubpages->subpages > 0 || $objSubpages->xNavigationIncludeArticles != 'map_never' || $objSubpages->xNavigationIncludeNewsArchives != 'map_never')
+					{
+						$subitems = $this->renderXNavigation($objSubpages, $level+1);
+					}
 
-				// Get href
-				switch ($objSubpages->type)
-				{
-					case 'redirect':
-						$href = $objSubpages->url;
+					// Get href
+					switch ($objSubpages->type)
+					{
+						case 'redirect':
+							$href = $objSubpages->url;
 
-						if (strncasecmp($href, 'mailto:', 7) === 0)
-						{
-							$this->import('String');
-							$href = $this->String->encodeEmail($href);
-						}
-						break;
-
-					case 'forward':
-						if (!$objSubpages->jumpTo)
-						{
-							$objNext = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE pid=? AND type='regular'" . (!BE_USER_LOGGED_IN ? " AND (start='' OR start<$time) AND (stop='' OR stop>$time) AND published=1" : "") . " ORDER BY sorting")
-													  ->limit(1)
-													  ->execute($objSubpages->id);
-						}
-						else
-						{
-							$objNext = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
-													  ->limit(1)
-													  ->execute($objSubpages->jumpTo);
-						}
-
-						if ($objNext->numRows)
-						{
-							$href = $this->generateFrontendUrl($objNext->fetchAssoc());
+							if (strncasecmp($href, 'mailto:', 7) === 0)
+							{
+								$this->import('String');
+								$href = $this->String->encodeEmail($href);
+							}
 							break;
-						}
-						// DO NOT ADD A break; STATEMENT
 
-					default:
-						$href = $this->generateFrontendUrl($objSubpages->row());
-						break;
+						case 'forward':
+							if (!$objSubpages->jumpTo)
+							{
+								$objNext = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE pid=? AND type='regular'" . (!BE_USER_LOGGED_IN ? " AND (start='' OR start<$time) AND (stop='' OR stop>$time) AND published=1" : "") . " ORDER BY sorting")
+														->limit(1)
+														->execute($objSubpages->id);
+							}
+							else
+							{
+								$objNext = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
+														->limit(1)
+														->execute($objSubpages->jumpTo);
+							}
+
+							if ($objNext->numRows)
+							{
+								$href = $this->generateFrontendUrl($objNext->fetchAssoc());
+								break;
+							}
+							// DO NOT ADD A break; STATEMENT
+
+						default:
+							$href = $this->generateFrontendUrl($objSubpages->row());
+							break;
+					}
+
+					$hassubmenu = false;
+					if (!($this instanceof ModuleXSitemap) &&
+						($objSubpages->xNavigationIncludeArticles == 'map_always' || $objSubpages->xNavigationIncludeArticles == 'map_active' ||
+						$objSubpages->xNavigationIncludeNewsArchives == 'map_always' || $objSubpages->xNavigationIncludeNewsArchives == 'map_active' ||
+						$objSubpages->vsubpages > 0)) {
+						$hassubmenu = true;
+					}
+
+
+					// Active page
+					if (($objPage->id == $objSubpages->id || $objSubpages->type == 'forward' && $objPage->id == $objSubpages->jumpTo)
+						&& !$this instanceof ModuleXSitemap && !$this->Input->get('articles'))
+					{
+						$strClass = 'page' . (strlen($subitems) ? ' submenu' : '') . ($hassubmenu ? ' hassubmenu' : '') . (strlen($objSubpages->cssClass) ? ' ' . $objSubpages->cssClass : '');
+						$row = $objSubpages->row();
+
+						$row['isActive'] = true;
+						$row['subitems'] = $subitems;
+						$row['class'] = (strlen($strClass) ? $strClass : '');
+						$row['pageTitle'] = specialchars($objSubpages->pageTitle);
+						$row['title'] = specialchars($objSubpages->title);
+						$row['link'] = $objSubpages->title;
+						$row['href'] = $href;
+						$row['alias'] = $objSubpages->alias;
+						$row['nofollow'] = (strncmp($objSubpages->robots, 'noindex', 7) === 0);
+						$row['target'] = (($objSubpages->type == 'redirect' && $objSubpages->target) ? LINK_NEW_WINDOW : '');
+						$row['description'] = str_replace(array("\n", "\r"), array(' ' , ''), $objSubpages->description);
+						$row['accesskey'] = $objSubpages->accesskey;
+						$row['tabindex'] = $objSubpages->tabindex;
+						$row['subpages'] = $objSubpages->subpages;
+						$row['itemtype'] = 'page';
+
+						$items[] = $row;
+					}
+
+					// Regular page
+					else
+					{
+						$strClass = 'page' . (strlen($subitems) ? ' submenu' : '') . ($hassubmenu ? ' hassubmenu' : '') . (strlen($objSubpages->cssClass) ? ' ' . $objSubpages->cssClass : '') . (in_array($objSubpages->id, $objPage->trail) ? ' trail' : '');
+
+						$row = $objSubpages->row();
+
+						$row['isActive'] = false;
+						$row['subitems'] = $subitems;
+						$row['class'] = (strlen($strClass) ? $strClass : '');
+						$row['pageTitle'] = specialchars($objSubpages->pageTitle);
+						$row['title'] = specialchars($objSubpages->title);
+						$row['link'] = $objSubpages->title;
+						$row['href'] = $href;
+						$row['alias'] = $objSubpages->alias;
+						$row['nofollow'] = (strncmp($objSubpages->robots, 'noindex', 7) === 0);
+						$row['target'] = (($objSubpages->type == 'redirect' && $objSubpages->target) ? LINK_NEW_WINDOW : '');
+						$row['description'] = str_replace(array("\n", "\r"), array(' ' , ''), $objSubpages->description);
+						$row['accesskey'] = $objSubpages->accesskey;
+						$row['tabindex'] = $objSubpages->tabindex;
+						$row['subpages'] = $objSubpages->subpages;
+						$row['itemtype'] = 'page';
+
+						$items[] = $row;
+					}
 				}
-				
-				$hassubmenu = false;
-				if (!($this instanceof ModuleXSitemap) &&
-					($objSubpages->xNavigationIncludeArticles == 'map_always' || $objSubpages->xNavigationIncludeArticles == 'map_active' ||
-					$objSubpages->xNavigationIncludeNewsArchives == 'map_always' || $objSubpages->xNavigationIncludeNewsArchives == 'map_active' ||
-					$objSubpages->vsubpages > 0)) {
-					$hassubmenu = true;
-				}
-				
 
-				// Active page
-				if (($objPage->id == $objSubpages->id || $objSubpages->type == 'forward' && $objPage->id == $objSubpages->jumpTo)
-					&& !$this instanceof ModuleXSitemap && !$this->Input->get('articles'))
-				{
-					$strClass = 'page' . (strlen($subitems) ? ' submenu' : '') . ($hassubmenu ? ' hassubmenu' : '') . (strlen($objSubpages->cssClass) ? ' ' . $objSubpages->cssClass : '');
-					$row = $objSubpages->row();
-
-					$row['isActive'] = true;
-					$row['subitems'] = $subitems;
-					$row['class'] = (strlen($strClass) ? $strClass : '');
-					$row['pageTitle'] = specialchars($objSubpages->pageTitle);
-					$row['title'] = specialchars($objSubpages->title);
-					$row['link'] = $objSubpages->title;
-					$row['href'] = $href;
-					$row['alias'] = $objSubpages->alias;
-					$row['nofollow'] = (strncmp($objSubpages->robots, 'noindex', 7) === 0);
-					$row['target'] = (($objSubpages->type == 'redirect' && $objSubpages->target) ? LINK_NEW_WINDOW : '');
-					$row['description'] = str_replace(array("\n", "\r"), array(' ' , ''), $objSubpages->description);
-					$row['accesskey'] = $objSubpages->accesskey;
-					$row['tabindex'] = $objSubpages->tabindex;
-					$row['subpages'] = $objSubpages->subpages;
-					$row['itemtype'] = 'page';
-
-					$items[] = $row;
-				}
-
-				// Regular page
-				else
-				{
-					$strClass = 'page' . (strlen($subitems) ? ' submenu' : '') . ($hassubmenu ? ' hassubmenu' : '') . (strlen($objSubpages->cssClass) ? ' ' . $objSubpages->cssClass : '') . (in_array($objSubpages->id, $objPage->trail) ? ' trail' : '');
-					
-					$row = $objSubpages->row();
-
-					$row['isActive'] = false;
-					$row['subitems'] = $subitems;
-					$row['class'] = (strlen($strClass) ? $strClass : '');
-					$row['pageTitle'] = specialchars($objSubpages->pageTitle);
-					$row['title'] = specialchars($objSubpages->title);
-					$row['link'] = $objSubpages->title;
-					$row['href'] = $href;
-					$row['alias'] = $objSubpages->alias;
-					$row['nofollow'] = (strncmp($objSubpages->robots, 'noindex', 7) === 0);
-					$row['target'] = (($objSubpages->type == 'redirect' && $objSubpages->target) ? LINK_NEW_WINDOW : '');
-					$row['description'] = str_replace(array("\n", "\r"), array(' ' , ''), $objSubpages->description);
-					$row['accesskey'] = $objSubpages->accesskey;
-					$row['tabindex'] = $objSubpages->tabindex;
-					$row['subpages'] = $objSubpages->subpages;
-					$row['itemtype'] = 'page';
-
-					$items[] = $row;
+				// Render news navigation
+				if ($objNewsArchives && $objCurrentPage->xNavigationNewsArchivePosition == $objSubpages->id) {
+					$this->generateNewsItems($objCurrentPage, $objNewsArchives, $items, $time);
 				}
 			}
+		}
+
+		// Render news navigation
+		if ($objNewsArchives && $objCurrentPage->xNavigationNewsArchivePosition == 2147483647) {
+			$this->generateNewsItems($objCurrentPage, $objNewsArchives, $items, $time);
 		}
 
 		// Add classes first and last

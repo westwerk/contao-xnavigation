@@ -2,7 +2,7 @@
 
 /**
  * TYPOlight Open Source CMS
- * Copyright (C) 2009-2010 Leo Feyer
+ * Copyright (C) 2005-2010 Leo Feyer
  *
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,24 +19,22 @@
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  InfinityLabs - Olck & Lins GbR - 2009-2010
- * @author     Tristan Lins <tristan.lins@infinitylabs.de>
- * @package    xNavigation
- * @license    LGPL 
+ * @copyright  Leo Feyer 2005-2010
+ * @author     Leo Feyer <http://www.typolight.org>
+ * @package    Language
+ * @license    LGPL
  * @filesource
  */
 
 
 /**
- * Front end modules
+ * Fields
  */
-$GLOBALS['FE_MOD']['navigationMenu']['xNavigation'] = 'ModuleXNavigation';
-$GLOBALS['FE_MOD']['navigationMenu']['xSitemap'] = 'ModuleXSitemap';
+$GLOBALS['TL_LANG']['tl_settings']['baseDNS'] = array('Basis Domainname', 'Hier können Sie den Basis Domainnamen angeben, der genutzt wird, falls es nicht möglich ist den Domainnamen dynamisch zu bestimmen. Dies ist z.B. beim generieren des Newsletters nicht möglich.');
 
 /**
- * Hooks
+ * References
  */
-$GLOBALS['TL_HOOKS']['generateFrontendUrl'][] = array('XNavigation', 'generateDomainLink');
-$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('XNavigation', 'replaceDomainLinkInsertTags');
+$GLOBALS['TL_LANG']['tl_settings']['dns_legend'] = 'DNS Einstellungen';
 
 ?>
