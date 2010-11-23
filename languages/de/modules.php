@@ -27,20 +27,6 @@
  */
 
 
-/**
- * Table tl_module
- */
-$GLOBALS['TL_DCA']['tl_module']['palettes']['xNavigation'] = '{title_legend},name,headline,type;{nav_legend},levelOffset,showLevel,hardLevel,showProtected;{reference_legend:hide},defineRoot;{template_legend:hide},navigationTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
-
-$GLOBALS['TL_DCA']['tl_module']['palettes']['xSitemap'] = '{title_legend},name,headline,type;{nav_legend},includeRoot,showProtected,showHidden;{reference_legend:hide},rootPage;{template_legend:hide},navigationTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['hardLevel'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['hardLevel'],
-	'default'                 => '0',
-	'exclude'                 => true,
-	'inputType'               => 'text',
-	'eval'                    => array('maxlength'=>5, 'rgxp'=>'digit', 'tl_class'=>'w50')
-);
-
+$GLOBALS['TL_LANG']['FMD']['xnavigation']    = array('Erweitertes Navigationsmenü', 'erzeugt ein Navigationsmenü aus der Seitenstruktur.');
+$GLOBALS['TL_LANG']['FMD']['xsitemap']       = array('Erweiterte Sitemap', 'erzeugt eine Liste aller Seiten aus der Seitenstruktur.');
 ?>

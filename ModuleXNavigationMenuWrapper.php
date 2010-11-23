@@ -19,8 +19,8 @@
  * Software Foundation website at http://www.gnu.org/licenses/.
  *
  * PHP version 5
- * @copyright  InfinityLabs - Olck & Lins GbR 2009 
- * @author     Tristan Lins 
+ * @copyright  InfinityLabs - Olck & Lins GbR - 2009-2010
+ * @author     Tristan Lins <tristan.lins@infinitylabs.de>
  * @package    xNavigation
  * @license    LGPL 
  * @filesource
@@ -30,9 +30,9 @@
 /**
  * Class ModuleXNavigationMenuWrapper
  *
- * 
- * @copyright  InfinityLabs - Olck & Lins GbR 2009 
- * @author     Tristan Lins 
+ * Wrapper for ModuleNewsMenu, to generate news items.
+ * @copyright  InfinityLabs - Olck & Lins GbR - 2009-2010
+ * @author     Tristan Lins <tristan.lins@infinitylabs.de>
  * @package    xNavigation
  */
 class ModuleXNavigationMenuWrapper extends ModuleNewsMenu {
