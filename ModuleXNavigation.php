@@ -315,7 +315,7 @@ class ModuleXNavigation extends Module {
 				// Regular page
 				else
 				{
-					$strClass = 'page' . trim((strlen($subitems) ? ' submenu' : '') . (strlen($objSubpages->cssClass) ? ' ' . $objSubpages->cssClass : '') . (in_array($objSubpages->id, $objPage->trail) ? ' trail' : ''));
+					$strClass = 'page' . (strlen($subitems) ? ' submenu' : '') . (strlen($objSubpages->cssClass) ? ' ' . $objSubpages->cssClass : '') . (in_array($objSubpages->id, $objPage->trail) ? ' trail' : '');
 					$row = $objSubpages->row();
 
 					$row['isActive'] = false;
