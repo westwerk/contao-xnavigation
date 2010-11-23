@@ -194,14 +194,14 @@ class tl_page_xNavigation extends Backend
 	public function submit(DataContainer $dc)
 	{
 		if (!$dc->activeRecord) {
-			$objPage = $this->Database->prepare("SELECT * FROM tl_page WHERE id = ?")
+			$dc->activeRecord = $this->Database->prepare("SELECT * FROM tl_page WHERE id = ?")
 											   ->execute($dc->id);
-		} else {
-			$hide = $dc->activeRecord->xNavigation == 'map_never' ? '1' : '';
-			if ($dc->activeRecord->hide != $hide);
-				$this->Database->prepare("UPDATE tl_page SET hide = ? WHERE id = ?")
-							   ->execute($hide, $dc->activeRecord->id);
 		}
+		
+		$hide = $dc->activeRecord->xNavigation == 'map_never' ? '1' : '';
+		if ($dc->activeRecord->hide != $hide);
+			$this->Database->prepare("UPDATE tl_page SET hide = ? WHERE id = ?")
+						   ->execute($hide, $dc->activeRecord->id);
 	}
 	
 
