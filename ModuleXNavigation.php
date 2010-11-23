@@ -217,7 +217,7 @@ class ModuleXNavigation extends Module {
 			unset($wrapper);
 		}
 
-		$objTemplate->level = 'level_' . $level++;
+		$objTemplate->level = 'level_' . $level;
 		
 		// Browse subpages
 		while($objSubpages->next())
@@ -225,11 +225,11 @@ class ModuleXNavigation extends Module {
 			// Skip hidden pages
 			if (/* non sitemap navigation */
 				!($this instanceof ModuleXSitemap) && ($objSubpages->xNavigation == 'map_never' || $objSubpages->hide ||
-					($this->showLevel > 0 && $this->showLevel+1 < $level && 
+					($this->showLevel > 0 && $this->showLevel < $level && 
 						!($objPage->id == $objSubpages->id ||
-							(in_array($objSubpages->id, $objPage->trail) || in_array($objCurrentPageID, $objPage->trail)) &&
-							in_array($objPage->id, $this->getChildRecords($objCurrentPageID, 'tl_page'))) ||
-						$this->hardLevel > 0 && $this->hardLevel+1 < $level) && $objSubpages->xNavigation != 'map_always') ||
+							in_array($objSubpages->id, $objPage->trail) ||
+							in_array($objCurrentPageID, $objPage->trail)) ||
+						$this->hardLevel > 0 && $this->hardLevel < $level) && $objSubpages->xNavigation != 'map_always') ||
 				/* sitemap navigation */
 				$this instanceof ModuleXSitemap && $objSubpages->sitemap == 'map_never')
 			{
@@ -245,7 +245,7 @@ class ModuleXNavigation extends Module {
 				// Check whether there will be subpages
 				if ($objSubpages->subpages > 0 || $objSubpages->xNavigationIncludeArticles != 'map_never' || $objSubpages->xNavigationIncludeNewsArchives != 'map_never')
 				{
-					$subitems = $this->renderXNavigation($objSubpages, $level);
+					$subitems = $this->renderXNavigation($objSubpages, $level+1);
 				}
 
 				// Get href
