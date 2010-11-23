@@ -1,13 +1,13 @@
 <?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
 
 /**
- * TYPOlight webCMS
- * Copyright (C) 2005-2009 Leo Feyer
+ * TYPOlight Open Source CMS
+ * Copyright (C) 2009-2010 Leo Feyer
  *
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 3 of the License, or (at your option) any later version.
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,7 +16,7 @@
  * 
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
- * Software Foundation website at http://www.gnu.org/licenses/.
+ * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
  * @copyright  InfinityLabs - Olck & Lins GbR - 2009-2010
@@ -116,9 +116,14 @@ class ModuleXNavigation extends Module {
 	/**
 	 * Converts the articles array structure into a 1 dimension flat structure, that only contains the top level.
 	 * All subitems are converted and parsed by the navigation template.
+	 * 
+	 * @param Database_Result FrontendTemplate
+	 * @param mixed $articles
+	 * @param integer $level
+	 * @param boolean $toString
 	 * @return array
 	 */
-	protected function convertArticles2Navigation(&$objTemplate, $articles, $level, $toString = false) {
+	protected function convertArticles2Navigation(FrontendTemplate &$objTemplate, $articles, $level, $toString = false) {
 		foreach ($articles as &$article) {
 			// Set the item link
 			$article['link'] = $article['title'];
@@ -133,8 +138,8 @@ class ModuleXNavigation extends Module {
 		{
 			$last = count($articles) - 1;
 
-			$articles[0]['class'] = trim($articles[0]['class'] . ' first_article');
-			$articles[$last]['class'] = trim($articles[$last]['class'] . ' last_article');
+			$articles[0]['class'] = trim($articles[0]['class'] . ' first_article' . ($toString ? ' first' : ''));
+			$articles[$last]['class'] = trim($articles[$last]['class'] . ' last_article' . ($toString ? ' last' : ''));
 		}
 		
 		// Parse by template or return the modified array
@@ -147,11 +152,87 @@ class ModuleXNavigation extends Module {
 		}
 	}
 	
+	/**
+	 * Generate the news archive items.
+	 * 
+	 * @param Database_Result $objCurrentPage
+	 * @param Database_Result $objNewsArchives
+	 * @param array $items
+	 * @param integer $time
+	 */
+	protected function generateNewsItems(Database_Result &$objCurrentPage, Database_Result &$objNewsArchives, &$items, $time) {
+		$arrData = array();
+		$maxQuantity = 0;
+		switch ($objCurrentPage->xNavigationNewsArchiveFormat) {
+		case 'news_year':
+			$format = 'Y';
+			$param = 'year';
+			break;
+		case 'news_month':
+		default:
+			$format = 'Ym';
+			$param = 'month';
+		}
+		
+		foreach ($objNewsArchives as $id)
+		{
+			// Get all active items
+			$objArchives = $this->Database->prepare("SELECT date FROM tl_news WHERE pid=?" . (!BE_USER_LOGGED_IN ? " AND (start='' OR start<$time) AND (stop='' OR stop>$time) AND published=1" : "") . " ORDER BY date DESC")
+										  ->execute($id);
+
+			while ($objArchives->next())
+			{
+				++$arrData[date($format, $objArchives->date)];
+				if ($arrData[date($format, $objArchives->date)] > $maxQuantity) {
+					$maxQuantity = $arrData[date($format, $objArchives->date)];
+				}
+			}
+		}
+		krsort($arrData);
+		
+		$url = $this->generateFrontendUrl($objCurrentPage->row(), sprintf('/%s/%%s', $param));
+		
+		if (count($arrData)) {
+			$n = count($items);
+			foreach ($arrData as $intDate => $intCount) {
+				$quantity = sprintf((($intCount < 2) ? $GLOBALS['TL_LANG']['MSC']['entry'] : $GLOBALS['TL_LANG']['MSC']['entries']), $intCount);
+				switch ($objCurrentPage->xNavigationNewsArchiveFormat) {
+				case 'news_year':
+					$intYear = $intDate;
+					$intMonth = '0';
+					$link = $title = specialchars($intYear . ($objCurrentPage->xNavigationNewsArchiveShowQuantity=='1' ? ' (' . $quantity . ')' : ''));
+					break;
+				case 'news_month':
+				default:
+					$intYear = intval(substr($intDate, 0, 4));
+					$intMonth = intval(substr($intDate, 4));
+					$link = $title = specialchars($GLOBALS['TL_LANG']['MONTHS'][$intMonth-1].' '.$intYear . ($objCurrentPage->xNavigationNewsArchiveShowQuantity=='1' ? ' (' . $quantity . ')' : ''));
+				}
+				
+				$items[] = array(
+					'date' => $intDate,
+					'link' => $link,
+					'href' => sprintf($url, $intDate),
+					'title' => $title,
+					'isActive' => ($this->Input->get($param) == $intDate),
+					'quantity' => $quantity,
+					'maxQuantity' => $maxQuantity,
+					'type' => 'news_archive',
+					'class' => ''
+				);
+			}
+			
+			$last = count($items) - 1;
+			
+			$items[$n]['class'] = trim($items[$n]['class'] . ' first_news_archive');
+			$items[$last]['class'] = trim($items[$last]['class'] . ' last_news_archive');
+		}
+	}
 	
 	/**
 	 * Recursively compile the navigation menu and return it as HTML string
-	 * @param integer|Database_Result
-	 * @param integer
+	 * @param mixed $objCurrentPage
+	 * @param integer $level
 	 * @return string
 	 */
 	protected function renderXNavigation(&$objCurrentPage, $level=1) {
@@ -233,72 +314,7 @@ class ModuleXNavigation extends Module {
 		
 		// Render news navigation
 		if ($objNewsArchives) {
-			$arrData = array();
-			$maxQuantity = 0;
-			switch ($objCurrentPage->xNavigationNewsArchiveFormat) {
-			case 'news_year':
-				$format = 'Y';
-				$param = 'year';
-				break;
-			case 'news_month':
-			default:
-				$format = 'Ym';
-				$param = 'month';
-			}
-			
-			foreach ($objNewsArchives as $id)
-			{
-				// Get all active items
-				$objArchives = $this->Database->prepare("SELECT date FROM tl_news WHERE pid=?" . (!BE_USER_LOGGED_IN ? " AND (start='' OR start<$time) AND (stop='' OR stop>$time) AND published=1" : "") . " ORDER BY date DESC")
-											  ->execute($id);
-	
-				while ($objArchives->next())
-				{
-					++$arrData[date($format, $objArchives->date)];
-					if ($arrData[date($format, $objArchives->date)] > $maxQuantity) {
-						$maxQuantity = $arrData[date($format, $objArchives->date)];
-					}
-				}
-			}
-			krsort($arrData);
-			
-			$url = $this->generateFrontendUrl($objCurrentPage->row(), sprintf('/%s/%%s', $param));
-			
-			if (count($arrData)) {
-				$n = count($items);
-				foreach ($arrData as $intDate => $intCount) {
-					$quantity = sprintf((($intCount < 2) ? $GLOBALS['TL_LANG']['MSC']['entry'] : $GLOBALS['TL_LANG']['MSC']['entries']), $intCount);
-					switch ($objCurrentPage->xNavigationNewsArchiveFormat) {
-					case 'news_year':
-						$intYear = $intDate;
-						$intMonth = '0';
-						$link = $title = specialchars($intYear . ($objCurrentPage->xNavigationNewsArchiveShowQuantity=='1' ? ' (' . $quantity . ')' : ''));
-						break;
-					case 'news_month':
-					default:
-						$intYear = intval(substr($intDate, 0, 4));
-						$intMonth = intval(substr($intDate, 4));
-						$link = $title = specialchars($GLOBALS['TL_LANG']['MONTHS'][$intMonth-1].' '.$intYear . ($objCurrentPage->xNavigationNewsArchiveShowQuantity=='1' ? ' (' . $quantity . ')' : ''));
-					}
-					
-					$items[] = array(
-						'date' => $intDate,
-						'link' => $link,
-						'href' => sprintf($url, $intDate),
-						'title' => $title,
-						'isActive' => ($this->Input->get($param) == $intDate),
-						'quantity' => $quantity,
-						'maxQuantity' => $maxQuantity,
-						'type' => 'news_archive',
-						'class' => ''
-					);
-				}
-				
-				$last = count($items) - 1;
-				
-				$items[$n]['class'] = trim($items[$n]['class'] . ' first_news_archive');
-				$items[$last]['class'] = trim($items[$last]['class'] . ' last_news_archive');
-			}
+			$this->generateNewsItems($objCurrentPage, $objNewsArchives, $items, $time);
 		}
 
 		$objTemplate->level = 'level_' . $level;
