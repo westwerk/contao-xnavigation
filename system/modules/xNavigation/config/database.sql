@@ -23,6 +23,7 @@ CREATE TABLE `tl_page` (
 
 CREATE TABLE `tl_module` (
   `hardLevel` int(10) unsigned NOT NULL default '0'
+  `includeFullHierarchy` char(1) NOT NULL default ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

@@ -34,4 +34,10 @@
 $GLOBALS['FE_MOD']['navigationMenu']['xNavigation'] = 'ModuleXNavigation';
 $GLOBALS['FE_MOD']['navigationMenu']['xSitemap']    = 'ModuleXSitemap';
 
+
+/**
+ * HOOKs
+ */
+$GLOBALS['TL_HOOKS']['xNavigationProvider'][] = array('xNavigationPageProvider', 'generateItems');
+
 ?>

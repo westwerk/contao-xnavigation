@@ -31,7 +31,8 @@
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_module']['hardLevel']        = array('Hardlevel', 'Geben Sie einen Wert größer 0 ein, um die maximale Verschachtelungstiefe des Menüs zu beschränken.');
+$GLOBALS['TL_LANG']['tl_module']['hardLevel']            = array('Hardlevel', 'Geben Sie einen Wert größer 0 ein, um die maximale Verschachtelungstiefe des Menüs zu beschränken.');
+$GLOBALS['TL_LANG']['tl_module']['includeFullHierarchy'] = array('Vollständige Hierarchie', 'Die vollständige Hierarchie der Seitenstruktur anzeigen.');
 
 /**
  * Reference

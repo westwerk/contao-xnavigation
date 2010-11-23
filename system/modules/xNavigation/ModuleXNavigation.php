@@ -130,18 +130,11 @@ class ModuleXNavigation extends Module {
 		}
 		
 		// Define if the current element is active
-		$blnActive = $objCurrentPage->id == $objPage->id || in_array($objCurrentPage->id, $objPage->trail);
+		$blnActive = $objCurrentPage->id == $objPage->id;
+		$blnTrail = in_array($objCurrentPage->id, $objPage->trail);
 		
 		$arrItems = array();
-		$arrGroups = array();
-
-		// Get all groups of the current front end user
-		if (FE_USER_LOGGED_IN)
-		{
-			$this->import('FrontendUser', 'User');
-			$arrGroups = $this->User->groups;
-		}
-
+		
 		// Layout template fallback
 		if (!strlen($this->navigationTpl))
 		{
@@ -153,11 +146,26 @@ class ModuleXNavigation extends Module {
 		$objTemplate->type = get_class($this);
 		$objTemplate->level = 'level_' . $intLevel;
 		
-		$n = 0;
+		// the children count, can be greater than 0, even $arrItems is empty
+		// this is the count of existing, but maybe not visible children
+		$intCountedChildren = 0;
 		
-		// TODO use providers!
-		$this->import('xNavigationPageProvider');
-		$n += $this->xNavigationPageProvider->generateItems($this, $objCurrentPage, $blnActive, $arrItems, $arrGroups, $intLevel, $this->showLevel, $this->hardLevel);
+		// generate the items
+		if (isset($GLOBALS['TL_HOOKS']['xNavigationProvider']) && is_array($GLOBALS['TL_HOOKS']['xNavigationProvider']))
+		{
+			foreach ($GLOBALS['TL_HOOKS']['xNavigationProvider'] as $callback)
+			{
+				$this->import($callback[0]);
+				$intCountedChildren += $this->$callback[0]->$callback[1]($this,
+					$objCurrentPage,
+					$blnActive,
+					$blnTrail,
+					$arrItems,
+					$intLevel,
+					$this->showLevel,
+					$this->hardLevel);
+			}
+		}
 		
 		// Add classes first and last
 		if (count($arrItems))
@@ -169,7 +177,7 @@ class ModuleXNavigation extends Module {
 		}
 
 		$objTemplate->items = $arrItems;
-		return count($arrItems) ? $objTemplate->parse() : ($n > 0 ? true : '');
+		return count($arrItems) ? $objTemplate->parse() : ($intCountedChildren > 0 ? true : '');
 	}
 	
 }
