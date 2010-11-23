@@ -38,6 +38,7 @@
  */
 abstract class xNavigationProvider extends Controller
 {
+	
 	/**
 	 * Generate menu items for the specific page.
 	 * @param ModuleXNavigation
@@ -48,6 +49,14 @@ abstract class xNavigationProvider extends Controller
 	 * @param int
 	 * @param int
 	 */
-	public abstract function generateItems(ModuleXNavigation &$xNavigation, Database_Result $objCurrentPage, $blnActive, &$arrItems, $arrGroups, $intLevel, $intMaxLevel);
+	public abstract function generateItems(ModuleXNavigation &$xNavigation,
+		Database_Result $objCurrentPage,
+		$blnActive,
+		&$arrItems,
+		$arrGroups,
+		$intLevel,
+		$intMaxLevel,
+		$intHardLevel);
+	
 }
 ?>
