@@ -24,7 +24,7 @@ class xNavigationRunonce extends Frontend
 /**
  * Instantiate controller
  */
-$objxNavigationRunonce = new xNavigationRunonce();
-$objxNavigationRunonce->run();
+$objXNavigationRunonce = new xNavigationRunonce();
+$objXNavigationRunonce->run();
 
 ?>
