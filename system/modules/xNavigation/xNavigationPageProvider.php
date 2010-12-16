@@ -218,6 +218,7 @@ class xNavigationPageProvider extends xNavigationProvider
 		{
 			$intCountedChildren ++;
 		}
+		return $intCountedChildren;
 	}
 	
 	public function generateItems(ModuleXNavigation &$objXNavigation,
