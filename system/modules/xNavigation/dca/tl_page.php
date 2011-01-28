@@ -102,25 +102,29 @@ class tl_page_xNavigation extends Backend
 	 */
 	public function submit(DataContainer $dc)
 	{
-		$strFormFields = implode(',', $this->Input->post('FORM_FIELDS'));
-		$arrFormFields = preg_split('~[,;]~', $strFormFields);
-		
-		if (in_array('menu_visibility', $arrFormFields))
+		$arrFormFields = $this->Input->post('FORM_FIELDS');
+		if (!empty($arrFormFields) && is_array($arrFormFields))
 		{
-			$hide = $this->Input->post('menu_visibility') == 'map_never' ? '1' : '';
-			if ($dc->activeRecord->hide != $hide)
+			$strFormFields = implode(',', $arrFormFields);
+			$arrFormFields = preg_split('~[,;]~', $strFormFields);
+			
+			if (in_array('menu_visibility', $arrFormFields))
 			{
-				$this->Database->prepare("UPDATE tl_page SET hide = ? WHERE id = ?")
-							   ->execute($hide, $dc->id);
+				$hide = $this->Input->post('menu_visibility') == 'map_never' ? '1' : '';
+				if ($dc->activeRecord->hide != $hide)
+				{
+					$this->Database->prepare("UPDATE tl_page SET hide = ? WHERE id = ?")
+								   ->execute($hide, $dc->id);
+				}
 			}
-		}
-		elseif (in_array('hide', $arrFormFields))
-		{
-			$menu_visibility = $this->Input->post('hide') ? 'map_never' : 'map_default';
-			if ($dc->activeRecord->menu_visibility != $menu_visibility)
+			elseif (in_array('hide', $arrFormFields))
 			{
-				$this->Database->prepare("UPDATE tl_page SET menu_visibility = ? WHERE id = ?")
-							   ->execute($hide_in_menu, $dc->id);
+				$menu_visibility = $this->Input->post('hide') ? 'map_never' : 'map_default';
+				if ($dc->activeRecord->menu_visibility != $menu_visibility)
+				{
+					$this->Database->prepare("UPDATE tl_page SET menu_visibility = ? WHERE id = ?")
+								   ->execute($hide_in_menu, $dc->id);
+				}
 			}
 		}
 	}
