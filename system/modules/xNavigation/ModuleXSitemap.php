@@ -64,29 +64,37 @@ class ModuleXSitemap extends ModuleXNavigation {
 			return $objTemplate->parse();
 		}
 
-		$this->rootPage = 0;
-		$this->rootPageObj = null;
-		
-		if (!$this->includeFullHierarchy)
+		if ($this->rootPage)
 		{
-			// calculate the root page
-			$arrTrail = $GLOBALS['objPage']->trail;
-			$objPage = $this->Database->execute("
-					SELECT
-						*
-					FROM
-						`tl_page`
-					WHERE
-							`id` IN (" . implode(',', $arrTrail) . ")
-						AND `type`='root'
-					ORDER BY
-						`id`=" . implode(',`id`=', $arrTrail) . "
-					LIMIT
-						1");
-			if ($objPage->next())
+			$this->rootPageObj = $this->Database->prepare("SELECT * FROM tl_page WHERE id=?")->execute($this->rootPage);
+			$this->rootPageObj->next();
+		}
+		else
+		{
+			$this->rootPage = 0;
+			$this->rootPageObj = null;
+		
+			if (!$this->includeFullHierarchy)
 			{
-				$this->rootPage = $objPage->id;
-				$this->rootPageObj = $objPage;
+				// calculate the root page
+				$arrTrail = $GLOBALS['objPage']->trail;
+				$objPage = $this->Database->execute("
+						SELECT
+							*
+						FROM
+							`tl_page`
+						WHERE
+								`id` IN (" . implode(',', $arrTrail) . ")
+							AND `type`='root'
+						ORDER BY
+							`id`=" . implode(',`id`=', $arrTrail) . "
+						LIMIT
+							1");
+				if ($objPage->next())
+				{
+					$this->rootPage = $objPage->id;
+					$this->rootPageObj = $objPage;
+				}
 			}
 		}
 		
