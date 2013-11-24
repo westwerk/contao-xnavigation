@@ -1,0 +1,41 @@
+{% macro render_item(item, itemMatcher, linkMatcher) %}
+	{% import _self as renderers %}
+
+	{% set children %}{% spaceless %}
+		{{ renderers.render_collection(item.children, itemMatcher, linkMatcher) }}
+	{% endspaceless %}{% endset %}
+
+	{% set showLink = not linkMatcher or linkMatcher.matchItem(item) %}
+
+	{% if showLink or children %}{% spaceless %}
+		<li>
+			{% if showLink %}
+				{% if item.current %}
+					<span class="active">{{ item.label }}</span>
+				{% else %}
+					<a href="{{ item.uri }}">{{ item.label }}</a>
+				{% endif %}
+			{% endif %}
+
+			{{ children }}
+		</li>
+	{% endspaceless %}{% endif %}
+{% endmacro %}
+
+{% macro render_collection(collection, itemMatcher, linkMatcher) %}
+	{% import _self as renderers %}
+
+	{% set items %}{% spaceless %}
+		{% for item in collection.getIterator(itemMatcher) %}
+			{{ renderers.render_item(item, itemMatcher, linkMatcher) }}
+		{% endfor %}
+	{% endspaceless %}{% endset %}
+
+	{% if items %}
+		<ul class="level_{{ collection.parentItem.level+1 }}">{{ items }}</ul>
+	{% endif %}
+{% endmacro %}
+
+{% import _self as renderers %}
+
+{{ renderers.render_collection(items, itemMatcher, linkMatcher) }}

@@ -1,0 +1,21 @@
+.header_xnavigation_menus {
+	padding: 2px 0 3px 20px;
+	background-image: url(../images/menu.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+	margin-left: 15px;
+}
+.header_xnavigation_providers {
+	padding: 2px 0 3px 20px;
+	background-image: url(../images/provider.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+	margin-left: 15px;
+}
+.header_xnavigation_filters {
+	padding: 2px 0 3px 20px;
+	background-image: url(../images/filter.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+	margin-left: 15px;
+}
