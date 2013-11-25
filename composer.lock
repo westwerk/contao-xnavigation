@@ -532,16 +532,16 @@
     "packages-dev": [
         {
             "name": "bit3/php-coding-standard",
-            "version": "2.2",
+            "version": "2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bit3/php-coding-standard.git",
-                "reference": "f9de2ccca396a66754fa95ee60132b874fc2cdf7"
+                "reference": "6053ea04ed02b2d82b7aa19978039cc287c74faf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bit3/php-coding-standard/zipball/f9de2ccca396a66754fa95ee60132b874fc2cdf7",
-                "reference": "f9de2ccca396a66754fa95ee60132b874fc2cdf7",
+                "url": "https://api.github.com/repos/bit3/php-coding-standard/zipball/6053ea04ed02b2d82b7aa19978039cc287c74faf",
+                "reference": "6053ea04ed02b2d82b7aa19978039cc287c74faf",
                 "shasum": ""
             },
             "require": {
@@ -569,7 +569,7 @@
                 "php",
                 "phpcs"
             ],
-            "time": "2013-07-25 07:45:53"
+            "time": "2013-11-25 13:28:43"
         },
         {
             "name": "pdepend/pdepend",
