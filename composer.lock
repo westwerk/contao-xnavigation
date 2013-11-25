@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "00e548ae3f19eecb75ef0b9a01d4a16c",
+    "hash": "0a53f8a490408e2884adbaa14e5856f3",
     "packages": [
         {
             "name": "bit3/contao-meta-palettes",
@@ -131,17 +131,24 @@
             "version": "dev-develop",
             "source": {
                 "type": "git",
-                "url": "/home/tristan/workspace/php/php-flexi-tree",
-                "reference": "5eb8ced3751d40ecee8c3fd070ebbbc60aeec7dc"
+                "url": "https://github.com/bit3/php-flexi-tree.git",
+                "reference": "9d2e5edcf7e71a7c9d9a327b346de7dcce034f73"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bit3/php-flexi-tree/zipball/9d2e5edcf7e71a7c9d9a327b346de7dcce034f73",
+                "reference": "9d2e5edcf7e71a7c9d9a327b346de7dcce034f73",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.4"
             },
             "require-dev": {
+                "bit3/php-coding-standard": "@dev",
                 "symfony/event-dispatcher": "~2"
             },
             "suggest": {
-                "symfony/event-dispatcher": "Use by the EventDrivenItemFactory"
+                "symfony/event-dispatcher": "Required for the EventDrivenItemFactory"
             },
             "type": "library",
             "extra": {
@@ -154,6 +161,7 @@
                     "Bit3\\FlexiTree": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL-3.0+"
             ],
@@ -166,7 +174,7 @@
                 }
             ],
             "description": "Object oriented framework to create menues.",
-            "time": "2013-11-24 16:50:36"
+            "time": "2013-11-25 12:38:37"
         },
         {
             "name": "contao-community-alliance/composer-installer",
