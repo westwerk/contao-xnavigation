@@ -175,7 +175,7 @@ $GLOBALS['TL_DCA']['tl_xnavigation_menu'] = array
 				'helpwizard'     => true,
 				'tl_class'       => 'w50',
 			),
-			'sql'       => "char(10) NOT NULL default ''"
+			'sql'       => "varchar(32) NOT NULL default ''"
 		),
 		'page_root_level' => array
 		(
