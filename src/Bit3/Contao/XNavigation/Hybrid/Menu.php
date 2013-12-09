@@ -54,6 +54,10 @@ class Menu extends \TwigSimpleHybrid
 			return;
 		}
 
+		if ($this->xnavigation_template) {
+			$this->Template->xnav_template = $this->xnavigation_template;
+		}
+
 		// create item condition
 		$this->createItemCondition($menu, $conditionFactory);
 

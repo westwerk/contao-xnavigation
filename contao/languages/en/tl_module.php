@@ -16,5 +16,14 @@
  */
 $GLOBALS['TL_LANG']['tl_module']['xnavigation_menu'] = array(
 	'Navigation menu',
-	'Please chose the navigation menu to show',
+	'Please chose the navigation menu to show.',
 );
+$GLOBALS['TL_LANG']['tl_module']['xnavigation_template'] = array(
+	'Template',
+	'Please chose the navigation template.',
+);
+
+/**
+ * Legend
+ */
+$GLOBALS['TL_LANG']['tl_module']['xnavigation_legend'] = 'Menu settings';

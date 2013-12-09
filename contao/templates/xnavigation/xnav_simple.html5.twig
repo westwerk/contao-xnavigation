@@ -14,13 +14,13 @@
 {% endblock %}
 
 {% block link %}
-	<a{{ xnav_render_attributes(link_attributes) }} href="{{ item.uri|escape('html_attr') }}">{{ label }}</a>
+	<a href="{{ item.uri|escape('html_attr') }}">{{ label }}</a>
 {% endblock %}
 
 {% block link_current %}
-	<strong{{ xnav_render_attributes(link_attributes) }}>{{ label }}</strong>
+	<strong>{{ label }}</strong>
 {% endblock %}
 
 {% block label %}
-	<span{{ xnav_render_attributes(label_attributes) }}>{{ item.label }}</span>
+	{{ item.label }}
 {% endblock %}

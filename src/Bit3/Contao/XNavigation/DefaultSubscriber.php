@@ -14,8 +14,7 @@
 namespace Bit3\Contao\XNavigation;
 
 use Bit3\Contao\XNavigation\Event\EvaluateRootEvent;
-use Bit3\FlexiTree\Event\CollectItemsEvent;
-use Bit3\FlexiTree\Event\CreateItemEvent;
+use Bit3\Contao\XNavigation\Twig\TwigExtension;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -30,6 +29,7 @@ class DefaultSubscriber implements EventSubscriberInterface
 	{
 		return array(
 			EVENT_XNAVIGATION_EVALUATE_ROOT => 'evaluateRoot',
+			'contao-twig.init'              => 'initTwig',
 		);
 	}
 
@@ -71,6 +71,11 @@ class DefaultSubscriber implements EventSubscriberInterface
 			$event->setItemType('page');
 			$event->stopPropagation();
 		}
+	}
+
+	public function initTwig(\ContaoTwigInitializeEvent $event)
+	{
+		$event->getContaoTwig()->getEnvironment()->addExtension(new TwigExtension());
 	}
 
 	/**
