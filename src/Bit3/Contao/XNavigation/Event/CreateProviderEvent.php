@@ -46,11 +46,11 @@ class CreateProviderEvent extends Event
 	}
 
 	/**
-	 * @param EventSubscriberInterface $voter
+	 * @param EventSubscriberInterface $provider
 	 */
-	public function setProvider(EventSubscriberInterface $voter)
+	public function setProvider(EventSubscriberInterface $provider)
 	{
-		$this->provider = $voter;
+		$this->provider = $provider;
 		return $this;
 	}
 
