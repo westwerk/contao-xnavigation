@@ -21,7 +21,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * Class Page
  */
-class PageProvider extends \Frontend implements EventSubscriberInterface
+class PageProvider implements EventSubscriberInterface
 {
 	/**
 	 * {@inheritdoc}
@@ -39,7 +39,20 @@ class PageProvider extends \Frontend implements EventSubscriberInterface
 		$item = $event->getParentItem();
 
 		if ($item->getType() == 'page') {
-			$pages = \PageModel::findPublishedSubpagesWithoutGuestsByPid($item->getName());
+			$t = \PageModel::getTable();
+			$arrColumns = array("$t.pid=?");
+
+			if (!BE_USER_LOGGED_IN)
+			{
+				$time = time();
+				$arrColumns[] = "($t.start='' OR $t.start<$time) AND ($t.stop='' OR $t.stop>$time) AND $t.published=1";
+			}
+
+			$pages = \PageModel::findBy(
+				$arrColumns,
+				array($item->getExtra('id')),
+				array('order' => 'sorting')
+			);
 
 			if ($pages) {
 				$factory = $event->getFactory();
@@ -59,16 +72,25 @@ class PageProvider extends \Frontend implements EventSubscriberInterface
 			$page = \PageModel::findByPk($item->getName());
 
 			if ($page) {
-				$item->setUri($this->generateFrontendUrl($page->row()));
+				$item->setUri(\Frontend::generateFrontendUrl($page->row()));
 				$item->setLabel($page->title);
 
 				if ($page->cssClass) {
 					$class = $item->getAttribute('class', '');
 					$item->setAttribute('class', trim($class . ' ' . $page->cssClass));
+
+					$class = $item->getLinkAttribute('class', '');
+					$item->setLinkAttribute('class', trim($class . ' ' . $page->cssClass));
+
+					$class = $item->getLabelAttribute('class', '');
+					$item->setLabelAttribute('class', trim($class . ' ' . $page->cssClass));
 				}
 
+				$currentPage = $this->getCurrentPage();
+
 				$item->setExtras($page->row());
-				$item->setCurrent($this->getCurrentPage()->id == $page->id);
+				$item->setCurrent($currentPage->id == $page->id);
+				$item->setTrail(in_array($page->id, $currentPage->trail));
 			}
 		}
 	}
