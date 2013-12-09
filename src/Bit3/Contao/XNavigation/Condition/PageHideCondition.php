@@ -11,15 +11,15 @@
  * @license    http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  */
 
-namespace Bit3\Contao\XNavigation\Voter;
+namespace Bit3\Contao\XNavigation\Condition;
 
+use Bit3\FlexiTree\Condition\ConditionInterface;
 use Bit3\FlexiTree\ItemInterface;
-use Bit3\FlexiTree\Matcher\Voter\VoterInterface;
 
 /**
- * Class PageHideVoter
+ * Class PageHideCondition
  */
-class PageHideVoter implements VoterInterface
+class PageHideCondition implements ConditionInterface
 {
 	/**
 	 * @var bool
@@ -54,16 +54,19 @@ class PageHideVoter implements VoterInterface
 	 */
 	public function matchItem(ItemInterface $item)
 	{
-		if ($item->getType() == 'page') {
-			$hide = $item->getExtra('hide');
-			if ($hide != $this->acceptedHideStatus) {
-				return 'never';
-			}
-			else {
-				return true;
-			}
+		if ($item->getType() != 'page') {
+			return true;
 		}
 
-		return null;
+		$hide = $item->getExtra('hide');
+		return $hide == $this->acceptedHideStatus;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function describe()
+	{
+		return $this->acceptedHideStatus ? 'page.hide' : '!page.hide';
 	}
 }

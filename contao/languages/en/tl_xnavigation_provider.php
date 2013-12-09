@@ -57,7 +57,7 @@ $GLOBALS['TL_LANG']['tl_xnavigation_provider']['menus']  = array(
 	'Manage menu\'s',
 	'Manage the menu configurations.'
 );
-$GLOBALS['TL_LANG']['tl_xnavigation_provider']['filters'] = array(
-	'Manage filter\'s',
-	'Manage the menu item filter.'
+$GLOBALS['TL_LANG']['tl_xnavigation_provider']['conditions'] = array(
+	'Manage condition\'s',
+	'Manage the menu item condition.'
 );

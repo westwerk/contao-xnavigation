@@ -43,13 +43,13 @@ $GLOBALS['TL_LANG']['tl_xnavigation_menu']['provider']     = array(
 	'Active providers',
 	'Please choose the providers for the menu.'
 );
-$GLOBALS['TL_LANG']['tl_xnavigation_menu']['item_filter']       = array(
-	'Item filter',
-	'Please choose the filters for the menu items. These filters will completely hide items and all of its children from the menu.'
+$GLOBALS['TL_LANG']['tl_xnavigation_menu']['item_condition']       = array(
+	'Item condition',
+	'Please choose the condition for the menu items. These condition will completely hide items and all of its children from the menu.'
 );
-$GLOBALS['TL_LANG']['tl_xnavigation_menu']['link_filter']       = array(
-	'Item link filter',
-	'Please choose the filters for the menu items links. These filters will hide items links from the menu, but children will be shown.'
+$GLOBALS['TL_LANG']['tl_xnavigation_menu']['link_condition']       = array(
+	'Item link condition',
+	'Please choose the condition for the menu items links. These condition will hide items links from the menu, but children will be shown.'
 );
 
 /**
@@ -83,7 +83,7 @@ $GLOBALS['TL_LANG']['tl_xnavigation_menu']['page_roots']['custom']  = array(
 $GLOBALS['TL_LANG']['tl_xnavigation_menu']['menu_legend']     = 'Menu';
 $GLOBALS['TL_LANG']['tl_xnavigation_menu']['root_legend']     = 'Root settings';
 $GLOBALS['TL_LANG']['tl_xnavigation_menu']['provider_legend'] = 'Provider settings';
-$GLOBALS['TL_LANG']['tl_xnavigation_menu']['filter_legend']   = 'Filter settings';
+$GLOBALS['TL_LANG']['tl_xnavigation_menu']['condition_legend']   = 'Condition settings';
 
 /**
  * Buttons
@@ -112,7 +112,7 @@ $GLOBALS['TL_LANG']['tl_xnavigation_menu']['providers'] = array(
 	'Manage providers\'s',
 	'Manage the provider configurations.'
 );
-$GLOBALS['TL_LANG']['tl_xnavigation_menu']['filters']   = array(
-	'Manage filter\'s',
-	'Manage the menu item filter.'
+$GLOBALS['TL_LANG']['tl_xnavigation_menu']['conditions']   = array(
+	'Manage condition\'s',
+	'Manage the menu item condition.'
 );

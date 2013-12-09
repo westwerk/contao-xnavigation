@@ -48,21 +48,21 @@ $GLOBALS['TL_DCA']['tl_xnavigation_menu'] = array
 		),
 		'global_operations' => array
 		(
-			'providers' => array
+			'providers'  => array
 			(
 				'label'      => &$GLOBALS['TL_LANG']['tl_xnavigation_menu']['providers'],
 				'href'       => 'table=tl_xnavigation_provider',
 				'class'      => 'header_xnavigation_providers',
 				'attributes' => 'onclick="Backend.getScrollOffset();" accesskey="p"',
 			),
-			'filters'   => array
+			'conditions' => array
 			(
-				'label'      => &$GLOBALS['TL_LANG']['tl_xnavigation_menu']['filters'],
-				'href'       => 'table=tl_xnavigation_filter',
-				'class'      => 'header_xnavigation_filters',
+				'label'      => &$GLOBALS['TL_LANG']['tl_xnavigation_menu']['conditions'],
+				'href'       => 'table=tl_xnavigation_condition',
+				'class'      => 'header_xnavigation_conditions',
 				'attributes' => 'onclick="Backend.getScrollOffset();" accesskey="p"',
 			),
-			'all'       => array
+			'all'        => array
 			(
 				'label'      => &$GLOBALS['TL_LANG']['MSC']['all'],
 				'href'       => 'act=select',
@@ -109,10 +109,10 @@ $GLOBALS['TL_DCA']['tl_xnavigation_menu'] = array
 	(
 		'default' => array
 		(
-			'menu'     => array('title'),
-			'root'     => array('root', 'include_root'),
-			'provider' => array('provider'),
-			'filter'   => array('item_filter', 'link_filter'),
+			'menu'      => array('title'),
+			'root'      => array('root', 'include_root'),
+			'provider'  => array('provider'),
+			'condition' => array('item_condition', 'link_condition'),
 		),
 	),
 	// MetaSubpalettes
@@ -125,15 +125,15 @@ $GLOBALS['TL_DCA']['tl_xnavigation_menu'] = array
 	// Fields
 	'fields'          => array
 	(
-		'id'           => array
+		'id'              => array
 		(
 			'sql' => "int(10) unsigned NOT NULL auto_increment"
 		),
-		'tstamp'       => array
+		'tstamp'          => array
 		(
 			'sql' => "int(10) unsigned NOT NULL default '0'"
 		),
-		'title'        => array
+		'title'           => array
 		(
 			'label'     => &$GLOBALS['TL_LANG']['tl_xnavigation_menu']['title'],
 			'inputType' => 'text',
@@ -218,25 +218,27 @@ $GLOBALS['TL_DCA']['tl_xnavigation_menu'] = array
 			),
 			'sql'        => "text NULL"
 		),
-		'item_filter'       => array
+		'item_condition'  => array
 		(
-			'label'      => &$GLOBALS['TL_LANG']['tl_xnavigation_menu']['item_filter'],
-			'inputType'  => 'checkboxWizard',
-			'foreignKey' => 'tl_xnavigation_filter.title',
-			'eval'       => array(
-				'multiple' => true,
+			'label'            => &$GLOBALS['TL_LANG']['tl_xnavigation_menu']['item_condition'],
+			'inputType'        => 'select',
+			'options_callback' => array('Bit3\Contao\XNavigation\DataContainer\OptionsBuilder', 'getConditionOptions'),
+			'eval'             => array(
+				'includeBlankOption' => true,
+				'tl_class'           => 'w50',
 			),
-			'sql'        => "text NULL"
+			'sql'              => "text NULL"
 		),
-		'link_filter'       => array
+		'link_condition'  => array
 		(
-			'label'      => &$GLOBALS['TL_LANG']['tl_xnavigation_menu']['link_filter'],
-			'inputType'  => 'checkboxWizard',
-			'foreignKey' => 'tl_xnavigation_filter.title',
-			'eval'       => array(
-				'multiple' => true,
+			'label'            => &$GLOBALS['TL_LANG']['tl_xnavigation_menu']['link_condition'],
+			'inputType'        => 'select',
+			'options_callback' => array('Bit3\Contao\XNavigation\DataContainer\OptionsBuilder', 'getConditionOptions'),
+			'eval'             => array(
+				'includeBlankOption' => true,
+				'tl_class'           => 'w50',
 			),
-			'sql'        => "text NULL"
+			'sql'              => "text NULL"
 		),
 	)
 );

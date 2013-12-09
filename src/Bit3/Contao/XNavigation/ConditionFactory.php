@@ -13,31 +13,33 @@
 
 namespace Bit3\Contao\XNavigation;
 
-use Bit3\Contao\XNavigation\Event\CreateVoterEvent;
-use Bit3\Contao\XNavigation\Model\FilterModel;
+use Bit3\Contao\XNavigation\Event\CreateConditionEvent;
+use Bit3\Contao\XNavigation\Model\ConditionModel;
+use Bit3\FlexiTree\Condition\ChainConditionInterface;
+use Bit3\FlexiTree\Condition\NotCondition;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
- * Class VoterFactory
+ * Class ConditionFactory
  */
-class VoterFactory
+class ConditionFactory
 {
-	public function create(FilterModel $filterModel)
+	public function create(ConditionModel $conditionModel)
 	{
 		$eventDispatcher = $this->getEventDispatcher();
 
-		$event = new CreateVoterEvent($filterModel);
-		$eventDispatcher->dispatch(EVENT_XNAVIGATION_CREATE_VOTER, $event);
+		$event = new CreateConditionEvent($conditionModel);
+		$eventDispatcher->dispatch(EVENT_XNAVIGATION_CREATE_CONDITION, $event);
 
-		if ($event->getVoter()) {
-			return $event->getVoter();
+		if ($event->getCondition()) {
+			return $event->getCondition();
 		}
 
-		$row       = $filterModel->row();
-		$type      = $filterModel->type;
-		$className = $this->getFilterClassName($type);
+		$row       = $conditionModel->row();
+		$type      = $conditionModel->type;
+		$className = $this->getConditionClassName($type);
 		$class     = new \ReflectionClass($className);
-		$voter     = $class->newInstance();
+		$condition = $class->newInstance();
 
 		$rgxp = '~^' . preg_quote($type, '~') . '_(.*)$~';
 		foreach ($row as $key => $value) {
@@ -50,7 +52,7 @@ class VoterFactory
 				$setterName = 'set' . $property;
 
 				if ($class->hasMethod($setterName)) {
-					$setter = $class->getMethod($setterName);
+					$setter     = $class->getMethod($setterName);
 					$parameters = $setter->getParameters();
 					if (count($parameters)) {
 						$firstParameter = $parameters[0];
@@ -60,13 +62,28 @@ class VoterFactory
 							$value = deserialize($value, true);
 						}
 
-						$setter->invoke($voter, $value);
+						$setter->invoke($condition, $value);
 					}
 				}
 			}
 		}
 
-		return $voter;
+		if ($condition instanceof ChainConditionInterface) {
+			$childConditionCollection = ConditionModel::findBy('pid', $conditionModel->id, array('order' => 'sorting'));
+
+			if ($childConditionCollection) {
+				while ($childConditionCollection->next()) {
+					$childCondition = $this->create($childConditionCollection->current());
+					$condition->addCondition($childCondition);
+				}
+			}
+		}
+
+		if ($conditionModel->invert) {
+			$condition = new NotCondition($condition);
+		}
+
+		return $condition;
 	}
 
 	/**
@@ -74,9 +91,9 @@ class VoterFactory
 	 * @SuppressWarnings(PHPMD.CamelCaseVariableName)
 	 * @return string
 	 */
-	public function getFilterClassName($type)
+	public function getConditionClassName($type)
 	{
-		return $GLOBALS['XNAVIGATION_FILTER'][$type];
+		return $GLOBALS['XNAVIGATION_CONDITION'][$type];
 	}
 
 	/**

@@ -13,9 +13,7 @@
 
 namespace Bit3\Contao\XNavigation\Event;
 
-use Bit3\Contao\XNavigation\Model\FilterModel;
 use Bit3\Contao\XNavigation\Model\ProviderModel;
-use Bit3\FlexiTree\Matcher\Voter\VoterInterface;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

@@ -14,8 +14,6 @@
 namespace Bit3\Contao\XNavigation;
 
 use Bit3\Contao\XNavigation\Event\CreateProviderEvent;
-use Bit3\Contao\XNavigation\Event\CreateVoterEvent;
-use Bit3\Contao\XNavigation\Model\FilterModel;
 use Bit3\Contao\XNavigation\Model\ProviderModel;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 

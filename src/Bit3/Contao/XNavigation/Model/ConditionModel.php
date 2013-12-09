@@ -14,9 +14,9 @@
 namespace Bit3\Contao\XNavigation\Model;
 
 /**
- * Class FilterModel
+ * Class ConditionModel
  */
-class FilterModel extends \Model
+class ConditionModel extends \Model
 {
-	protected static $strTable = 'tl_xnavigation_filter';
+	protected static $strTable = 'tl_xnavigation_condition';
 }

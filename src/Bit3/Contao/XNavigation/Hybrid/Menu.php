@@ -14,16 +14,13 @@
 namespace Bit3\Contao\XNavigation\Hybrid;
 
 use Bit3\Contao\XNavigation\Event\EvaluateRootEvent;
-use Bit3\Contao\XNavigation\Model\FilterModel;
+use Bit3\Contao\XNavigation\Model\ConditionModel;
 use Bit3\Contao\XNavigation\Model\MenuModel;
 use Bit3\Contao\XNavigation\Model\ProviderModel;
 use Bit3\Contao\XNavigation\ProviderFactory;
-use Bit3\Contao\XNavigation\VoterFactory;
+use Bit3\Contao\XNavigation\ConditionFactory;
 use Bit3\FlexiTree\EventDrivenItemFactory;
 use Bit3\FlexiTree\ItemCollection;
-use Bit3\FlexiTree\Iterator\ItemFilterIterator;
-use Bit3\FlexiTree\Iterator\RecursiveItemIterator;
-use Bit3\FlexiTree\Matcher\Matcher;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
@@ -45,7 +42,7 @@ class Menu extends \TwigSimpleHybrid
 			return;
 		}
 
-		$voterFactory = new VoterFactory();
+		$conditionFactory = new ConditionFactory();
 
 		// evaluate the root item
 
@@ -57,11 +54,11 @@ class Menu extends \TwigSimpleHybrid
 			return;
 		}
 
-		// evaluate item filters and create matcher
-		$this->createItemMatcher($menu, $voterFactory);
+		// create item condition
+		$this->createItemCondition($menu, $conditionFactory);
 
-		// evaluate item link filters and create matcher
-		$this->createLinkMatcher($menu, $voterFactory);
+		// create item link condition
+		$this->createItemLinkCondition($menu, $conditionFactory);
 
 		// create the item structure
 		$this->createItems($menu, $event->getItemType(), $event->getItemName());
@@ -70,47 +67,36 @@ class Menu extends \TwigSimpleHybrid
 	}
 
 	/**
-	 * Create the item matcher and assign to the template.
+	 * Create the item condition and assign to the template.
 	 *
 	 * @param MenuModel    $menu
-	 * @param VoterFactory $voterFactory
+	 * @param ConditionFactory $conditionFactory
 	 */
-	protected function createItemMatcher(MenuModel $menu, VoterFactory $voterFactory)
+	protected function createItemCondition(MenuModel $menu, ConditionFactory $conditionFactory)
 	{
-		$itemMatcher = new Matcher();
-
-		$filterIds = deserialize($menu->item_filter, true);
-		$filters   = FilterModel::findMultipleByIds($filterIds);
-		if ($filters) {
-			foreach ($filters as $filter) {
-				$voter = $voterFactory->create($filter);
-				$itemMatcher->addVoter($voter);
-			}
-		}
-
-		$this->Template->itemMatcher = $itemMatcher->hasVoter() ? $itemMatcher : null;
+		$this->Template->item_condition = $this->createCondition($menu->item_condition, $menu, $conditionFactory);
 	}
 
 	/**
-	 * Create the item link matcher and assign to the template.
+	 * Create the item link condition and assign to the template.
 	 *
 	 * @param MenuModel    $menu
-	 * @param VoterFactory $voterFactory
+	 * @param ConditionFactory $conditionFactory
 	 */
-	protected function createLinkMatcher(MenuModel $menu, VoterFactory $voterFactory)
+	protected function createItemLinkCondition(MenuModel $menu, ConditionFactory $conditionFactory)
 	{
-		$linkMatcher = new Matcher();
+		$this->Template->link_condition = $this->createCondition($menu->link_condition, $menu, $conditionFactory);
+	}
 
-		$filterIds = deserialize($menu->link_filter, true);
-		$filters   = FilterModel::findMultipleByIds($filterIds);
-		if ($filters) {
-			foreach ($filters as $filter) {
-				$voter = $voterFactory->create($filter);
-				$linkMatcher->addVoter($voter);
-			}
+	protected function createCondition($conditionId, MenuModel $menu, ConditionFactory $conditionFactory)
+	{
+		$conditionModel = ConditionModel::findByPk($conditionId);
+
+		if ($conditionModel) {
+			return $conditionFactory->create($conditionModel);
 		}
 
-		$this->Template->linkMatcher = $linkMatcher->hasVoter() ? $linkMatcher : null;
+		return null;
 	}
 
 	/**

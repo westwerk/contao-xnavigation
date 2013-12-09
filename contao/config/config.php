@@ -15,7 +15,7 @@
 /**
  * Event names
  */
-define('EVENT_XNAVIGATION_CREATE_VOTER', 'xnavigation.create-voter');
+define('EVENT_XNAVIGATION_CREATE_CONDITION', 'xnavigation.create-condition');
 define('EVENT_XNAVIGATION_CREATE_PROVIDER', 'xnavigation.create-provider');
 define('EVENT_XNAVIGATION_EVALUATE_ROOT', 'xnavigation.evaluate-root');
 
@@ -30,7 +30,7 @@ $GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'Bit3\Contao\XNavigation\DefaultSubscriber'
  * Back end modules
  */
 $GLOBALS['BE_MOD']['design']['xnavigation'] = array(
-	'tables'     => array('tl_xnavigation_menu', 'tl_xnavigation_provider', 'tl_xnavigation_filter'),
+	'tables'     => array('tl_xnavigation_menu', 'tl_xnavigation_provider', 'tl_xnavigation_condition'),
 	'icon'       => 'system/modules/xnavigation/assets/images/menu.png',
 	'stylesheet' => 'system/modules/xnavigation/assets/css/backend.css',
 );
@@ -51,9 +51,9 @@ $GLOBALS['TL_CTE']['navigation']['xnavigation_menu'] = 'Bit3\Contao\XNavigation\
 /**
  * Models
  */
-$GLOBALS['TL_MODELS']['tl_xnavigation_filter']   = 'Bit3\Contao\XNavigation\Model\FilterModel';
-$GLOBALS['TL_MODELS']['tl_xnavigation_menu']     = 'Bit3\Contao\XNavigation\Model\MenuModel';
-$GLOBALS['TL_MODELS']['tl_xnavigation_provider'] = 'Bit3\Contao\XNavigation\Model\ProviderModel';
+$GLOBALS['TL_MODELS']['tl_xnavigation_condition'] = 'Bit3\Contao\XNavigation\Model\ConditionModel';
+$GLOBALS['TL_MODELS']['tl_xnavigation_menu']      = 'Bit3\Contao\XNavigation\Model\MenuModel';
+$GLOBALS['TL_MODELS']['tl_xnavigation_provider']  = 'Bit3\Contao\XNavigation\Model\ProviderModel';
 
 
 /**
@@ -63,12 +63,17 @@ $GLOBALS['XNAVIGATION_PROVIDER']['page'] = 'Bit3\Contao\XNavigation\Provider\Pag
 
 
 /**
- * Filter
+ * Conditions
  */
-$GLOBALS['XNAVIGATION_FILTER']['current']        = 'Bit3\FlexiTree\Matcher\Voter\CurrentVoter';
-$GLOBALS['XNAVIGATION_FILTER']['trail']          = 'Bit3\FlexiTree\Matcher\Voter\TrailVoter';
-$GLOBALS['XNAVIGATION_FILTER']['level']          = 'Bit3\FlexiTree\Matcher\Voter\LevelVoter';
-$GLOBALS['XNAVIGATION_FILTER']['page_guests']    = 'Bit3\Contao\XNavigation\Voter\PageGuestsVoter';
-$GLOBALS['XNAVIGATION_FILTER']['page_protected'] = 'Bit3\Contao\XNavigation\Voter\PageProtectedVoter';
-$GLOBALS['XNAVIGATION_FILTER']['page_hide']      = 'Bit3\Contao\XNavigation\Voter\PageHideVoter';
-$GLOBALS['XNAVIGATION_FILTER']['page_sitemap']   = 'Bit3\Contao\XNavigation\Voter\PageSitemapVoter';
+$GLOBALS['XNAVIGATION_CONDITION']['and']            = 'Bit3\FlexiTree\Condition\AndCondition';
+$GLOBALS['XNAVIGATION_CONDITION']['or']             = 'Bit3\FlexiTree\Condition\OrCondition';
+$GLOBALS['XNAVIGATION_CONDITION']['current']        = 'Bit3\FlexiTree\Condition\CurrentCondition';
+$GLOBALS['XNAVIGATION_CONDITION']['trail']          = 'Bit3\FlexiTree\Condition\TrailCondition';
+$GLOBALS['XNAVIGATION_CONDITION']['level']          = 'Bit3\FlexiTree\Condition\LevelCondition';
+$GLOBALS['XNAVIGATION_CONDITION']['page_guests']    = 'Bit3\Contao\XNavigation\Condition\PageGuestsCondition';
+$GLOBALS['XNAVIGATION_CONDITION']['page_protected'] = 'Bit3\Contao\XNavigation\Condition\PageProtectedCondition';
+$GLOBALS['XNAVIGATION_CONDITION']['page_hide']      = 'Bit3\Contao\XNavigation\Condition\PageHideCondition';
+$GLOBALS['XNAVIGATION_CONDITION']['page_sitemap']   = 'Bit3\Contao\XNavigation\Condition\PageSitemapCondition';
+$GLOBALS['XNAVIGATION_CONDITION']['page_published'] = 'Bit3\Contao\XNavigation\Condition\PagePublishedCondition';
+$GLOBALS['XNAVIGATION_CONDITION']['member_login']   = 'Bit3\Contao\XNavigation\Condition\MemberLoginCondition';
+$GLOBALS['XNAVIGATION_CONDITION']['link']           = 'Bit3\Contao\XNavigation\Condition\LinkCondition';

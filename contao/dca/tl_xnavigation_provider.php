@@ -58,11 +58,11 @@ $GLOBALS['TL_DCA']['tl_xnavigation_provider'] = array
 				'class'      => 'header_xnavigation_menus',
 				'attributes' => 'onclick="Backend.getScrollOffset();" accesskey="m"',
 			),
-			'filters' => array
+			'conditions' => array
 			(
-				'label'      => &$GLOBALS['TL_LANG']['tl_xnavigation_provider']['filters'],
-				'href'       => 'table=tl_xnavigation_filter',
-				'class'      => 'header_xnavigation_filters',
+				'label'      => &$GLOBALS['TL_LANG']['tl_xnavigation_provider']['conditions'],
+				'href'       => 'table=tl_xnavigation_condition',
+				'class'      => 'header_xnavigation_conditions',
 				'attributes' => 'onclick="Backend.getScrollOffset();" accesskey="p"',
 			),
 			'all'     => array

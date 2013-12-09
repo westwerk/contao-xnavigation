@@ -11,15 +11,15 @@
  * @license    http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  */
 
-namespace Bit3\Contao\XNavigation\Voter;
+namespace Bit3\Contao\XNavigation\Condition;
 
+use Bit3\FlexiTree\Condition\ConditionInterface;
 use Bit3\FlexiTree\ItemInterface;
-use Bit3\FlexiTree\Matcher\Voter\VoterInterface;
 
 /**
- * Class PageSitemapVoter
+ * Class PageSitemapCondition
  */
-class PageSitemapVoter implements VoterInterface
+class PageSitemapCondition implements ConditionInterface
 {
 	/**
 	 * @var bool
@@ -54,16 +54,29 @@ class PageSitemapVoter implements VoterInterface
 	 */
 	public function matchItem(ItemInterface $item)
 	{
-		if ($item->getType() == 'page') {
-			$sitemap = $item->getExtra('sitemap');
-			if (!in_array($sitemap, $this->acceptedSitemapStatus)) {
-				return 'never';
-			}
-			else {
-				return true;
-			}
+		if ($item->getType() != 'page') {
+			return true;
 		}
 
-		return null;
+		$sitemap = $item->getExtra('sitemap');
+		return in_array($sitemap, $this->acceptedSitemapStatus);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function describe()
+	{
+		$parts = array();
+
+		foreach ($this->acceptedSitemapStatus as $acceptedSitemapStatus) {
+			$parts[] = sprintf('page.sitemap="%s"', $acceptedSitemapStatus);
+		}
+
+		if (count($parts)) {
+			return sprintf('(%s)', implode(' OR ', $parts));
+		}
+
+		return false;
 	}
 }
