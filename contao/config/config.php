@@ -49,6 +49,12 @@ $GLOBALS['TL_CTE']['navigation']['xnavigation_menu'] = 'Bit3\Contao\XNavigation\
 
 
 /**
+ * Menu root types
+ */
+$GLOBALS['XNAVIGATION_MENU_ROOT'][] = 'page';
+
+
+/**
  * Models
  */
 $GLOBALS['TL_MODELS']['tl_xnavigation_condition'] = 'Bit3\Contao\XNavigation\Model\ConditionModel';
