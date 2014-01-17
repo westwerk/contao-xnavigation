@@ -145,6 +145,11 @@ $GLOBALS['TL_DCA']['tl_xnavigation_condition'] = array
 			'condition' => array('type', 'title'),
 			'settings'  => array('level_min', 'level_max', 'invert'),
 		),
+		'page_id'        => array
+		(
+			'condition' => array('type', 'title'),
+			'settings'  => array('page_id_page_id', 'invert'),
+		),
 		'page_guests'    => array
 		(
 			'condition' => array('type', 'title'),
@@ -256,6 +261,12 @@ $GLOBALS['TL_DCA']['tl_xnavigation_condition'] = array
 				'rgxp'      => 'digit',
 			),
 			'sql'       => "char(10) NOT NULL default ''"
+		),
+		'page_id_page_id'                        => array
+		(
+			'label'     => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_id_page_id'],
+			'inputType' => 'pageTree',
+			'sql'       => "int(10) NOT NULL default '0'"
 		),
 		'page_guests_accepted_guests_status'     => array
 		(

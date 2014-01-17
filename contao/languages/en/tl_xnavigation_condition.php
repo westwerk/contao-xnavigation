@@ -31,6 +31,10 @@ $GLOBALS['TL_LANG']['tl_xnavigation_condition']['level_max']                    
 	'Max level (inclusive)',
 	'Please enter the max level that is visible.'
 );
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_id_page_id']   = array(
+	'Page',
+	'Please choose the page.'
+);
 $GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_guests_accepted_guests_status']   = array(
 	'Accepted status',
 	'Please choose the accepted status of the "guests only" flag.'

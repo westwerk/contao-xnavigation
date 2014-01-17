@@ -76,6 +76,7 @@ $GLOBALS['XNAVIGATION_CONDITION']['or']             = 'Bit3\FlexiTree\Condition\
 $GLOBALS['XNAVIGATION_CONDITION']['current']        = 'Bit3\FlexiTree\Condition\CurrentCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['trail']          = 'Bit3\FlexiTree\Condition\TrailCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['level']          = 'Bit3\FlexiTree\Condition\LevelCondition';
+$GLOBALS['XNAVIGATION_CONDITION']['page_id']        = 'Bit3\Contao\XNavigation\Condition\PageIdCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['page_guests']    = 'Bit3\Contao\XNavigation\Condition\PageGuestsCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['page_protected'] = 'Bit3\Contao\XNavigation\Condition\PageProtectedCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['page_hide']      = 'Bit3\Contao\XNavigation\Condition\PageHideCondition';

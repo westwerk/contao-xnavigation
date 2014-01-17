@@ -133,12 +133,19 @@ class TwigExtension extends \Twig_Extension
 
 		$itemCondition = $context['item_condition'];
 
-		$count    = $collection->count();
-		$index    = 0;
 		$iterator = $collection->getIterator($itemCondition);
 		$children = '';
 
+		/** @var ItemInterface[] $items */
+		$items = array();
 		foreach ($iterator as $item) {
+			$items[] = $item;
+		}
+
+		$count    = count($items);
+		$index    = 0;
+
+		foreach ($items as $item) {
 			$context['loop'] = array(
 				'index'     => $index + 1,
 				'index0'    => $index,
@@ -253,11 +260,11 @@ class TwigExtension extends \Twig_Extension
 		$context['item']             = $item;
 		$context['item_classes']     = $classes;
 		$context['link_attributes']  = $this->extendAttributesFunction(
-			$item->getAttributes(),
+			$item->getLinkAttributes(),
 			array('class' => implode(' ', $classes))
 		);
 		$context['label_attributes'] = $this->extendAttributesFunction(
-			$item->getAttributes(),
+			$item->getLabelAttributes(),
 			array('class' => implode(' ', $classes))
 		);
 		$context['level']            = $item->getLevel();
@@ -291,7 +298,7 @@ class TwigExtension extends \Twig_Extension
 		$context['item']             = $item;
 		$context['level']            = $item->getLevel();
 		$context['label_attributes'] = $this->extendAttributesFunction(
-			$item->getAttributes(),
+			$item->getLabelAttributes(),
 			array('class' => implode(' ', $classes))
 		);
 
