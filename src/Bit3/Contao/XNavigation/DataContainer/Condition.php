@@ -30,7 +30,9 @@ class Condition
 		{
 			if ($row['pid'] > 0) {
 				$parentCondition = ConditionModel::findByPk($row['pid']);
-				$disabled = $parentCondition->type != 'or' && $parentCondition->type != 'and';
+				$disabled = $parentCondition->type != 'or' &&
+					$parentCondition->type != 'and' &&
+					($parentCondition->type != 'parent' || (bool) ConditionModel::findBy('pid', $row['id']));
 			}
 			else {
 				$disabled = false;
@@ -49,7 +51,12 @@ class Condition
 			}
 		}
 
-		if ($row['id'] == 0 || $row['type'] == 'or' || $row['type'] == 'and') {
+		if (
+			$row['id'] == 0 ||
+			$row['type'] == 'or' ||
+			$row['type'] == 'and' ||
+			($row['type'] == 'parent' && !ConditionModel::findBy('pid', $row['id']))
+		) {
 			$html .= sprintf(
 				'<a href="%s" title="%s" onclick="Backend.getScrollOffset()">%s</a> ',
 				\Backend::addToUrl('act='.$arrClipboard['mode'].'&amp;mode=2&amp;pid='.$row['id'].(!is_array($arrClipboard['id']) ? '&amp;id='.$arrClipboard['id'] : '')),

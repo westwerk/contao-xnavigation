@@ -130,6 +130,10 @@ $GLOBALS['TL_DCA']['tl_xnavigation_condition'] = array
 		(
 			'condition' => array('type')
 		),
+		'parent'         => array
+		(
+			'condition' => array('type', 'title'),
+		),
 		'and'            => array
 		(
 			'condition' => array('type', 'title'),

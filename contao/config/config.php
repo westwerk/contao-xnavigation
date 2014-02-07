@@ -73,6 +73,7 @@ $GLOBALS['XNAVIGATION_PROVIDER']['page'] = 'Bit3\Contao\XNavigation\Provider\Pag
  */
 $GLOBALS['XNAVIGATION_CONDITION']['and']            = 'Bit3\FlexiTree\Condition\AndCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['or']             = 'Bit3\FlexiTree\Condition\OrCondition';
+$GLOBALS['XNAVIGATION_CONDITION']['parent']         = 'Bit3\FlexiTree\Condition\ParentCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['current']        = 'Bit3\FlexiTree\Condition\CurrentCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['trail']          = 'Bit3\FlexiTree\Condition\TrailCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['level']          = 'Bit3\FlexiTree\Condition\LevelCondition';

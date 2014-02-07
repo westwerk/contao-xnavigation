@@ -17,6 +17,7 @@ use Bit3\Contao\XNavigation\Event\CreateConditionEvent;
 use Bit3\Contao\XNavigation\Model\ConditionModel;
 use Bit3\FlexiTree\Condition\ChainConditionInterface;
 use Bit3\FlexiTree\Condition\NotCondition;
+use Bit3\FlexiTree\Condition\ParentCondition;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
@@ -76,6 +77,15 @@ class ConditionFactory
 					$childCondition = $this->create($childConditionCollection->current());
 					$condition->addCondition($childCondition);
 				}
+			}
+		}
+
+		if ($condition instanceof ParentCondition) {
+			$childConditionCollection = ConditionModel::findBy('pid', $conditionModel->id, array('order' => 'sorting'));
+
+			if ($childConditionCollection && $childConditionCollection->next()) {
+				$childCondition = $this->create($childConditionCollection->current());
+				$condition->setCondition($childCondition);
 			}
 		}
 

@@ -23,6 +23,10 @@ $GLOBALS['TL_LANG']['xnavigation_condition']['or']             = array(
 	'OR',
 	'OR conjunction over several conditions.'
 );
+$GLOBALS['TL_LANG']['xnavigation_condition']['parent']         = array(
+	'Parent',
+	'Show only items with parent. Allows sub-conditions on the parent.'
+);
 $GLOBALS['TL_LANG']['xnavigation_condition']['current']        = array(
 	'Active item',
 	'Show only the active pages.'
