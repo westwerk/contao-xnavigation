@@ -22,8 +22,13 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * Class Page
  */
-class PageProvider implements EventSubscriberInterface
+class PageProvider extends \Controller implements EventSubscriberInterface
 {
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -75,6 +80,8 @@ class PageProvider implements EventSubscriberInterface
 			if ($page) {
 				if ($page->type == 'redirect') {
 					$uri = $page->url;
+					$uri = html_entity_decode($uri, ENT_QUOTES, 'UTF-8');
+					$uri = $this->replaceInsertTags($uri);
 				}
 				else {
 					$uri = \Frontend::generateFrontendUrl($page->row());
