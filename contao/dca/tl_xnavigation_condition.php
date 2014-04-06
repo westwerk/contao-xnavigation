@@ -53,6 +53,12 @@ $GLOBALS['TL_DCA']['tl_xnavigation_condition'] = array
 		),
 		'global_operations' => array
 		(
+			'create_default'     => array
+			(
+				'label'      => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['create_default'],
+				'href'       => 'table=tl_xnavigation_condition&key=create_default',
+				'class'      => 'header_new',
+			),
 			'menus'     => array
 			(
 				'label'      => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['menus'],

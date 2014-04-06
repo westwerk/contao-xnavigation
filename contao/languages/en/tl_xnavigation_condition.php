@@ -80,6 +80,10 @@ $GLOBALS['TL_LANG']['tl_xnavigation_condition']['settings_legend']  = 'Settings'
 /**
  * Buttons
  */
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['create_default']       = array(
+	'Create default condition',
+	'Create a new default condition.'
+);
 $GLOBALS['TL_LANG']['tl_xnavigation_condition']['new']       = array(
 	'New condition',
 	'Create a new condition.'
@@ -108,3 +112,8 @@ $GLOBALS['TL_LANG']['tl_xnavigation_condition']['providers'] = array(
 	'Manage providers\'s',
 	'Manage the provider configurations.'
 );
+
+/**
+ * Messages
+ */
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['default_created'] = 'New default condition <em>%s</em> created.';
