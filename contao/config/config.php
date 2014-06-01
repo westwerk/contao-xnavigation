@@ -50,23 +50,11 @@ $GLOBALS['TL_CTE']['navigation']['xnavigation_menu'] = 'Bit3\Contao\XNavigation\
 
 
 /**
- * Menu root types
- */
-$GLOBALS['XNAVIGATION_MENU_ROOT'][] = 'page';
-
-
-/**
  * Models
  */
 $GLOBALS['TL_MODELS']['tl_xnavigation_condition'] = 'Bit3\Contao\XNavigation\Model\ConditionModel';
 $GLOBALS['TL_MODELS']['tl_xnavigation_menu']      = 'Bit3\Contao\XNavigation\Model\MenuModel';
 $GLOBALS['TL_MODELS']['tl_xnavigation_provider']  = 'Bit3\Contao\XNavigation\Model\ProviderModel';
-
-
-/**
- * Provider
- */
-$GLOBALS['XNAVIGATION_PROVIDER']['page'] = 'Bit3\Contao\XNavigation\Provider\PageProvider';
 
 
 /**
@@ -78,11 +66,5 @@ $GLOBALS['XNAVIGATION_CONDITION']['parent']         = 'Bit3\FlexiTree\Condition\
 $GLOBALS['XNAVIGATION_CONDITION']['current']        = 'Bit3\FlexiTree\Condition\CurrentCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['trail']          = 'Bit3\FlexiTree\Condition\TrailCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['level']          = 'Bit3\FlexiTree\Condition\LevelCondition';
-$GLOBALS['XNAVIGATION_CONDITION']['page_id']        = 'Bit3\Contao\XNavigation\Condition\PageIdCondition';
-$GLOBALS['XNAVIGATION_CONDITION']['page_guests']    = 'Bit3\Contao\XNavigation\Condition\PageGuestsCondition';
-$GLOBALS['XNAVIGATION_CONDITION']['page_protected'] = 'Bit3\Contao\XNavigation\Condition\PageProtectedCondition';
-$GLOBALS['XNAVIGATION_CONDITION']['page_hide']      = 'Bit3\Contao\XNavigation\Condition\PageHideCondition';
-$GLOBALS['XNAVIGATION_CONDITION']['page_sitemap']   = 'Bit3\Contao\XNavigation\Condition\PageSitemapCondition';
-$GLOBALS['XNAVIGATION_CONDITION']['page_published'] = 'Bit3\Contao\XNavigation\Condition\PagePublishedCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['member_login']   = 'Bit3\Contao\XNavigation\Condition\MemberLoginCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['link']           = 'Bit3\Contao\XNavigation\Condition\LinkCondition';

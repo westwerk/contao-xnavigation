@@ -13,7 +13,7 @@
 
 
 /**
- * Fields
+ * Conditions
  */
 $GLOBALS['TL_LANG']['tl_xnavigation_condition']['type']                                 = array(
 	'Type',
@@ -31,22 +31,6 @@ $GLOBALS['TL_LANG']['tl_xnavigation_condition']['level_max']                    
 	'Max level (inclusive)',
 	'Please enter the max level that is visible.'
 );
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_id_page_id']   = array(
-	'Page',
-	'Please choose the page.'
-);
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_guests_accepted_guests_status']   = array(
-	'Accepted status',
-	'Please choose the accepted status of the "guests only" flag.'
-);
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_hide_accepted_hide_status']       = array(
-	'Accepted status',
-	'Please choose the accepted status of the "hide in menu" flag.'
-);
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_sitemap_accepted_sitemap_status'] = array(
-	'Accepted status',
-	'Please choose the accepted status of the "show in sitemap" flag.'
-);
 $GLOBALS['TL_LANG']['tl_xnavigation_condition']['member_login_accepted_login_status']    = array(
 	'Accepted login status',
 	'Please choose the accepted login status.'
@@ -59,15 +43,6 @@ $GLOBALS['TL_LANG']['tl_xnavigation_condition']['invert']                       
 /**
  * Reference
  */
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_guests_accepted_guests_statuses']['']              = 'not selected';
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_guests_accepted_guests_statuses']['1']             = 'selected';
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_members_accepted_protected_status']['']            = 'not selected';
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_members_accepted_protected_status']['1']           = 'selected';
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_hide_accepted_hide_statuses']['']                  = 'not selected';
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_hide_accepted_hide_statuses']['1']                 = 'selected';
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_sitemap_accepted_sitemap_statuses']['map_default'] = 'default';
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_sitemap_accepted_sitemap_statuses']['map_always']  = 'always in sitemap';
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_sitemap_accepted_sitemap_statuses']['map_never']   = 'never in sitemap';
 $GLOBALS['TL_LANG']['tl_xnavigation_condition']['member_login_accepted_login_statuses']['logged_in']     = 'logged in';
 $GLOBALS['TL_LANG']['tl_xnavigation_condition']['member_login_accepted_login_statuses']['logged_out']    = 'logged out';
 

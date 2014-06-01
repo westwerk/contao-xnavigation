@@ -36,6 +36,11 @@
 	"replace": {
 		"contao-legacy/xnavigation": "self.version"
 	},
+	"suggest": {
+		"bit3/contao-xnavigation-page": "Pages navigation items.",
+		"bit3/contao-xnavigation-article": "Article navigation items.",
+		"bit3/contao-xnavigation-content": "Content navigation items."
+	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
 	"autoload": {

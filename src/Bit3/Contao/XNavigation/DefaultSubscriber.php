@@ -28,49 +28,8 @@ class DefaultSubscriber implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-			EVENT_XNAVIGATION_EVALUATE_ROOT => 'evaluateRoot',
-			'contao-twig.init'              => 'initTwig',
+			'contao-twig.init'                          => 'initTwig',
 		);
-	}
-
-	public function evaluateRoot(EvaluateRootEvent $event)
-	{
-		$menu = $event->getMenuModel();
-
-		if ($menu->root == 'page') {
-			switch ($menu->page_root) {
-				case 'root':
-					$event->setItemName($this->getCurrentPage()->rootId);
-					break;
-
-				case 'parent':
-					$event->setItemName($this->getCurrentPage()->pid);
-					break;
-
-				case 'current':
-					$event->setItemName($this->getCurrentPage()->id);
-					break;
-
-				case 'level':
-					$level = $menu->page_root_level;
-					$trail = $this->getCurrentPage()->trail;
-					$pageId = isset($trail[$level])
-						? $trail[$level]
-						: - 1;
-					$event->setItemName($pageId);
-					break;
-
-				case 'custom':
-					$event->setItemName($menu->page_root_id);
-					break;
-
-				default:
-					return;
-			}
-
-			$event->setItemType('page');
-			$event->stopPropagation();
-		}
 	}
 
 	public function initTwig(\ContaoTwigInitializeEvent $event)

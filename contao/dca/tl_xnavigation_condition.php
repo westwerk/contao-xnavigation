@@ -155,36 +155,6 @@ $GLOBALS['TL_DCA']['tl_xnavigation_condition'] = array
 			'condition' => array('type', 'title'),
 			'settings'  => array('level_min', 'level_max', 'invert'),
 		),
-		'page_id'        => array
-		(
-			'condition' => array('type', 'title'),
-			'settings'  => array('page_id_page_id', 'invert'),
-		),
-		'page_guests'    => array
-		(
-			'condition' => array('type', 'title'),
-			'settings'  => array('page_guests_accepted_guests_status', 'invert'),
-		),
-		'page_members'   => array
-		(
-			'condition' => array('type', 'title'),
-			'settings'  => array('page_members_accepted_protected_status', 'invert'),
-		),
-		'page_hide'      => array
-		(
-			'condition' => array('type', 'title'),
-			'settings'  => array('page_hide_accepted_hide_status', 'invert'),
-		),
-		'page_sitemap'   => array
-		(
-			'condition' => array('type', 'title'),
-			'settings'  => array('page_sitemap_accepted_sitemap_status', 'invert'),
-		),
-		'page_published' => array
-		(
-			'condition' => array('type', 'title'),
-			'settings'  => array('invert'),
-		),
 		'member_login'   => array
 		(
 			'condition' => array('type', 'title'),
@@ -271,57 +241,6 @@ $GLOBALS['TL_DCA']['tl_xnavigation_condition'] = array
 				'rgxp'      => 'digit',
 			),
 			'sql'       => "char(10) NOT NULL default ''"
-		),
-		'page_id_page_id'                        => array
-		(
-			'label'     => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_id_page_id'],
-			'inputType' => 'pageTree',
-			'sql'       => "int(10) NOT NULL default '0'"
-		),
-		'page_guests_accepted_guests_status'     => array
-		(
-			'label'     => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_guests_accepted_guests_status'],
-			'inputType' => 'select',
-			'options'   => array('', '1'),
-			'reference' => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_guests_accepted_guests_statuses'],
-			'eval'      => array(
-				'tl_class' => 'w50',
-			),
-			'sql'       => "char(1) NOT NULL default ''"
-		),
-		'page_members_accepted_protected_status' => array
-		(
-			'label'     => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_members_accepted_protected_status'],
-			'inputType' => 'select',
-			'options'   => array('', '1'),
-			'reference' => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_members_accepted_protected_statuses'],
-			'eval'      => array(
-				'tl_class' => 'w50',
-			),
-			'sql'       => "char(1) NOT NULL default ''"
-		),
-		'page_hide_accepted_hide_status'         => array
-		(
-			'label'     => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_hide_accepted_hide_status'],
-			'inputType' => 'select',
-			'options'   => array('', '1'),
-			'reference' => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_hide_accepted_hide_statuses'],
-			'eval'      => array(
-				'tl_class' => 'w50',
-			),
-			'sql'       => "char(1) NOT NULL default ''"
-		),
-		'page_sitemap_accepted_sitemap_status'   => array
-		(
-			'label'     => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_sitemap_accepted_sitemap_status'],
-			'inputType' => 'checkbox',
-			'options'   => array('map_default', 'map_always', 'map_never'),
-			'reference' => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_sitemap_accepted_sitemap_statuses'],
-			'eval'      => array(
-				'mandatory' => true,
-				'multiple'  => true,
-			),
-			'sql'       => "varchar(255) NOT NULL default ''"
 		),
 		'member_login_accepted_login_status'     => array
 		(
