@@ -35,6 +35,22 @@ $GLOBALS['TL_LANG']['tl_xnavigation_condition']['level_max']                    
 	'Max level (inclusive)',
 	'Please enter the max level that is visible.'
 );
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_guests_accepted_guests_status']   = array(
+	'Accepted status',
+	'Please choose the accepted status of the "guests only" flag.'
+);
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_hide_accepted_hide_status']       = array(
+	'Accepted status',
+	'Please choose the accepted status of the "hide in menu" flag.'
+);
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_members_accepted_protected_status']       = array(
+	'Accepted status',
+	'Please choose the accepted status of the "protected" flag.'
+);
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_sitemap_accepted_sitemap_status'] = array(
+	'Accepted status',
+	'Please choose the accepted status of the "show in sitemap" flag.'
+);
 $GLOBALS['TL_LANG']['tl_xnavigation_condition']['member_login_accepted_login_status']    = array(
 	'Accepted login status',
 	'Please choose the accepted login status.'
