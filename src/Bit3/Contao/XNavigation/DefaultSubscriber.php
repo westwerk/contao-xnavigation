@@ -13,7 +13,9 @@
 
 namespace Bit3\Contao\XNavigation;
 
+use Bit3\Contao\XNavigation\Event\CreateDefaultConditionEvent;
 use Bit3\Contao\XNavigation\Event\EvaluateRootEvent;
+use Bit3\Contao\XNavigation\Model\ConditionModel;
 use Bit3\Contao\XNavigation\Twig\TwigExtension;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

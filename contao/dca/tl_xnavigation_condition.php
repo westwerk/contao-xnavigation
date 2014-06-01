@@ -12,7 +12,8 @@
  */
 
 
-$this->loadLanguageFile('xnavigation_condition');
+\Controller::loadLanguageFile('xnavigation_condition');
+\Controller::loadLanguageFile('xnavigation_provider');
 
 
 /**
@@ -67,14 +68,14 @@ $GLOBALS['TL_DCA']['tl_xnavigation_condition'] = array
 				'class'      => 'header_xnavigation_menus',
 				'attributes' => 'onclick="Backend.getScrollOffset();" accesskey="m"',
 			),
-			'providers' => array
+			'providers'                => array
 			(
 				'label'      => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['providers'],
 				'href'       => 'table=tl_xnavigation_provider',
 				'class'      => 'header_xnavigation_providers',
 				'attributes' => 'onclick="Backend.getScrollOffset();" accesskey="p"',
 			),
-			'all'       => array
+			'all'                      => array
 			(
 				'label'      => &$GLOBALS['TL_LANG']['MSC']['all'],
 				'href'       => 'act=select',
@@ -173,9 +174,6 @@ $GLOBALS['TL_DCA']['tl_xnavigation_condition'] = array
 			'settings'  => array('link_condition_id', 'invert'),
 		),
 	),
-	// MetaSubpalettes
-	'metasubpalettes' => array
-	(),
 	// Fields
 	'fields'          => array
 	(

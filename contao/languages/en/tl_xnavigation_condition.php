@@ -51,7 +51,7 @@ $GLOBALS['TL_LANG']['tl_xnavigation_condition']['page_sitemap_accepted_sitemap_s
 	'Accepted status',
 	'Please choose the accepted status of the "show in sitemap" flag.'
 );
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['member_login_accepted_login_status']    = array(
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['member_login_accepted_login_status']   = array(
 	'Accepted login status',
 	'Please choose the accepted login status.'
 );
@@ -75,11 +75,7 @@ $GLOBALS['TL_LANG']['tl_xnavigation_condition']['settings_legend']  = 'Settings'
 /**
  * Buttons
  */
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['create_default']       = array(
-	'Create default condition',
-	'Create a new default condition.'
-);
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['new']       = array(
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['new']                      = array(
 	'New condition',
 	'Create a new condition.'
 );
@@ -91,23 +87,23 @@ $GLOBALS['TL_LANG']['tl_xnavigation_condition']['edit']                     = ar
 	'Edit condition',
 	'Edit the condition ID %s'
 );
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['copy']      = array(
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['copy']                     = array(
 	'Duplicate condition',
 	'Duplicate the condition ID %s'
 );
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['delete']    = array(
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['delete']                   = array(
 	'Delete condition',
 	'Delete condition ID %s'
 );
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['show']      = array(
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['show']                     = array(
 	'Condition details',
 	'Show details of condition ID %s'
 );
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['menus']     = array(
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['menus']                    = array(
 	'Manage menu\'s',
 	'Manage the menu configurations.'
 );
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['providers'] = array(
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['providers']                = array(
 	'Manage providers\'s',
 	'Manage the provider configurations.'
 );

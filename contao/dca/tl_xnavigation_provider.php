@@ -115,9 +115,6 @@ $GLOBALS['TL_DCA']['tl_xnavigation_provider'] = array
 			'provider' => array('type', 'title')
 		),
 	),
-	// MetaSubpalettes
-	'metasubpalettes' => array
-	(),
 	// Fields
 	'fields'          => array
 	(
