@@ -27,6 +27,10 @@ $GLOBALS['TL_LANG']['xnavigation_condition']['parent']         = array(
 	'Parent',
 	'Show only items with parent. Allows sub-conditions on the parent.'
 );
+$GLOBALS['TL_LANG']['xnavigation_condition']['item_type']      = array(
+	'Item type',
+	'Show only items of a specific type.'
+);
 $GLOBALS['TL_LANG']['xnavigation_condition']['current']        = array(
 	'Active item',
 	'Show only the active pages.'

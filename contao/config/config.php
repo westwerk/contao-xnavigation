@@ -63,6 +63,7 @@ $GLOBALS['TL_MODELS']['tl_xnavigation_provider']  = 'Bit3\Contao\XNavigation\Mod
 $GLOBALS['XNAVIGATION_CONDITION']['and']            = 'Bit3\FlexiTree\Condition\AndCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['or']             = 'Bit3\FlexiTree\Condition\OrCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['parent']         = 'Bit3\FlexiTree\Condition\ParentCondition';
+$GLOBALS['XNAVIGATION_CONDITION']['item_type']      = 'Bit3\FlexiTree\Condition\TypeCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['current']        = 'Bit3\FlexiTree\Condition\CurrentCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['trail']          = 'Bit3\FlexiTree\Condition\TrailCondition';
 $GLOBALS['XNAVIGATION_CONDITION']['level']          = 'Bit3\FlexiTree\Condition\LevelCondition';

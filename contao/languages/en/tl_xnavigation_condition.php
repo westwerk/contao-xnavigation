@@ -23,6 +23,10 @@ $GLOBALS['TL_LANG']['tl_xnavigation_condition']['title']                        
 	'Title',
 	'Please enter a name for the condition.'
 );
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['item_type_accepted_type']                        = array(
+	'Accepted type',
+	'Please choose the accepted type.'
+);
 $GLOBALS['TL_LANG']['tl_xnavigation_condition']['level_min']                            = array(
 	'Min level (inclusive)',
 	'Please enter the min level that is visible. The levels start at 0 (the root entry).'

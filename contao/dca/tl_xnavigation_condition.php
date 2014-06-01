@@ -150,6 +150,12 @@ $GLOBALS['TL_DCA']['tl_xnavigation_condition'] = array
 			'condition' => array('type', 'title'),
 			'settings'  => array('invert'),
 		),
+		'item_type'           => array
+		(
+			'condition' => array('type', 'title'),
+			'type'      => array('item_type_accepted_type'),
+			'settings'  => array('invert'),
+		),
 		'level'          => array
 		(
 			'condition' => array('type', 'title'),
@@ -219,6 +225,19 @@ $GLOBALS['TL_DCA']['tl_xnavigation_condition'] = array
 				'maxlength' => 255,
 			),
 			'sql'       => "varchar(255) NOT NULL default ''"
+		),
+		'item_type_accepted_type'                          => array
+		(
+			'label'     => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['item_type_accepted_type'],
+			'inputType' => 'select',
+			'options'   => array_keys($GLOBALS['XNAVIGATION_PROVIDER']),
+			'reference' => &$GLOBALS['TL_LANG']['xnavigation_provider'],
+			'eval'      => array(
+				'tl_class'           => 'w50',
+				'includeBlankOption' => true,
+				'mandatory'          => true,
+			),
+			'sql'       => "varchar(64) NOT NULL default ''"
 		),
 		'level_min'                              => array
 		(
