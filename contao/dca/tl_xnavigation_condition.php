@@ -53,13 +53,14 @@ $GLOBALS['TL_DCA']['tl_xnavigation_condition'] = array
 		),
 		'global_operations' => array
 		(
-			'create_default'     => array
+			'create_default_condition' => array
 			(
-				'label'      => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['create_default'],
-				'href'       => 'table=tl_xnavigation_condition&key=create_default',
+				'label'      => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['create_default_condition'],
+				'href'       => 'key=create_default_condition',
 				'class'      => 'header_new',
+				'attributes' => 'onclick="Backend.getScrollOffset();"',
 			),
-			'menus'     => array
+			'menus'                    => array
 			(
 				'label'      => &$GLOBALS['TL_LANG']['tl_xnavigation_condition']['menus'],
 				'href'       => 'table=tl_xnavigation_menu',

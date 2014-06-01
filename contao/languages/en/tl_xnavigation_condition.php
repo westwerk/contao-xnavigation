@@ -67,7 +67,11 @@ $GLOBALS['TL_LANG']['tl_xnavigation_condition']['new']       = array(
 	'New condition',
 	'Create a new condition.'
 );
-$GLOBALS['TL_LANG']['tl_xnavigation_condition']['edit']      = array(
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['create_default_condition'] = array(
+	'Create default',
+	'Create a default condition set.'
+);
+$GLOBALS['TL_LANG']['tl_xnavigation_condition']['edit']                     = array(
 	'Edit condition',
 	'Edit the condition ID %s'
 );

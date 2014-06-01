@@ -14,69 +14,33 @@
 namespace Bit3\Contao\XNavigation\DataContainer;
 
 use Bit3\Contao\XNavigation\ConditionFactory;
+use Bit3\Contao\XNavigation\Event\CreateDefaultConditionEvent;
 use Bit3\Contao\XNavigation\Model\ConditionModel;
-use Bit3\FlexiTree\Condition\AndCondition;
+use Bit3\Contao\XNavigation\XNavigationEvents;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Condition
  */
 class Condition
 {
-	public function createDefault($dc)
+	public function createDefault()
 	{
-		// root node
-		$root        = new ConditionModel();
-		$root->type  = 'and';
-		$root->title = 'Contao default condition (' . \Date::parse($GLOBALS['TL_CONFIG']['datimFormat']) . ')';
+		/** @var EventDispatcherInterface $eventDispatcher */
+		$eventDispatcher = $GLOBALS['container']['event-dispatcher'];
+
+		$root = new ConditionModel();
+		$root->type = 'or';
+		$root->title = sprintf('Contao default condition (generated at %s)', date($GLOBALS['TL_CONFIG']['datimFormat']));
 		$root->save();
 
-		// root node child conditions
-		{
-			$condition       = new ConditionModel();
-			$condition->pid  = $root->id;
-			$condition->type = 'page_published';
-			$condition->save();
+		$event = new CreateDefaultConditionEvent($root);
+		$eventDispatcher->dispatch(XNavigationEvents::CREATE_DEFAULT_CONDITION, $event);
 
-			$condition                                 = new ConditionModel();
-			$condition->pid                            = $root->id;
-			$condition->type                           = 'page_hide';
-			$condition->page_hide_accepted_hide_status = '';
-			$condition->save();
-
-			$loginStatus       = new ConditionModel();
-			$loginStatus->pid  = $root->id;
-			$loginStatus->type = 'or';
-			$loginStatus->save();
-
-			// login status child conditions
-			{
-				$condition                                     = new ConditionModel();
-				$condition->pid                                = $loginStatus->id;
-				$condition->type                               = 'member_login';
-				$condition->member_login_accepted_login_status = 'logged_out';
-				$condition->save();
-
-				$condition                                     = new ConditionModel();
-				$condition->pid                                = $loginStatus->id;
-				$condition->type                               = 'page_guests';
-				$condition->page_guests_accepted_guests_status = '';
-				$condition->save();
-			}
-		}
-
-		\Message::addConfirmation(
-			sprintf($GLOBALS['TL_LANG']['tl_xnavigation_condition']['default_created'], $root->title)
-		);
-		\Controller::redirect(
-			sprintf(
-				'contao/main.php?do=xnavigation&table=tl_xnavigation_condition&rt=%s&ref=%s',
-				REQUEST_TOKEN,
-				TL_REFERER_ID
-			)
-		);
+		\Controller::redirect(\Backend::addToUrl('key='));
 	}
 
-	public function pasteButton(\DataContainer $dc, $row, $table, $cr, $arrClipboard = null)
+	public function pasteButton(\DataContainer $dc, $row, $table, $cr, $arrClipboard=null)
 	{
 		$html = '';
 

@@ -30,10 +30,10 @@ $GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'Bit3\Contao\XNavigation\DefaultSubscriber'
  * Back end modules
  */
 $GLOBALS['BE_MOD']['design']['xnavigation'] = array(
-	'tables'         => array('tl_xnavigation_menu', 'tl_xnavigation_provider', 'tl_xnavigation_condition'),
-	'icon'           => 'system/modules/xnavigation/assets/images/menu.png',
-	'stylesheet'     => 'system/modules/xnavigation/assets/css/backend.css',
-	'create_default' => array('Bit3\Contao\XNavigation\DataContainer\Condition', 'createDefault'),
+	'tables'                   => array('tl_xnavigation_menu', 'tl_xnavigation_provider', 'tl_xnavigation_condition'),
+	'icon'                     => 'system/modules/xnavigation/assets/images/menu.png',
+	'stylesheet'               => 'system/modules/xnavigation/assets/css/backend.css',
+	'create_default_condition' => array('Bit3\Contao\XNavigation\DataContainer\Condition', 'createDefault'),
 );
 
 
