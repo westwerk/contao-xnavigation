@@ -1,0 +1,27 @@
+.header_xnavigation_menus {
+	padding: 2px 0 3px 20px;
+	background-image: url(../images/menu.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+	margin-left: 15px;
+}
+.header_xnavigation_providers {
+	padding: 2px 0 3px 20px;
+	background-image: url(../images/provider.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+	margin-left: 15px;
+}
+.header_xnavigation_conditions {
+	padding: 2px 0 3px 20px;
+	background-image: url(../images/condition.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+	margin-left: 15px;
+}
+
+.condition_describe {
+	padding: 4px 0;
+	font-size: 11px;
+	font-family: monospace;
+}

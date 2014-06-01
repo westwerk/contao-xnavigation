@@ -1,0 +1,11 @@
+{% extends 'mod_container.html5.twig' %}
+
+{% block element %}nav{% endblock %}
+
+{% block content %}
+	<a href="{{ _env.request }}#xnav_skip_{{ id }}" class="invisible">{{ _lang.MSC.skipNavigation }}</a>
+
+	{{ xnav_list(items) }}
+
+	<a id="xnav_skip_{{ id }}" class="invisible">&nbsp;</a>
+{% endblock %}

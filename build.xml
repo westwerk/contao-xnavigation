@@ -1,0 +1,15 @@
+<project name="xNavigation" default="test">
+	<target name="phpcs">
+		<exec dir="${basedir}" executable="vendor/bin/phpcs" failonerror="true">
+			<arg line="--standard=${basedir}/vendor/bit3/php-coding-standard/phpcs/Bit3Contao/ruleset.xml ${basedir}/src"/>
+		</exec>
+	</target>
+
+	<target name="phpmd">
+		<exec dir="${basedir}" executable="vendor/bin/phpmd" failonerror="true">
+			<arg line="${basedir}/src text ${basedir}/vendor/bit3/php-coding-standard/phpmd/ruleset.xml"/>
+		</exec>
+	</target>
+
+	<target name="test" depends="phpcs,phpmd"/>
+</project>
