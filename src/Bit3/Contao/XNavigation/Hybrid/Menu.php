@@ -19,6 +19,7 @@ use Bit3\Contao\XNavigation\Model\MenuModel;
 use Bit3\Contao\XNavigation\Model\ProviderModel;
 use Bit3\Contao\XNavigation\ProviderFactory;
 use Bit3\Contao\XNavigation\ConditionFactory;
+use Bit3\Contao\XNavigation\XNavigationEvents;
 use Bit3\FlexiTree\EventDrivenItemFactory;
 use Bit3\FlexiTree\ItemCollection;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -144,8 +145,8 @@ class Menu extends \TwigSimpleHybrid
 		// create the event driven menu
 		$eventDrivenItemFactory = new EventDrivenItemFactory(
 			$eventDispatcher,
-			'create-item',
-			'collect-items'
+			XNavigationEvents::CREATE_ITEM,
+			XNavigationEvents::COLLECT_ITEMS
 		);
 
 		// create the root item

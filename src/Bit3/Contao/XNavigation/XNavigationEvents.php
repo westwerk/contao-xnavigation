@@ -28,4 +28,26 @@ class XNavigationEvents
 	 * @api
 	 */
 	const CREATE_DEFAULT_CONDITION = 'xnavigation.create-default-condition';
+
+	/**
+	 * The CREATE_ITEM event occurs when a default condition set gets created.
+	 *
+	 * The event listener method receives a Bit3\Contao\XNavigation\Event\CreateDefaultConditionEvent instance.
+	 *
+	 * @var string
+	 *
+	 * @api
+	 */
+	const CREATE_ITEM = 'xnavigation.create-item';
+
+	/**
+	 * The COLLECT_ITEMS event occurs when a default condition set gets created.
+	 *
+	 * The event listener method receives a Bit3\Contao\XNavigation\Event\CreateDefaultConditionEvent instance.
+	 *
+	 * @var string
+	 *
+	 * @api
+	 */
+	const COLLECT_ITEMS = 'xnavigation.collect-items';
 }
