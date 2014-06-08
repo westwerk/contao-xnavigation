@@ -13,8 +13,12 @@
 
 namespace Bit3\Contao\XNavigation\Twig;
 
+use Bit3\Contao\XNavigation\Event\GenerateItemClassesEvent;
+use Bit3\Contao\XNavigation\XNavigationEvents;
+use Bit3\FlexiTree\Condition\ConditionInterface;
 use Bit3\FlexiTree\ItemCollectionInterface;
 use Bit3\FlexiTree\ItemInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class TwigExtension
@@ -94,6 +98,13 @@ class TwigExtension extends \Twig_Extension
 				array(
 					'needs_context' => true,
 					'is_safe'       => array('html'),
+				)
+			),
+			new \Twig_SimpleFunction(
+				'xnav_link_is_visible',
+				array($this, 'linkIsVisibleFunction'),
+				array(
+					'needs_context' => true,
 				)
 			),
 		);
@@ -233,6 +244,16 @@ class TwigExtension extends \Twig_Extension
 		return $template->renderBlock('item', $context);
 	}
 
+	public function linkIsVisibleFunction(
+		$context,
+		ItemInterface $item
+	) {
+		/** @var ConditionInterface $linkCondition */
+		$linkCondition = $context['link_condition'];
+
+		return !$linkCondition || $linkCondition->matchItem($item);
+	}
+
 	public function linkFunction(
 		\Twig_Environment $env,
 		$context,
@@ -249,6 +270,7 @@ class TwigExtension extends \Twig_Extension
 		/** @var \Twig_Template $template */
 		$template = $env->loadTemplate($context['xnav_template']);
 
+		/** @var ConditionInterface $linkCondition */
 		$linkCondition = $context['link_condition'];
 
 		if ($linkCondition && !$linkCondition->matchItem($item)) {
@@ -361,6 +383,12 @@ class TwigExtension extends \Twig_Extension
 		if ($hasChildren) {
 			$classes[] = 'children';
 		}
+		if ($this->linkIsVisibleFunction($context, $item)) {
+			$classes[] = 'show-link';
+		}
+		else {
+			$classes[] = 'hide-link';
+		}
 
 		if (isset($context['loop'])) {
 			if ($context['loop']['first']) {
@@ -372,6 +400,13 @@ class TwigExtension extends \Twig_Extension
 			$classes[] = 'item_' . $context['loop']['index'];
 		}
 
-		return $classes;
+		/** @var EventDispatcherInterface $eventDispatcher */
+		$eventDispatcher = $GLOBALS['container']['event-dispatcher'];
+
+		$event = new GenerateItemClassesEvent($item);
+		$event->setClasses($classes);
+		$eventDispatcher->dispatch(XNavigationEvents::GENERATE_ITEM_CLASSES, $event);
+
+		return $event->getClasses();
 	}
 }
