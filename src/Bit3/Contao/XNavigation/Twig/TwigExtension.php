@@ -13,8 +13,11 @@
 
 namespace Bit3\Contao\XNavigation\Twig;
 
+use Bit3\Contao\XNavigation\Event\GenerateItemClassesEvent;
+use Bit3\Contao\XNavigation\XNavigationEvents;
 use Bit3\FlexiTree\ItemCollectionInterface;
 use Bit3\FlexiTree\ItemInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class TwigExtension
@@ -372,6 +375,13 @@ class TwigExtension extends \Twig_Extension
 			$classes[] = 'item_' . $context['loop']['index'];
 		}
 
-		return $classes;
+		/** @var EventDispatcherInterface $eventDispatcher */
+		$eventDispatcher = $GLOBALS['container']['event-dispatcher'];
+
+		$event = new GenerateItemClassesEvent($item);
+		$event->setClasses($classes);
+		$eventDispatcher->dispatch(XNavigationEvents::GENERATE_ITEM_CLASSES, $event);
+
+		return $event->getClasses();
 	}
 }

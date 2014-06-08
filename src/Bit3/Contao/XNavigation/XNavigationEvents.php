@@ -50,4 +50,15 @@ class XNavigationEvents
 	 * @api
 	 */
 	const COLLECT_ITEMS = 'xnavigation.collect-items';
+
+	/**
+	 * The GENERATE_ITEM_CLASSES event occurs when the css classes for an item get generated.
+	 *
+	 * The event listener method receives a Bit3\Contao\XNavigation\Event\GenerateItemClassesEvent instance.
+	 *
+	 * @var string
+	 *
+	 * @api
+	 */
+	const GENERATE_ITEM_CLASSES = 'xnavigation.generate-item-classes';
 }
