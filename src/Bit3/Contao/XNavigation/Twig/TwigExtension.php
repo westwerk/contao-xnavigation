@@ -270,6 +270,7 @@ class TwigExtension extends \Twig_Extension
 		/** @var \Twig_Template $template */
 		$template = $env->loadTemplate($context['xnav_template']);
 
+		/** @var ConditionInterface $linkCondition */
 		$linkCondition = $context['link_condition'];
 
 		if ($linkCondition && !$linkCondition->matchItem($item)) {
