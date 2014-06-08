@@ -383,6 +383,12 @@ class TwigExtension extends \Twig_Extension
 		if ($hasChildren) {
 			$classes[] = 'children';
 		}
+		if ($this->linkIsVisibleFunction($context, $item)) {
+			$classes[] = 'show-link';
+		}
+		else {
+			$classes[] = 'hide-link';
+		}
 
 		if (isset($context['loop'])) {
 			if ($context['loop']['first']) {
