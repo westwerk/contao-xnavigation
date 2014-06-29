@@ -153,10 +153,10 @@ class xNavigationPageProvider extends xNavigationProvider
 					&&  !($objXNavigation instanceof ModuleXSitemap)
 					&&  !$this->Input->get('articles'))
 				{
-					$strClass = 'page' . (strlen($strSubItems) ? ' submenu' : '') . ($hassubmenu ? ' hassubmenu' : '') . (strlen($objCurrentPage->cssClass) ? ' ' . $objCurrentPage->cssClass : '');
+					$strClass = (in_array($objCurrentPage->id, $objPage->trail)? 'trail':'active' ).' page' . (strlen($strSubItems) ? ' submenu' : '') . ($hassubmenu ? ' hassubmenu' : '') . (strlen($objCurrentPage->cssClass) ? ' ' . $objCurrentPage->cssClass : '');
 					$row = $objCurrentPage->row();
 
-					$row['isActive'] = true;
+					$row['isActive'] = in_array($objCurrentPage->id, $objPage->trail)? false : true;
 					$row['subitems'] = $strSubItems;
 					$row['class'] = (strlen($strClass) ? $strClass : '');
 					$row['pageTitle'] = specialchars($objCurrentPage->pageTitle);
