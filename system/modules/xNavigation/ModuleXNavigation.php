@@ -45,6 +45,12 @@ class ModuleXNavigation extends Module {
 	protected $strTemplate = 'mod_navigation';
 
 	/**
+	* for active/trail CSS-Class for page
+	* @var bool
+	*/
+	public $isSubActive = false;
+	
+	/**
 	 * Do not display the module if there are no menu items
 	 * @return string
 	 */
@@ -174,6 +180,12 @@ class ModuleXNavigation extends Module {
 			
 			$arrItems[0]['class'] = trim($arrItems[0]['class'] . ' first');
 			$arrItems[$last]['class'] = trim($arrItems[$last]['class'] . ' last');
+			
+			//ermitteln ob ein aktives Untermenü besteht		
+			foreach($arrItems as $k => $item)
+			{
+				if($item['itemtype'] != 'page' && $item['isActive']) $this->isSubActive = true; 			
+			}
 		}
 
 		$objTemplate->items = $arrItems;
