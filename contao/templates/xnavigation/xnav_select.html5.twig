@@ -1,0 +1,25 @@
+
+{% block list %}
+	{% if level == 1 %}
+		<select class="level_{{ level }}" onchange="window.location.href=this.value;">{{ items }}</select>
+	{% else %}
+		{{ items }}
+	{% endif %}
+{% endblock %}
+
+{% block item %}
+	{{ link }}
+	{{ children }}
+{% endblock %}
+
+{% block link %}
+	<option{{ xnav_render_attributes(link_attributes) }} value="{{ item.uri|escape('html_attr') }}">{{ label }}</option>
+{% endblock %}
+
+{% block link_current %}
+	<option{{ xnav_render_attributes(link_attributes) }} value="{{ item.uri|escape('html_attr') }}" selected>{{ label }}</option>
+{% endblock %}
+
+{% block label %}{#
+	#}{% if level > 1 %}{% for indent in range(2, level) %}&nbsp;&nbsp;&nbsp;&nbsp;{% endfor %}{% endif %}{{ item.label }}{#
+#}{% endblock %}
