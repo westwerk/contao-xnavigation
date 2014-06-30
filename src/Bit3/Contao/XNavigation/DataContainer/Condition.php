@@ -101,19 +101,31 @@ class Condition
 	public function getLabel($row, $label)
 	{
 		try {
+			$session = \Session::getInstance()->getData();
+			$tree    = $session['tl_xnavigation_condition_tree'];
+
 			$type  = $GLOBALS['TL_LANG']['xnavigation_condition'][$row['type']][0];
 			$title = $row['title'];
 
 			$factory        = new ConditionFactory();
 			$conditionModel = ConditionModel::findByPk($row['id']);
 			$condition      = $factory->create($conditionModel);
-			$describe       = $condition->describe();
 
-			$html = sprintf(
-				'<span style="color:#b3b3b3;padding-left:3px">%s</span> <span class="condition_describe">%s</span>',
-				$type,
-				$describe
-			);
+			if (isset($tree[$row['id']]) && $tree[$row['id']]) {
+				$html = sprintf(
+					'<span style="color:#b3b3b3;padding-left:3px">%s</span>',
+					$type
+				);
+			}
+			else {
+				$describe = $condition->describe();
+
+				$html = sprintf(
+					'<span style="color:#b3b3b3;padding-left:3px">%s</span> <span class="condition_describe">%s</span>',
+					$type,
+					$describe
+				);
+			}
 
 			if ($title) {
 				$html = sprintf('%s<div style="text-indent:-23px">%s</div>', $title, $html);
