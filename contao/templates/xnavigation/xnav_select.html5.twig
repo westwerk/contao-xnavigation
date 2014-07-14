@@ -1,25 +1,25 @@
 
-{% block list %}
+{% block list %}{% spaceless %}
 	{% if level == 1 %}
 		<select class="level_{{ level }}" onchange="window.location.href=this.value;">{{ items }}</select>
 	{% else %}
 		{{ items }}
 	{% endif %}
-{% endblock %}
+{% endspaceless %}{% endblock %}
 
-{% block item %}
+{% block item %}{% spaceless %}
 	{{ link }}
 	{{ children }}
-{% endblock %}
+{% endspaceless %}{% endblock %}
 
-{% block link %}
+{% block link %}{% spaceless %}
 	<option{{ xnav_render_attributes(link_attributes) }} value="{{ item.uri|escape('html_attr') }}">{{ label }}</option>
-{% endblock %}
+{% endspaceless %}{% endblock %}
 
-{% block link_current %}
+{% block link_current %}{% spaceless %}
 	<option{{ xnav_render_attributes(link_attributes) }} value="{{ item.uri|escape('html_attr') }}" selected>{{ label }}</option>
-{% endblock %}
+{% endspaceless %}{% endblock %}
 
-{% block label %}{#
-	#}{% if level > 1 %}{% for indent in range(2, level) %}&nbsp;&nbsp;&nbsp;&nbsp;{% endfor %}{% endif %}{{ item.label }}{#
-#}{% endblock %}
+{% block label %}{% spaceless %}
+	{% if level > 1 %}{% for indent in range(2, level) %}&nbsp;&nbsp;&nbsp;&nbsp;{% endfor %}{% endif %}{{ item.label }}
+{% endspaceless %}{% endblock %}

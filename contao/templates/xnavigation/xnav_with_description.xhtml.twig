@@ -1,8 +1,8 @@
 {% extends 'xnavigation/xnav_default.html5.twig' %}
 
-{% block label %}
+{% block label %}{% spaceless %}
 	<dl{{ xnav_render_attributes(label_attributes) }}>
 		<dt>{{ item.label }}</dt>
 		<dd>{{ item.extras.xnavigationSubitle }}</dd>
 	</dl>
-{% endblock %}
+{% endspaceless %}{% endblock %}
