@@ -200,12 +200,14 @@ class TwigExtension extends \Twig_Extension
 		/** @var \Twig_Template $template */
 		$template = $env->loadTemplate($context['xnav_template']);
 
+		/** @var null|ConditionInterface $itemCondition */
 		$itemCondition = $context['item_condition'];
 
 		if ($itemCondition && !$itemCondition->matchItem($item)) {
 			return '';
 		}
 
+		/** @var null|ConditionInterface $linkCondition */
 		$linkCondition = $context['link_condition'];
 
 		$link = '';

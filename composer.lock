@@ -1,22 +1,23 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "0a53f8a490408e2884adbaa14e5856f3",
+    "hash": "d13824946afcc6e8936bb0832b0e14dd",
     "packages": [
         {
             "name": "bit3/contao-meta-palettes",
-            "version": "1.5.2",
+            "version": "1.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bit3/contao-meta-palettes.git",
-                "reference": "6d6d8c724bbfb0fee7aa1553c1d474a9bb905ed2"
+                "reference": "68f419316584f56e06b107d60c524e396688b53d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bit3/contao-meta-palettes/zipball/6d6d8c724bbfb0fee7aa1553c1d474a9bb905ed2",
-                "reference": "6d6d8c724bbfb0fee7aa1553c1d474a9bb905ed2",
+                "url": "https://api.github.com/repos/bit3/contao-meta-palettes/zipball/68f419316584f56e06b107d60c524e396688b53d",
+                "reference": "68f419316584f56e06b107d60c524e396688b53d",
                 "shasum": ""
             },
             "require": {
@@ -24,11 +25,16 @@
                 "contao/core": ">=2.11,<4",
                 "php": ">=5.3"
             },
+            "conflict": {
+                "metamodels/dc_general": "<1-dev"
+            },
             "replace": {
                 "contao-legacy/metapalettes": "self.version"
             },
             "require-dev": {
                 "bit3/php-coding-standard": "@dev",
+                "metamodels/dc_general": "1.0.*@dev",
+                "phpunit/phpunit": ">=3.7.10,<4-dev",
                 "squizlabs/php_codesniffer": "1.*"
             },
             "type": "contao-module",
@@ -39,7 +45,8 @@
                     }
                 },
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-master": "1.6.x-dev",
+                    "dev-develop": "1.7.x-dev"
                 }
             },
             "autoload": {
@@ -66,26 +73,31 @@
                 "page",
                 "title"
             ],
-            "time": "2013-11-12 15:10:45"
+            "time": "2014-06-06 12:34:14"
         },
         {
             "name": "bit3/contao-twig",
-            "version": "1.3.2",
+            "version": "1.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bit3/contao-twig.git",
-                "reference": "9336b4771e00e1ebc0d073881b97d98be5318cf0"
+                "reference": "3a1fa18f1ad7a86ffba3992c30b95c7c3d211d55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bit3/contao-twig/zipball/9336b4771e00e1ebc0d073881b97d98be5318cf0",
-                "reference": "9336b4771e00e1ebc0d073881b97d98be5318cf0",
+                "url": "https://api.github.com/repos/bit3/contao-twig/zipball/3a1fa18f1ad7a86ffba3992c30b95c7c3d211d55",
+                "reference": "3a1fa18f1ad7a86ffba3992c30b95c7c3d211d55",
                 "shasum": ""
             },
             "require": {
+                "contao-community-alliance/composer-installer": "*",
+                "contao-community-alliance/event-dispatcher": "~1",
                 "contao/core": ">=2.11,<4",
                 "php": ">=5.3",
                 "twig/twig": "1.*"
+            },
+            "replace": {
+                "contao-legacy/twig": "self.version"
             },
             "require-dev": {
                 "bit3/php-coding-standard": "@dev",
@@ -94,9 +106,13 @@
             "type": "contao-module",
             "extra": {
                 "contao": {
-                    "symlinks": {
+                    "sources": {
                         "contao": "system/modules/twig"
                     }
+                },
+                "branch-alias": {
+                    "dev-master": "1.10.x-dev",
+                    "dev-develop": "1.11.x-dev"
                 }
             },
             "autoload": {
@@ -124,24 +140,27 @@
                 "theme",
                 "twig"
             ],
-            "time": "2013-03-18 15:51:10"
+            "time": "2014-07-03 18:06:02"
         },
         {
-            "name": "bit3/flexi-tree",
+            "name": "bit3/php-flexi-tree",
             "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bit3/php-flexi-tree.git",
-                "reference": "9d2e5edcf7e71a7c9d9a327b346de7dcce034f73"
+                "reference": "39341d1191d4c8155e34ce55812d74b7f69a3614"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bit3/php-flexi-tree/zipball/9d2e5edcf7e71a7c9d9a327b346de7dcce034f73",
-                "reference": "9d2e5edcf7e71a7c9d9a327b346de7dcce034f73",
+                "url": "https://api.github.com/repos/bit3/php-flexi-tree/zipball/39341d1191d4c8155e34ce55812d74b7f69a3614",
+                "reference": "39341d1191d4c8155e34ce55812d74b7f69a3614",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.4"
+            },
+            "replace": {
+                "bit3/flexi-tree": "self.version"
             },
             "require-dev": {
                 "bit3/php-coding-standard": "@dev",
@@ -174,69 +193,191 @@
                 }
             ],
             "description": "Object oriented framework to create menues.",
-            "time": "2013-11-25 12:38:37"
+            "time": "2014-06-01 21:04:43"
         },
         {
-            "name": "contao-community-alliance/composer-installer",
-            "version": "1.6.8",
+            "name": "bit3/php-string-builder",
+            "version": "1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/contao-community-alliance/composer-installer.git",
-                "reference": "12f83d88fb5d6542ba7b2e5e2a241ce4cc345794"
+                "url": "https://github.com/bit3/php-string-builder.git",
+                "reference": "9abaded7ed5ee4776d8ef6edf7f9fa6c211a9ab4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-community-alliance/composer-installer/zipball/12f83d88fb5d6542ba7b2e5e2a241ce4cc345794",
-                "reference": "12f83d88fb5d6542ba7b2e5e2a241ce4cc345794",
+                "url": "https://api.github.com/repos/bit3/php-string-builder/zipball/9abaded7ed5ee4776d8ef6edf7f9fa6c211a9ab4",
+                "reference": "9abaded7ed5ee4776d8ef6edf7f9fa6c211a9ab4",
                 "shasum": ""
             },
             "require": {
-                "contao/core": ">=2.11,<3.3"
+                "php": ">=5.3"
             },
-            "conflict": {
-                "contao-community-alliance/composer": "<0.7.10",
-                "contao/core": "3.0.*"
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
             },
-            "type": "composer-installer",
+            "type": "library",
             "extra": {
-                "class": "ContaoCommunityAlliance\\ComposerInstaller\\ModuleInstaller"
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tristan Lins",
+                    "email": "tristan.lins@bit3.de",
+                    "homepage": "http://bit3.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Java like StringBuilder implementation for PHP",
+            "keywords": [
+                "string"
+            ],
+            "time": "2013-07-15 15:27:52"
+        },
+        {
+            "name": "contao-community-alliance/backports-initialize-system",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/contao-community-alliance/backports-initialize-system.git",
+                "reference": "cc58c04803d7eda41e4421f44eccb6e8b24ac30d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/contao-community-alliance/backports-initialize-system/zipball/cc58c04803d7eda41e4421f44eccb6e8b24ac30d",
+                "reference": "cc58c04803d7eda41e4421f44eccb6e8b24ac30d",
+                "shasum": ""
+            },
+            "require": {
+                "contao-community-alliance/composer-plugin": "~2.0",
+                "contao/core": ">=2.11-dev,<4-dev",
+                "php": ">=5.3"
+            },
+            "type": "contao-module",
+            "extra": {
+                "contao": {
+                    "sources": {
+                        "module": "system/modules/backports-initialize-system"
+                    }
+                },
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev",
+                    "dev-develop": "1.1.x-dev"
+                }
             },
             "autoload": {
                 "psr-0": {
-                    "ContaoCommunityAlliance\\ComposerInstaller": "src/"
+                    "ContaoCommunityAlliance\\Contao\\Backports": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPLv3"
+                "LGPL-3.0+"
             ],
-            "time": "2013-11-20 09:28:05"
+            "authors": [
+                {
+                    "name": "Tristan Lins",
+                    "email": "tristan.lins@bit3.de",
+                    "homepage": "http://bit3.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Backport of the initializeSystem Hook for Contao Open Source CMS.",
+            "homepage": "http://c-c-a.org/",
+            "keywords": [
+                "backports",
+                "contao"
+            ],
+            "time": "2014-06-05 11:58:45"
         },
         {
-            "name": "contao-community-alliance/dependency-container",
-            "version": "1.3",
+            "name": "contao-community-alliance/composer-plugin",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/contao-community-alliance/dependency-container.git",
-                "reference": "c4de561affe7f432927a47ddcd187282fe9b0225"
+                "url": "https://github.com/contao-community-alliance/composer-plugin.git",
+                "reference": "fb5db3f6355e5b66267670f4e93b5a4cdae18f8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-community-alliance/dependency-container/zipball/c4de561affe7f432927a47ddcd187282fe9b0225",
-                "reference": "c4de561affe7f432927a47ddcd187282fe9b0225",
+                "url": "https://api.github.com/repos/contao-community-alliance/composer-plugin/zipball/fb5db3f6355e5b66267670f4e93b5a4cdae18f8e",
+                "reference": "fb5db3f6355e5b66267670f4e93b5a4cdae18f8e",
                 "shasum": ""
             },
             "require": {
-                "contao-community-alliance/composer-installer": "*",
-                "contao/core": ">=2.11",
-                "php": ">=5.3",
-                "pimple/pimple": "~1"
+                "composer-plugin-api": "1.0.0"
+            },
+            "conflict": {
+                "contao-community-alliance/composer": "<0.9-dev",
+                "contao/core": "3.0.*"
             },
             "replace": {
+                "contao-community-alliance/composer-installer": "1.7.1"
+            },
+            "require-dev": {
+                "bit3/php-coding-standard": "*",
+                "composer/composer": "dev-master",
+                "pdepend/pdepend": "1.1.*",
+                "phpunit/phpunit": ">=3.7.10,<4-dev"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "ContaoCommunityAlliance\\Composer\\Plugin\\Plugin",
+                "branch-alias": {
+                    "dev-master": "2.2.x-dev",
+                    "dev-develop": "2.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "ContaoCommunityAlliance\\Composer\\Plugin": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0+"
+            ],
+            "description": "Composer plugin that provide contao integration and installer.",
+            "homepage": "http://c-c-a.org/",
+            "time": "2014-07-16 15:35:36"
+        },
+        {
+            "name": "contao-community-alliance/dependency-container",
+            "version": "1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/contao-community-alliance/dependency-container.git",
+                "reference": "5b22e6c19d58fa41a9cd624ece433f7fcbcf6128"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/contao-community-alliance/dependency-container/zipball/5b22e6c19d58fa41a9cd624ece433f7fcbcf6128",
+                "reference": "5b22e6c19d58fa41a9cd624ece433f7fcbcf6128",
+                "shasum": ""
+            },
+            "require": {
+                "contao-community-alliance/backports-initialize-system": "~1.0",
+                "contao-community-alliance/composer-plugin": "~2.0",
+                "contao/core": ">=2.11,<3.4",
+                "php": ">=5.3",
+                "pimple/pimple": "~1.0"
+            },
+            "replace": {
+                "bit3/contao-dependency-container": "self.version",
                 "contao-legacy/dependency-container": "self.version"
             },
             "suggest": {
-                "bit3/contao-dependency-container-inspector": "*"
+                "contao-community-alliance/dependency-container-inspector": "*"
             },
             "type": "contao-module",
             "extra": {
@@ -246,7 +387,8 @@
                     }
                 },
                 "branch-alias": {
-                    "dev-master": "1.3.x-dev"
+                    "dev-master": "1.4.x-dev",
+                    "dev-develop": "1.5.x-dev"
                 }
             },
             "autoload": {
@@ -267,6 +409,7 @@
                 }
             ],
             "description": "Dependency container based on pimple for Contao open source cms.",
+            "homepage": "http://c-c-a.org/",
             "keywords": [
                 "container",
                 "contao",
@@ -274,28 +417,28 @@
                 "di",
                 "injection"
             ],
-            "time": "2013-11-12 15:34:05"
+            "time": "2014-06-05 08:27:30"
         },
         {
             "name": "contao-community-alliance/event-dispatcher",
-            "version": "dev-develop",
+            "version": "1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-community-alliance/event-dispatcher.git",
-                "reference": "1dc477c2e9d80fbfbf4c402e7fc1ed297122cba8"
+                "reference": "42128c16a96b332527c688f0831a8ba31640af30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-community-alliance/event-dispatcher/zipball/1dc477c2e9d80fbfbf4c402e7fc1ed297122cba8",
-                "reference": "1dc477c2e9d80fbfbf4c402e7fc1ed297122cba8",
+                "url": "https://api.github.com/repos/contao-community-alliance/event-dispatcher/zipball/42128c16a96b332527c688f0831a8ba31640af30",
+                "reference": "42128c16a96b332527c688f0831a8ba31640af30",
                 "shasum": ""
             },
             "require": {
-                "contao-community-alliance/composer-installer": "*",
-                "contao-community-alliance/dependency-container": "~1",
-                "contao/core": ">=2.11,<3.3",
+                "contao-community-alliance/composer-plugin": "~2.0",
+                "contao-community-alliance/dependency-container": "~1.4",
+                "contao/core": ">=2.11,<3.4",
                 "php": ">=5.3",
-                "symfony/event-dispatcher": "2.3.*"
+                "symfony/event-dispatcher": "~2.3"
             },
             "replace": {
                 "bit3/contao-event-dispatcher": "self.version"
@@ -330,30 +473,40 @@
                 }
             ],
             "description": "Event dispatcher service for Contao Open Source CMS",
+            "homepage": "http://c-c-a.org/",
             "keywords": [
                 "contao",
                 "event"
             ],
-            "time": "2013-11-12 15:25:59"
+            "time": "2014-06-05 08:26:24"
         },
         {
             "name": "contao/core",
-            "version": "3.1.5",
+            "version": "3.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-community-alliance/composerized-contao-core.git",
-                "reference": "8e99e3378a04d94a8da7800893eac21dffcf8b9e"
+                "reference": "6c5de548731b9a024930be23451ee824cabac13c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-community-alliance/composerized-contao-core/zipball/8e99e3378a04d94a8da7800893eac21dffcf8b9e",
-                "reference": "8e99e3378a04d94a8da7800893eac21dffcf8b9e",
+                "url": "https://api.github.com/repos/contao-community-alliance/composerized-contao-core/zipball/6c5de548731b9a024930be23451ee824cabac13c",
+                "reference": "6c5de548731b9a024930be23451ee824cabac13c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2"
+                "contao-community-alliance/composer-plugin": "*",
+                "contao/idna": "dev-master",
+                "contao/php-diff": "dev-master",
+                "contao/tcpdf": "dev-master",
+                "leafo/lessphp": "~0.4.0",
+                "leafo/scssphp": "~0.0.9",
+                "michelf/php-markdown": "~1.4.0",
+                "php": ">=5.3.2",
+                "simplepie/simplepie": "~1.3.0",
+                "swiftmailer/swiftmailer": "~4.3.0"
             },
-            "type": "library",
+            "type": "project",
             "autoload": {
                 "classmap": [
                     "system/modules"
@@ -361,14 +514,12 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-3.0"
+                "LGPL-3.0+"
             ],
             "authors": [
                 {
                     "name": "Leo Feyer",
-                    "email": "github@contao.org",
-                    "homepage": "https://contao.org",
-                    "role": "Project leader"
+                    "homepage": "https://github.com/leofeyer"
                 }
             ],
             "description": "Contao Open Source CMS",
@@ -377,20 +528,277 @@
                 "contao",
                 "core"
             ],
-            "time": "2013-11-20 02:46:36"
+            "time": "2014-07-01 16:41:26"
         },
         {
-            "name": "pimple/pimple",
-            "version": "v1.1.0",
+            "name": "contao/idna",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fabpot/Pimple.git",
-                "reference": "471c7d7c52ad6594e17b8ec33efdd1be592b5d83"
+                "url": "https://github.com/contao/idna.git",
+                "reference": "176e7549aeac534f3be8dfbf8a543fd9c54b431c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Pimple/zipball/471c7d7c52ad6594e17b8ec33efdd1be592b5d83",
-                "reference": "471c7d7c52ad6594e17b8ec33efdd1be592b5d83",
+                "url": "https://api.github.com/repos/contao/idna/zipball/176e7549aeac534f3be8dfbf8a543fd9c54b431c",
+                "reference": "176e7549aeac534f3be8dfbf8a543fd9c54b431c",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "idna_convert.class.php",
+                    "uctc.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1+"
+            ],
+            "authors": [
+                {
+                    "name": "Leo Feyer",
+                    "homepage": "https://github.com/leofeyer"
+                }
+            ],
+            "description": "A library for encoding and decoding internationalized domain names.",
+            "time": "2014-05-17 19:04:55"
+        },
+        {
+            "name": "contao/php-diff",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/contao/php-diff.git",
+                "reference": "9928f73548f26c4b8627d78a3722e52f63efadbd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/contao/php-diff/zipball/9928f73548f26c4b8627d78a3722e52f63efadbd",
+                "reference": "9928f73548f26c4b8627d78a3722e52f63efadbd",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Diff": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Leo Feyer",
+                    "homepage": "https://github.com/leofeyer"
+                }
+            ],
+            "description": "A comprehensive library for generating differences between two hashable objects (strings or arrays).",
+            "time": "2014-05-17 19:04:01"
+        },
+        {
+            "name": "contao/tcpdf",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/contao/tcpdf.git",
+                "reference": "d0a2b268fe5b4d826ac09ff58b329547fda61198"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/contao/tcpdf/zipball/d0a2b268fe5b4d826ac09ff58b329547fda61198",
+                "reference": "d0a2b268fe5b4d826ac09ff58b329547fda61198",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "fonts/",
+                    "config/",
+                    "include/",
+                    "tcpdf.php",
+                    "tcpdf_parser.php",
+                    "tcpdf_import.php",
+                    "tcpdf_barcodes_1d.php",
+                    "tcpdf_barcodes_2d.php",
+                    "include/tcpdf_colors.php",
+                    "include/tcpdf_filters.php",
+                    "include/tcpdf_font_data.php",
+                    "include/tcpdf_fonts.php",
+                    "include/tcpdf_images.php",
+                    "include/tcpdf_static.php",
+                    "include/barcodes/datamatrix.php",
+                    "include/barcodes/pdf417.php",
+                    "include/barcodes/qrcode.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPLv3"
+            ],
+            "authors": [
+                {
+                    "name": "Leo Feyer",
+                    "homepage": "https://github.com/leofeyer"
+                }
+            ],
+            "description": "TCPDF is a PHP class for generating PDF documents.",
+            "time": "2014-06-14 17:40:58"
+        },
+        {
+            "name": "leafo/lessphp",
+            "version": "v0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leafo/lessphp.git",
+                "reference": "51f3f06f0fe78a722dabfd14578444bdd078d9de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leafo/lessphp/zipball/51f3f06f0fe78a722dabfd14578444bdd078d9de",
+                "reference": "51f3f06f0fe78a722dabfd14578444bdd078d9de",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lessc.inc.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Leaf Corcoran",
+                    "email": "leafot@gmail.com",
+                    "homepage": "http://leafo.net"
+                }
+            ],
+            "description": "lessphp is a compiler for LESS written in PHP.",
+            "homepage": "http://leafo.net/lessphp/",
+            "time": "2013-08-09 17:09:19"
+        },
+        {
+            "name": "leafo/scssphp",
+            "version": "v0.0.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leafo/scssphp.git",
+                "reference": "ff76df3e45af45e808f3fcd516a2cb5cbc77f45e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/ff76df3e45af45e808f3fcd516a2cb5cbc77f45e",
+                "reference": "ff76df3e45af45e808f3fcd516a2cb5cbc77f45e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "require-dev": {
+                "php": ">=5.3.0",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "bin": [
+                "pscss"
+            ],
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "scss.inc.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Leaf Corcoran",
+                    "email": "leafot@gmail.com",
+                    "homepage": "http://leafo.net"
+                }
+            ],
+            "description": "scssphp is a compiler for SCSS written in PHP.",
+            "homepage": "http://leafo.net/scssphp/",
+            "time": "2014-07-07 01:51:39"
+        },
+        {
+            "name": "michelf/php-markdown",
+            "version": "1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/michelf/php-markdown.git",
+                "reference": "de9a19c7bf352d41cc99ed86c3c0ef17e87394b6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/de9a19c7bf352d41cc99ed86c3c0ef17e87394b6",
+                "reference": "de9a19c7bf352d41cc99ed86c3c0ef17e87394b6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-lib": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Michelf": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Michel Fortin",
+                    "email": "michel.fortin@michelf.ca",
+                    "homepage": "http://michelf.ca/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "John Gruber",
+                    "homepage": "http://daringfireball.net/"
+                }
+            ],
+            "description": "PHP Markdown",
+            "homepage": "http://michelf.ca/projects/php-markdown/",
+            "keywords": [
+                "markdown"
+            ],
+            "time": "2014-05-05 02:43:50"
+        },
+        {
+            "name": "pimple/pimple",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fabpot/Pimple.git",
+                "reference": "2019c145fe393923f3441b23f29bbdfaa5c58c4d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fabpot/Pimple/zipball/2019c145fe393923f3441b23f29bbdfaa5c58c4d",
+                "reference": "2019c145fe393923f3441b23f29bbdfaa5c58c4d",
                 "shasum": ""
             },
             "require": {
@@ -414,7 +822,9 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 }
             ],
             "description": "Pimple is a simple Dependency Injection Container for PHP 5.3",
@@ -423,28 +833,136 @@
                 "container",
                 "dependency injection"
             ],
-            "time": "2013-09-19 04:53:08"
+            "time": "2013-11-22 08:30:29"
+        },
+        {
+            "name": "simplepie/simplepie",
+            "version": "1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/simplepie/simplepie.git",
+                "reference": "ce53709778bc1e2e4deda1651b66e5081398d5cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/ce53709778bc1e2e4deda1651b66e5081398d5cc",
+                "reference": "ce53709778bc1e2e4deda1651b66e5081398d5cc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SimplePie": "library"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ryan Parman",
+                    "homepage": "http://ryanparman.com/",
+                    "role": "Creator, alumnus developer"
+                },
+                {
+                    "name": "Geoffrey Sneddon",
+                    "homepage": "http://gsnedders.com/",
+                    "role": "Alumnus developer"
+                },
+                {
+                    "name": "Ryan McCue",
+                    "email": "me@ryanmccue.info",
+                    "homepage": "http://ryanmccue.info/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple Atom/RSS parsing library for PHP",
+            "homepage": "http://simplepie.org/",
+            "keywords": [
+                "atom",
+                "feeds",
+                "rss"
+            ],
+            "time": "2012-10-30 17:54:03"
+        },
+        {
+            "name": "swiftmailer/swiftmailer",
+            "version": "v4.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/swiftmailer/swiftmailer.git",
+                "reference": "ae540bed1079c07aa12e9e62d9d8d4fc49bbdff2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/ae540bed1079c07aa12e9e62d9d8d4fc49bbdff2",
+                "reference": "ae540bed1079c07aa12e9e62d9d8d4fc49bbdff2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.3-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "lib/swift_required.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Chris Corbyn"
+                }
+            ],
+            "description": "Swiftmailer, free feature-rich PHP mailer",
+            "homepage": "http://swiftmailer.org",
+            "keywords": [
+                "mail",
+                "mailer"
+            ],
+            "time": "2013-04-11 10:22:09"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.3.7",
+            "version": "v2.5.2",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "2d8ece3c610726a73d0c95c885134efea182610e"
+                "reference": "2215d2ef6fd7ab24d55576a3d924df575c741762"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/2d8ece3c610726a73d0c95c885134efea182610e",
-                "reference": "2d8ece3c610726a73d0c95c885134efea182610e",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/2215d2ef6fd7ab24d55576a3d924df575c741762",
+                "reference": "2215d2ef6fd7ab24d55576a3d924df575c741762",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "symfony/dependency-injection": "~2.0"
+                "psr/log": "~1.0",
+                "symfony/config": "~2.0",
+                "symfony/dependency-injection": "~2.0",
+                "symfony/stopwatch": "~2.2"
             },
             "suggest": {
                 "symfony/dependency-injection": "",
@@ -453,7 +971,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3-dev"
+                    "dev-master": "2.5-dev"
                 }
             },
             "autoload": {
@@ -468,7 +986,9 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Symfony Community",
@@ -477,20 +997,20 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
-            "time": "2013-10-13 06:32:10"
+            "time": "2014-07-09 09:05:48"
         },
         {
             "name": "twig/twig",
-            "version": "v1.14.2",
+            "version": "v1.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "ca445842fcea4f844d68203ffa2d00f5e3cdea64"
+                "reference": "8ce37115802e257a984a82d38254884085060024"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/ca445842fcea4f844d68203ffa2d00f5e3cdea64",
-                "reference": "ca445842fcea4f844d68203ffa2d00f5e3cdea64",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/8ce37115802e257a984a82d38254884085060024",
+                "reference": "8ce37115802e257a984a82d38254884085060024",
                 "shasum": ""
             },
             "require": {
@@ -499,7 +1019,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.14-dev"
+                    "dev-master": "1.16-dev"
                 }
             },
             "autoload": {
@@ -514,11 +1034,19 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Armin Ronacher",
-                    "email": "armin.ronacher@active-4.com"
+                    "email": "armin.ronacher@active-4.com",
+                    "role": "Project Founder"
+                },
+                {
+                    "name": "Twig Team",
+                    "homepage": "https://github.com/fabpot/Twig/graphs/contributors",
+                    "role": "Contributors"
                 }
             ],
             "description": "Twig, the flexible, fast, and secure template language for PHP",
@@ -526,27 +1054,27 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-10-30 08:20:53"
+            "time": "2014-07-05 12:19:05"
         }
     ],
     "packages-dev": [
         {
             "name": "bit3/php-coding-standard",
-            "version": "2.3",
+            "version": "2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bit3/php-coding-standard.git",
-                "reference": "6053ea04ed02b2d82b7aa19978039cc287c74faf"
+                "reference": "302f4362b8fa983725d56828e1821df01e1c7d8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bit3/php-coding-standard/zipball/6053ea04ed02b2d82b7aa19978039cc287c74faf",
-                "reference": "6053ea04ed02b2d82b7aa19978039cc287c74faf",
+                "url": "https://api.github.com/repos/bit3/php-coding-standard/zipball/302f4362b8fa983725d56828e1821df01e1c7d8d",
+                "reference": "302f4362b8fa983725d56828e1821df01e1c7d8d",
                 "shasum": ""
             },
             "require": {
-                "phpmd/phpmd": "1.4.*",
-                "squizlabs/php_codesniffer": "1.4.*"
+                "phpmd/phpmd": "~1.4",
+                "squizlabs/php_codesniffer": "~1.4"
             },
             "type": "coding-standard",
             "notification-url": "https://packagist.org/downloads/",
@@ -569,49 +1097,63 @@
                 "php",
                 "phpcs"
             ],
-            "time": "2013-11-25 13:28:43"
+            "time": "2013-11-29 04:08:54"
         },
         {
             "name": "pdepend/pdepend",
-            "version": "1.1.1",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "6fcfb7666c95f341b42f02c94a47b3a51ed484e0"
+                "reference": "b74f2bb68e86104cd97dfb8d74209692c9b465ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/6fcfb7666c95f341b42f02c94a47b3a51ed484e0",
-                "reference": "6fcfb7666c95f341b42f02c94a47b3a51ed484e0",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/b74f2bb68e86104cd97dfb8d74209692c9b465ce",
+                "reference": "b74f2bb68e86104cd97dfb8d74209692c9b465ce",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.3"
+                "symfony/config": "@stable",
+                "symfony/dependency-injection": "@stable",
+                "symfony/filesystem": "@stable"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.*@stable",
+                "squizlabs/php_codesniffer": "@stable"
             },
             "bin": [
                 "src/bin/pdepend"
             ],
             "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PDepend\\": "src/main/php/"
+                }
+            },
             "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
             "description": "Official version of pdepend to be handled with Composer",
-            "time": "2013-07-25 19:23:48"
+            "time": "2014-05-21 09:48:10"
         },
         {
             "name": "phpmd/phpmd",
-            "version": "1.4.1",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpmd/phpmd.git",
-                "reference": "7d03a50e937811970751697ad1aea33a1089d66f"
+                "reference": "692b7b1b64518091b2b1bea91b489dbb13598c07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/7d03a50e937811970751697ad1aea33a1089d66f",
-                "reference": "7d03a50e937811970751697ad1aea33a1089d66f",
+                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/692b7b1b64518091b2b1bea91b489dbb13598c07",
+                "reference": "692b7b1b64518091b2b1bea91b489dbb13598c07",
                 "shasum": ""
             },
             "require": {
-                "pdepend/pdepend": "*",
+                "pdepend/pdepend": ">=1.1.1",
                 "php": ">=5.3.0"
             },
             "bin": [
@@ -624,20 +1166,20 @@
                 "src/main/php"
             ],
             "description": "Official version of PHPMD handled with Composer.",
-            "time": "2012-12-14 12:25:09"
+            "time": "2013-07-26 14:47:02"
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "1.4.7",
+            "version": "1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "df764a1604607ea61c4eeea5410666e27cb37a8b"
+                "reference": "396178ada8499ec492363587f037125bf7b07fcc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/df764a1604607ea61c4eeea5410666e27cb37a8b",
-                "reference": "df764a1604607ea61c4eeea5410666e27cb37a8b",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/396178ada8499ec492363587f037125bf7b07fcc",
+                "reference": "396178ada8499ec492363587f037125bf7b07fcc",
                 "shasum": ""
             },
             "require": {
@@ -651,13 +1193,17 @@
                 "scripts/phpcs"
             ],
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-phpcs-fixer": "2.0.x-dev"
+                }
+            },
             "autoload": {
                 "classmap": [
                     "CodeSniffer.php",
                     "CodeSniffer/CLI.php",
                     "CodeSniffer/Exception.php",
                     "CodeSniffer/File.php",
-                    "CodeSniffer/MultiFileSniff.php",
                     "CodeSniffer/Report.php",
                     "CodeSniffer/Reporting.php",
                     "CodeSniffer/Sniff.php",
@@ -695,20 +1241,175 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2013-09-26 00:08:21"
+            "time": "2014-05-01 03:07:07"
+        },
+        {
+            "name": "symfony/config",
+            "version": "v2.5.2",
+            "target-dir": "Symfony/Component/Config",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Config.git",
+                "reference": "a31aa8029bcc0b5b85578328050aa70d052e177b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Config/zipball/a31aa8029bcc0b5b85578328050aa70d052e177b",
+                "reference": "a31aa8029bcc0b5b85578328050aa70d052e177b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "symfony/filesystem": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Config\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Config Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-07-09 09:05:48"
+        },
+        {
+            "name": "symfony/dependency-injection",
+            "version": "v2.5.2",
+            "target-dir": "Symfony/Component/DependencyInjection",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/DependencyInjection.git",
+                "reference": "59984a9e6f18875751469dea073f6d24fd59f4a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/59984a9e6f18875751469dea073f6d24fd59f4a7",
+                "reference": "59984a9e6f18875751469dea073f6d24fd59f4a7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/config": "~2.2",
+                "symfony/expression-language": "~2.4",
+                "symfony/yaml": "~2.0"
+            },
+            "suggest": {
+                "symfony/config": "",
+                "symfony/proxy-manager-bridge": "Generate service proxies to lazy load them",
+                "symfony/yaml": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\DependencyInjection\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony DependencyInjection Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-07-09 09:05:48"
+        },
+        {
+            "name": "symfony/filesystem",
+            "version": "v2.5.2",
+            "target-dir": "Symfony/Component/Filesystem",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Filesystem.git",
+                "reference": "c1309b0ee195ad264a4314435bdaecdfacb8ae9c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/c1309b0ee195ad264a4314435bdaecdfacb8ae9c",
+                "reference": "c1309b0ee195ad264a4314435bdaecdfacb8ae9c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Filesystem\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Filesystem Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-07-09 09:05:48"
         }
     ],
-    "aliases": [
-
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
         "bit3/php-coding-standard": 20
     },
+    "prefer-stable": true,
     "platform": {
         "php": ">=5.3"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }
