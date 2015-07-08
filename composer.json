@@ -1,24 +1,24 @@
 {
-	"name": "bit3/contao-xnavigation",
+	"name": "westwerk-ac/contao-xnavigation",
 	"description": "Highly extendable and flexible navigation module.",
 	"keywords": ["contao", "navigation", "sitemap"],
 	"type": "contao-module",
-	"homepage": "http://bit3.de",
+	"homepage": "http://westwerk.ac",
 	"license": "LGPL-3.0+",
 	"authors": [
 		{
-			"name": "Tristan Lins",
-			"email": "tristan.lins@bit3.de",
-			"homepage": "http://bit3.de",
+			"name": "Westwerk GmbH & Co. KG",
+			"email": "hallo@westwerk.ac",
+			"homepage": "http://westwerk.ac",
 			"role": "Developer"
 		}
 	],
 	"support": {
-		"email": "info@bit3.de",
-		"issues": "https://github.com/bit3/contao-xnavigation/issues",
-		"wiki": "https://github.com/bit3/contao-xnavigation/wiki",
+		"email": "hallo@westwerk.ac",
+		"issues": "https://github.com/westwerk-ac/contao-xnavigation/issues",
+		"wiki": "https://github.com/westwerk-ac/contao-xnavigation/wiki",
 		"irc": "irc://irc.freenode.org/contao.dev",
-		"source": "https://github.com/bit3/contao-xnavigation"
+		"source": "https://github.com/westwerk-ac/contao-xnavigation"
 	},
 	"require": {
 		"php": ">=5.3",
