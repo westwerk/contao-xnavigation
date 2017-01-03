@@ -13,10 +13,7 @@
 
 namespace Bit3\Contao\XNavigation\Event;
 
-use Bit3\Contao\XNavigation\Model\ConditionModel;
-use Bit3\FlexiTree\Condition\ConditionInterface;
 use Bit3\FlexiTree\ItemInterface;
-use string;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
